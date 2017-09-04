@@ -35,10 +35,7 @@ public class DeptoController {
     private @Getter
     @Setter
     List<Tbldepartamento> listaDeptos = new ArrayList<>();
-    private @Getter
-    @Setter
-    Tbldepartamento depto = new Tbldepartamento();
-
+    private @Getter @Setter Tbldepartamento selectedDepto = new Tbldepartamento();
     private @Getter
     @Setter
     String nomDepto;
@@ -53,20 +50,10 @@ public class DeptoController {
     }
 
     public void insert() {
-        //df.insert(depto);
-        /* System.out.println(depto);
-    
-      depto.setNomdepto(nomDepto);
-      depto.setMaxcand(new BigInteger(maxCand));
-        System.out.println(depto);
-         */ 
-        if (depto == null) {
-            depto = new Tbldepartamento();
-      
-        }else{
-         if (depto.getIddepto() == null) {
-         
-          if (setValores()) {
+     
+         if (selectedDepto == null || selectedDepto.getIddepto() == null) {
+          Tbldepartamento depto = new Tbldepartamento();
+          if (setValores(depto)) {
            
                 
                 df.insert(depto);
@@ -79,27 +66,53 @@ public class DeptoController {
          }else{
          vb.lanzarMensaje("error", "lblMantDepto", "lblDeptoReqLimp");
          }
-        }
         
-        if (depto.getIddepto() == null) {
-         
-          if (setValores()) {
-           
-                
-                df.insert(depto);
-                vb.lanzarMensaje("info", "lblMantDepto", "lblAgregarSuccess");
-                limpiar();
-                listaDeptos = df.obtenerDeptos();
-            
-
-        }
-         }else{
-         vb.lanzarMensaje("error", "lblMantDepto", "lblDeptoReqLimp");
-         }
+        
+     
        
     }
-
-    public boolean setValores() {
+    
+    public void modificar(){
+       
+        if (selectedDepto != null ) {
+            if (setValores(selectedDepto)) {
+                df.edit(selectedDepto);
+                vb.lanzarMensaje("info", "lblMantDepto", "lblbtnModifiarSucces");
+                limpiar();
+                listaDeptos = df.obtenerDeptos();
+            }
+        }else{
+        vb.lanzarMensaje("error", "lblMantDepto", "lblDeptoReqMod");
+        }
+    
+    }
+    
+    public void validarEliminar(){
+        if (selectedDepto != null) {
+          
+                
+                
+                vb.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
+                
+          
+        }else{
+        vb.lanzarMensaje("error", "lblMantDepto", "lblDeptoReqMod");
+        }
+    }
+    public void eliminar(){
+                df.remove(selectedDepto);
+                vb.lanzarMensaje("info", "lblMantDepto", "lblbtnModifiarSucces");
+                limpiar();
+                listaDeptos = df.obtenerDeptos();
+    } 
+    public void cerrarDialogo(){
+        limpiar();
+        vb.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+    }
+    
+    
+    
+    public boolean setValores(Tbldepartamento depto) {
         boolean flag = false;
         try {
             if (vb.validarCampoVacio(nomDepto, "warn", "lblMantDepto", "lblNomReqDepto")
@@ -120,18 +133,14 @@ public class DeptoController {
     }
 
     public void limpiar() {
-        depto = new Tbldepartamento();
-        depto.setIddepto(null);
-        depto.setMaxcand(null);
-        depto.setNomdepto("");
+        selectedDepto = new Tbldepartamento();
         maxCand = "";
         nomDepto = "";
     }
 
-    public void onSelect(Tbldepartamento d) {
-        depto.setIddepto(d.getIddepto());
-        depto.setNomdepto(d.getNomdepto());
-        depto.setMaxcand(d.getMaxcand());
+    public void onSelect() {
+        nomDepto = selectedDepto.getNomdepto();
+        maxCand = String.valueOf(selectedDepto.getMaxcand());
         System.out.println("com.votoseguro.controller.DeptoController.onSelect()");
     }
 

@@ -10,49 +10,64 @@
 
     <ui:composition template="/WEB-INF/templates/template.xhtml">
         <ui:define name="content">
-             <h:form id="deptoForm">
-                    <b:tabView tabPosition="left" content-style="padding:10px">
-                        <b:tab title="" style="background-color: white;">
-                            <b:row>
-                               
-                                    <b:column span="2">
-                                    <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{deptoController.insert()}"/>
-                            </b:column>
-                               <b:column span="2">
-                                    <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%" />
+            <h:form id="deptoForm">
+                <b:tabView tabPosition="left" content-style="padding:10px">
+                    <b:tab title="" style="background-color: white;">
+                        <b:row>
+
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{deptoController.insert()}"/>
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" look="danger" style="width:100%" />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  actionListener="#{deptoController.modificar()}"/>
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" look="danger" style="width:100%" actionListener="#{deptoController.validarEliminar()}"/>
                             </b:column>
-                            </b:row>
-                        </b:tab>
-                    </b:tabView>
-                    <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
-                        <b:tab title="#{bundle.lblMantDepto}" >
-                            <b:messages/>
-                            <b:inputText size="10" id="nomDepto"  label="#{bundle.lblNomDepto}" value="#{deptoController.nomDepto}" placeholder="#{bundle.lblMantDepto}"/>
-                            <b:inputText size="10" id="numCand"  label="#{bundle.lblNumCDepto}" value="#{deptoController.maxCand}" placeholder="5"/>
-                            <p:separator></p:separator>
-                            <p:dataTable style="background-color: black" id="tblDepto" var="depto" value="#{deptoController.listaDeptos}" selectionMode="single" selection="#{deptoController.depto}" rowKey="#{depto.iddepto}"
-                                         paginator="true" rows="5" >
-        <p:column headerText="Id">
-            <h:outputText  value="#{depto.iddepto}" />
-        </p:column>
-        <p:column  headerText="#{bundle.lblNomDepto}">
-            <h:outputText value="#{depto.nomdepto}" />
-        </p:column>
-        <p:column headerText="#{bundle.lblNumCDepto}">
-            <h:outputText value="#{depto.maxcand}" />
-        </p:column>
-    </p:dataTable>
-                        </b:tab>
-                    </b:tabView>
-                    
-                </h:form>  
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" actionListener="#{deptoController.limpiar()}" look="success" style="width:100%" />
+                            </b:column>
+                        </b:row>
+                         <b:modal  id="amodal" title="#{bundle['lblMantDepto']}" styleClass="modalPseudoClass">
+                            <p>#{bundle['lblRegEliminar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false" actionListener="#{deptoController.cerrarDialogo}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
+                                <b:commandButton  ajax="false" actionListener="#{deptoController.eliminar}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                            </f:facet>
+                        </b:modal>
+                    </b:tab>
+                   
+                </b:tabView>
+                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
+                    <b:tab title="#{bundle.lblMantDepto}" >
+                        <b:messages/>
+                        <b:inputText size="10" id="nomDepto"  label="#{bundle.lblNomDepto}" value="#{deptoController.nomDepto}" placeholder="#{bundle.lblMantDepto}"/>
+                        <b:inputText size="10" id="numCand"  label="#{bundle.lblNumCDepto}" value="#{deptoController.maxCand}" placeholder="5"/>
+                        <p:separator></p:separator>
+                        <p:dataTable style="background-color: black" 
+                                     id="tblDepto" 
+                                     var="depto" 
+                                     value="#{deptoController.listaDeptos}" 
+                                     selectionMode="single" 
+                                     selection="#{deptoController.selectedDepto}" 
+                                     rowKey="#{depto.iddepto}"
+                                     paginator="true" rows="10"
+                                     sortBy="#{depto.nomdepto}" sortOrder="ascending">
+                            
+                            <p:ajax  event="rowSelect" listener="#{deptoController.onSelect()}" update="@form" process="tblDepto" />
+                           
+                            <p:column  headerText="#{bundle.lblNomDepto}">
+                                <h:outputText value="#{depto.nomdepto}" />
+                            </p:column>
+                            <p:column headerText="#{bundle.lblNumCDepto}">
+                                <h:outputText value="#{depto.maxcand}" />
+                            </p:column>
+                        </p:dataTable>
+                    </b:tab>
+                </b:tabView>
+
+            </h:form>  
         </ui:define>
-</ui:composition>
-    </html>
+    </ui:composition>
+</html>
 

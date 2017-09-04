@@ -128,6 +128,10 @@ public class ValidationBean {
         String value = bundle.getString(key);
         return value;
     }
+     public void ejecutarJavascript(String codigo){
+        RequestContext requestContext = RequestContext.getCurrentInstance();  
+        requestContext.execute(codigo);
+    }
 
   /*  public String Encriptar(String texto) {
 
