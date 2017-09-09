@@ -147,7 +147,7 @@ public class MunicipioController {
                 muni.setNommuni(nomMuni);
             }
         } catch (Exception e) {
-            System.out.println("com.votoseguro.controller.DeptoController.setValores()");
+            System.out.println("com.votoseguro.controller.MunicipioController.setValores()");
             e.printStackTrace();
         }
         return flag;

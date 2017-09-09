@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/WEB-INF/templates/template.xhtml">
+        <ui:define name="content">
+            <h:form id="rolForm">
+             <b:tabView tabPosition="left" content-style="padding:10px">
+                    <b:tab title="" style="background-color: white;">
+                        <b:row>
+
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{rolController.insert()}" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%" actionListener="#{rolController.modificar()}"  />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" look="danger" style="width:100%" actionListener="#{rolController.validarEliminar()}"  />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}"  look="success" style="width:100%" actionListener="#{rolController.limpiar()}" />
+                            </b:column>
+                        </b:row>
+                         <b:modal  id="amodal" title="#{bundle['lblMantRol']}" styleClass="modalPseudoClass">
+                            <p>#{bundle['lblRegEliminar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary" actionListener="#{rolController.cerrarDialogo()}" />
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnOk']}" look="primary" actionListener="#{rolController.eliminar()}" />
+                            </f:facet>
+                        </b:modal>
+                    </b:tab>
+                   
+                </b:tabView>   
+                
+                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
+                    <b:tab title="#{bundle.lblMantRol}" >
+                        <b:messages/>
+                        <b:inputText size="10" id="nomRol"  label="#{bundle.lblNomRol}" value="#{rolController.nomRol}" placeholder="#{bundle.lblMantRol}"/>
+                        
+                        <p:separator></p:separator>
+                        <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
+                                  id="tblMuni"
+                                  value="#{rolController.listaRoles}"
+                                         var="rol"
+                                         select="true"
+                                         selectionMode="single"
+                                         onselect="ajax:rolController.onSelect(rol);"
+                                         ondeselect="ajax:rolController.deSelect();"
+                                         ajax="true"
+                                         update="@form"
+                                         >
+                                <b:dataTableColumn label="#{bundle.lblNomRol}" value="#{rol.nomrol}"/>
+                                <b:dataTableColumn label="#{bundle.lblRolPorUser}" value="#{rolController.contarRoles(rol.idrol)}"/>   
+                               
+                            </b:dataTable>
+                    </b:tab>
+                </b:tabView>
+            </h:form>
+            
+        </ui:define>
+    </ui:composition>
+</html>
+

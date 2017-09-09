@@ -12,10 +12,13 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,6 +45,8 @@ public class Tblrol implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "IDROL")
+    @GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "ROL_SQE")
+    @SequenceGenerator(name = "ROL_SQE", sequenceName = "SQE_ROL", allocationSize = 1)
     private BigDecimal idrol;
     @Basic(optional = false)
     @NotNull
