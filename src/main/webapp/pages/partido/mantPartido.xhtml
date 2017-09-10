@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/WEB-INF/templates/template.xhtml">
+        <ui:define name="content">
+            <h:form id="partidoForm">
+              <b:tabView tabPosition="left" content-style="padding:10px">
+                    <b:tab title="" style="background-color: white;">
+                        <b:row>
+
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{partidoController.insert()}" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  actionListener="#{partidoController.modificar()}"  />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" look="danger" style="width:100%" actionListener="#{partidoController.validarEliminar()}"/>
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" actionListener="#{partidoController.limpiar()}"/>
+                            </b:column>
+                        </b:row>
+                         <b:modal  id="amodal" title="#{bundle['lblMantPart']}" styleClass="modalPseudoClass">
+                            <p>#{bundle['lblRegEliminar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{partidoController.cerrarDialogo()}" />
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnOk']}" look="primary"  actionListener="#{partidoController.eliminar()}"/>
+                            </f:facet>
+                        </b:modal>
+                    </b:tab>
+                   
+                </b:tabView>  
+                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
+                    <b:tab title="#{bundle.lblMantPart}" >
+                        <b:messages/>
+                        <b:inputText id="nomPart" label="#{bundle.lblNomPart}" value="#{partidoController.nomPartido}" size="10" placeholder="#{bundle.lblNomReqPart}"/>
+                        
+                         <p:fileUpload label="#{bundle['lblImageUploadLogo']}" invalidFileMessage="#{bundle['lblFileInvalid']}" id="logoEmp" fileUploadListener="#{partidoController.handleFileUploadLogo}" mode="advanced"
+                                       auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        <b:label id="msgFileLogo" text="#{partidoController.msgFileLogo}"></b:label>
+                        
+                        
+                        
+                        <p:fileUpload label="#{bundle['lblImageUploadBandera']}" invalidFileMessage="#{bundle['lblFileInvalid']}" id="banderaEmp" fileUploadListener="#{partidoController.handleFileUploadBandera}" mode="advanced"
+                                       auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        <b:label id="msgFileBandera" text="#{partidoController.msgFileBandera}"></b:label>
+                        
+                        <p:separator></p:separator>
+                     <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
+                                  id="tblPart"
+                                  value="#{partidoController.listaPartidos}"
+                                         var="part"
+                                         select="true"
+                                         selectionMode="single"
+                                         onselect="ajax:partidoController.onSelect(part);"
+                                         ondeselect="ajax:partidoController.deSelect();"
+                                         ajax="true"
+                                         update="@form"
+                                         >
+                                <b:dataTableColumn label="#{bundle.lblNomPart}" value="#{part.nompartido}"/>
+                                <b:dataTableColumn label="#{bundle.lblLogoPart}" value="#{part.logopartido}">
+                                <h:graphicImage library="images" name="#{part.logopartido}" width="28px" height="28px"/>
+                                   
+                                </b:dataTableColumn>   
+                                <b:dataTableColumn label="#{bundle.lblBanderaPartido}" value="#{part.banderapartido}">
+                                    <h:graphicImage library="images" name="#{part.banderapartido}" width="28px" height="28px"/>
+                                <p:graphicImage value="#{partidoController.banderaPartido}"/></b:dataTableColumn> 
+                            </b:dataTable>
+                      
+                    </b:tab>
+                </b:tabView>
+                
+                
+           
+        </h:form>
+            
+        </ui:define>
+    </ui:composition>
+</html>
+
