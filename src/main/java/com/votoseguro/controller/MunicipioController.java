@@ -87,7 +87,7 @@ public class MunicipioController {
               if (setValores(muni)) {
             muni.setIddepto(df.find(new BigDecimal(idDepto)));
             mf.create(muni);
-            vb.lanzarMensaje("info", "lblMantMuni","lblAgregarSuccess" );
+            vb.lanzarMensaje("info", "lblMantPart","lblAgregarSuccess" );
             listaMunis = mf.obtenerMunicipios(idDepto);
             limpiar();
         }
@@ -104,6 +104,7 @@ public class MunicipioController {
                 mf.edit(selectedMuni);
                 vb.lanzarMensaje("info", "lblMantMuni","lblbtnModifiarSucces" );
                 listaMunis = mf.obtenerMunicipios(idDepto);
+                vb.lanzarMensaje("info", "lblMantPart","lblbtnModifiarSucces" );
                 limpiar();
             }
             

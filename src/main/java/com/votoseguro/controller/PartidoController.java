@@ -9,6 +9,8 @@ import com.votoseguro.entity.Tblpartido;
 import com.votoseguro.entity.Tblrol;
 import com.votoseguro.facade.PartidoFacade;
 import com.votoseguro.util.ValidationBean;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,12 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -36,8 +41,14 @@ public class PartidoController {
     @EJB
     ValidationBean vb;
 
-    private String destino = "C:\\Users\\luis\\Desktop\\tareas\\multi\\SIS13B_VOTACIONES_LUIS_EDUARDO_VALDEZ_CISNEROS\\sisVotoBSFaces\\votoseguroM\\votoseguroM\\src\\main\\webapp\\resources\\images\\";
+    //private String destino = "C:\\Users\\luis\\Desktop\\tareas\\multi\\SIS13B_VOTACIONES_LUIS_EDUARDO_VALDEZ_CISNEROS\\sisVotoBSFaces\\votoseguroM\\votoseguroM\\src\\main\\webapp\\resources\\images\\";
+    private static final String SAVE_DIR = "uploads\\";
 
+            // gets absolute path of the web application
+            String appPath = System.getProperty("user.dir");
+
+            // constructs path of the directory to save uploaded file
+            String destino = appPath + File.separator + SAVE_DIR;
     private @Getter
     @Setter
     List<Tblpartido> listaPartidos = new ArrayList<>();
@@ -76,25 +87,27 @@ public class PartidoController {
     }
 
     public void handleFileUploadLogo(FileUploadEvent event) {
+        
+        
         try {
             if (logo == null) {
                 logo = event.getFile();
                 vb.copyFile(event.getFile().getFileName(), destino, event.getFile().getInputstream());
                 msgFileLogo = vb.getMsgBundle("lblFileSuccess");
                 vb.updateComponent("partidoForm:msgFileLogo");
-                logoPartido = event.getFile().getFileName();
+                logoPartido = "/"+SAVE_DIR.substring(0, 7)+"/"+event.getFile().getFileName();
             } else {
                 if (vb.deleteFile(destino + logo.getFileName())) {
                     logo = event.getFile();
                     vb.copyFile(event.getFile().getFileName(), destino, event.getFile().getInputstream());
                     msgFileLogo = vb.getMsgBundle("lblFileSuccess");
                     vb.updateComponent("partidoForm:msgFileLogo");
-                    logoPartido = event.getFile().getFileName();
+                    logoPartido = "/"+SAVE_DIR.substring(0, 7)+"/"+event.getFile().getFileName();
                 }
             }
         } catch (IOException e) {
             msgFileLogo = vb.getMsgBundle("lblFileUploadError");
-            vb.updateComponent("partidoForm:msgFileLogo");
+            vb.updateComponent("partidoFormo:msgFileLogo");
             if (logo != null) {
                 if (vb.deleteFile(destino + logo.getFileName())) {
                     logo = null;
@@ -112,14 +125,14 @@ public class PartidoController {
                 vb.copyFile(event.getFile().getFileName(), destino, event.getFile().getInputstream());
                 msgFileBandera = vb.getMsgBundle("lblFileSuccess");
                 vb.updateComponent("partidoForm:msgFileBandera");
-                banderaPartido = event.getFile().getFileName();
+                banderaPartido = "/"+SAVE_DIR.substring(0, 7)+"/"+event.getFile().getFileName();
             } else {
                 if (vb.deleteFile(destino + bandera.getFileName())) {
                     bandera = event.getFile();
                     vb.copyFile(event.getFile().getFileName(), destino, event.getFile().getInputstream());
                     msgFileBandera = vb.getMsgBundle("lblFileSuccess");
                     vb.updateComponent("partidoForm:msgFileBandera");
-                    banderaPartido = event.getFile().getFileName();
+                    banderaPartido = "/"+SAVE_DIR.substring(0, 7)+"/"+event.getFile().getFileName();
                 }
             }
         } catch (IOException e) {
@@ -136,20 +149,53 @@ public class PartidoController {
     }
 
     public void insert() {
-        if (setValores()) {
+        
+        if (selectedPartido == null || selectedPartido.getIdpartido() == null) {
+          if (setValores()) {
             pf.create(selectedPartido);
             limpiar();
             listaPartidos = pf.obtenerPartidos();
+            vb.lanzarMensaje("info", "lblMantMuni","lblAgregarSuccess" );
+        }   
+        }else{
+        vb.lanzarMensaje("warn", "lblMantPart", "lblPartReqLimp");
         }
+       
     }
 
     public void modificar() {
+        if (selectedPartido != null && selectedPartido.getIdpartido() != null) {
+        if (setValores()) {
+            pf.edit(selectedPartido);
+            limpiar();
+            listaPartidos = pf.obtenerPartidos();
+            vb.lanzarMensaje("info", "lblMantMuni","lblbtnModifiarSucces" );
+        }  
+        }else{
+        vb.lanzarMensaje("warn", "lblMantPart", "lblPartReqMod");
+        }
+        
     }
 
     public void validarEliminar() {
+          if (selectedPartido != null && selectedPartido.getIdpartido()!= null) {
+          
+                
+                
+                vb.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
+                
+          
+        }else{
+        vb.lanzarMensaje("error", "lblMantPart", "lblPartReqMod");
+        }
     }
 
     public void eliminar() {
+        selectedPartido.setEstadodel("I");
+        pf.edit(selectedPartido);
+       vb.lanzarMensaje("info", "lblMantPart", "lblEliminarSuccess");
+       listaPartidos = pf.obtenerPartidos();
+       limpiar();
     }
 
     public void limpiar() {
@@ -157,6 +203,11 @@ public class PartidoController {
         nomPartido = "";
         banderaPartido = "";
         logoPartido = "";
+        msgFileBandera ="";
+        msgFileLogo = "";
+        logo = null;
+        bandera=null;
+                
     }
 
     public void cerrarDialogo() {
@@ -191,4 +242,7 @@ public class PartidoController {
     public void deSelect() {
         limpiar();
     }
+    
+    
+  
 }

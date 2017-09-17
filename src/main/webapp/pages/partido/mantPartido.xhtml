@@ -43,10 +43,11 @@
                         <b:messages/>
                         <b:inputText id="nomPart" label="#{bundle.lblNomPart}" value="#{partidoController.nomPartido}" size="10" placeholder="#{bundle.lblNomReqPart}"/>
                         
+                       
+                       
                          <p:fileUpload label="#{bundle['lblImageUploadLogo']}" invalidFileMessage="#{bundle['lblFileInvalid']}" id="logoEmp" fileUploadListener="#{partidoController.handleFileUploadLogo}" mode="advanced"
                                        auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                         <b:label id="msgFileLogo" text="#{partidoController.msgFileLogo}"></b:label>
-                        
                         
                         
                         <p:fileUpload label="#{bundle['lblImageUploadBandera']}" invalidFileMessage="#{bundle['lblFileInvalid']}" id="banderaEmp" fileUploadListener="#{partidoController.handleFileUploadBandera}" mode="advanced"
@@ -66,13 +67,13 @@
                                          update="@form"
                                          >
                                 <b:dataTableColumn label="#{bundle.lblNomPart}" value="#{part.nompartido}"/>
-                                <b:dataTableColumn label="#{bundle.lblLogoPart}" value="#{part.logopartido}">
-                                <h:graphicImage library="images" name="#{part.logopartido}" width="28px" height="28px"/>
+                                <b:dataTableColumn label="#{bundle.lblLogoPart}" >
+                                <h:graphicImage value="#{part.logopartido}" width="112px" height="69px"/>
                                    
                                 </b:dataTableColumn>   
-                                <b:dataTableColumn label="#{bundle.lblBanderaPartido}" value="#{part.banderapartido}">
-                                    <h:graphicImage library="images" name="#{part.banderapartido}" width="28px" height="28px"/>
-                                <p:graphicImage value="#{partidoController.banderaPartido}"/></b:dataTableColumn> 
+                                <b:dataTableColumn label="#{bundle.lblBanderaPartido}" >
+                                    <h:graphicImage value="#{part.banderapartido}" width="112px" height="69px"/>
+                                </b:dataTableColumn> 
                             </b:dataTable>
                       
                     </b:tab>
