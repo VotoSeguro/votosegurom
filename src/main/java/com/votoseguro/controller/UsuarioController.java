@@ -10,6 +10,7 @@ import com.votoseguro.entity.Tblusuario;
 import com.votoseguro.facade.RolFacade;
 import com.votoseguro.facade.UsuarioFacade;
 import com.votoseguro.util.ValidationBean;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -49,7 +50,7 @@ public class UsuarioController {
         
         
         listaRoles = rf.obtenerRoles();
-        listaUsuarios = uf.obtenerUsuarios(String.valueOf(listaRoles.get(0)));
+        listaUsuarios = uf.obtenerUsuarios(String.valueOf(listaRoles.get(0).getIdrol()));
 
     }
     
@@ -66,8 +67,9 @@ public class UsuarioController {
     } 
     
     public void onChange() {
-        limpiar();
         listaUsuarios = uf.obtenerUsuarios(idRol);
+        limpiar();
+        
     }
     
     public void deSelect() {
@@ -81,10 +83,24 @@ public class UsuarioController {
         passUser = "";
         passRe = "";
         apellidoUser="";
-        idRol = "";
+      
 
     }
-    public void insert() {}
+    public void insert() {
+    
+        if (selectedUsuario == null || selectedUsuario.getIduser() == null) {
+            if (setValores() ){
+            uf.create(selectedUsuario);
+            listaUsuarios = uf.obtenerUsuarios(idRol);
+            limpiar();
+            
+            vb.lanzarMensaje("info", "lblMantUser", "lblAgregarSuccess");
+            
+        }
+        }else{
+        vb.lanzarMensaje("warn", "lblMantUser", "lblLimpUser");
+        }
+    }
     public void modificar(){}
     public void eliminar(){}
     public void cerrarDialogo(){
@@ -93,7 +109,53 @@ public class UsuarioController {
     }
     public void validarEliminar(){}
     
-    public boolean setValores(Tblusuario user) {return true;}
+    public boolean setValores() {
+        boolean flag = false;
+        try {
+            if (vb.validarCampoVacio(userName.trim(), "warn", "lblMantUser", "lblNomReqUser")
+                    && vb.validarLongitudCampo(userName, 4, 10, "warn", "lblMantUser", "lblLongUserName")
+                    && vb.validarCampoVacio(nombreUser.trim(), "warn", "lblMantUser", "lblNombreUsuarioReq")
+                    && vb.validarSoloLetras(nombreUser.trim(), "warn", "lblMantUser", "lblNombreSoloLetras")
+                    && vb.validarLongitudCampo(nombreUser, 4, 30, "warn", "lblMantUser", "lblLongNombreUsuario")
+                    && vb.validarCampoVacio(apellidoUser.trim(), "warn", "lblMantUser", "lblApellidoUsuarioReq")
+                    && vb.validarSoloLetras(apellidoUser.trim(), "warn", "lblMantUser", "lblApellidoSoloLetras")
+                    && vb.validarLongitudCampo(apellidoUser, 4, 30, "warn", "lblMantUser", "lblLongApellidoUsuario")
+                    && vb.validarCampoVacio(passUser.trim(), "warn", "lblMantUser", "lblPassUsuarioReq")
+                    && vb.validarLongitudCampo(passUser, 4, 10, "warn", "lblMantUser", "lblLongPass")
+                    && vb.validarCampoVacio(passRe.trim(), "warn", "lblMantUser", "lblPassReUsuarioReq")
+                    && vb.validarLongitudCampo(passRe, 4, 10, "warn", "lblMantUser", "lblLongPass")
+                    ) {
+                
+                if (passUser.equals(passRe)) {
+                    
+                    if (uf.revisarUsername(userName) == 0) {
+                      flag = true;
+                      selectedUsuario.setUsername(userName);
+                      selectedUsuario.setNombreuser(nombreUser);
+                      selectedUsuario.setApellidouser(apellidoUser);
+                      selectedUsuario.setPassuser(passUser);
+                      selectedUsuario.setEstadodel("A");
+                      selectedUsuario.setIdrol(rf.find(new BigDecimal(idRol)));
+                    }else{
+                    vb.lanzarMensaje("warn", "lblMantUser", "lblUserRepetido");
+                    }
+                }else{
+                 vb.lanzarMensaje("warn", "lblMantUser", "lblEqualPass");
+                }
+                
+                
+            }
+            
+            
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.controller.UsuarioController.setValores()");
+            e.printStackTrace();
+        }
+        
+        
+        return flag;
+    
+    }
     
     
 }
