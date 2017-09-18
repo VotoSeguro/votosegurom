@@ -61,9 +61,15 @@ public class UsuarioFacade extends AbstractFacade<Tblusuario>{
         return listaEntity;
     }
     
-     public int revisarUsername(String username){
+     public int revisarUsername(String username, String op){
+         String sql = "";
+         if (op.equals("0")) {
+           sql = "select * from Tblusuario where estadodel = 'A' and username= '" + username+"'";  
+         }else{
+           sql = "select * from Tblusuario where estadodel = 'A' and username= '" + username+"' and iduser != " + op;
+         }
          
-     Query q = getEntityManager().createNativeQuery("select * from Tblusuario where estadodel = 'A' and username= '" + username+"'", Tblusuario.class);
+     Query q = getEntityManager().createNativeQuery(sql, Tblusuario.class);
      List<Tblusuario> listaEntity;
         try {
             listaEntity = q.getResultList();

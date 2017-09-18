@@ -19,7 +19,7 @@
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{usuarioController.insert()}" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  actionListener="#{usuarioController.modificar()}"  />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  actionListener="#{usuarioController.validarModificar()}"  />
                             </b:column>
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" look="danger" style="width:100%" actionListener="#{usuarioController.validarEliminar()}"/>
@@ -29,10 +29,17 @@
                             </b:column>
                         </b:row>
                          <b:modal  id="amodal" title="#{bundle['lblMantUser']}" styleClass="modalPseudoClass">
-                            <p>#{bundle['lblRegEliminar']}</p>
+                             <p>#{bundle['lblRegEliminar']}</p>
                             <f:facet name="footer">
                                 <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{usuarioController.cerrarDialogo()}" />
                                 <b:commandButton  ajax="false"  value="#{bundle['lblBtnOk']}" look="primary"  actionListener="#{usuarioController.eliminar()}"/>
+                            </f:facet>
+                        </b:modal>
+                        <b:modal  id="bmodal" title="#{bundle['lblMantUser']}" styleClass="modalPseudoClass2">
+                             <p>#{bundle['lblRegModificar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{usuarioController.cerrarDialogo2()}" />
+                                <b:commandButton  ajax="false"  value="#{bundle['lblbtnModifiar']}" look="primary"  actionListener="#{usuarioController.modificar()}"/>
                             </f:facet>
                         </b:modal>
                     </b:tab>
