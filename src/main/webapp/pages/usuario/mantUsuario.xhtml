@@ -10,6 +10,13 @@
 
     <ui:composition template="/WEB-INF/templates/template.xhtml">
         <ui:define name="content">
+            <script>
+                function noEspacios(obj){
+                    
+                    obj.value = (obj.value + '').replace(' ','');
+                }
+            </script>
+            
             <h:form id="userForm">
                 <b:tabView tabPosition="left" content-style="padding:10px">
                     <b:tab title="" style="background-color: white;">
@@ -51,7 +58,7 @@
                         <b:selectOneMenu id="Rol" value="#{usuarioController.idRol}" label="#{bundle.lblRol}" onchange="ajax:usuarioController.onChange();" ajax="true" update="tblUser" >
                             <f:selectItems  value="#{usuarioController.listaRoles}" var="rol" itemValue="#{rol.idrol}" itemLabel="#{rol.nomrol}" />
                         </b:selectOneMenu>
-                        <b:inputText size="10" id="userName"  label="#{bundle.lblUserName}" value="#{usuarioController.userName}" placeholder="#{bundle.lblNomReqUser}"/>
+                        <b:inputText size="10" id="userName"  label="#{bundle.lblUserName}" value="#{usuarioController.userName}" placeholder="#{bundle.lblNomReqUser}" onkeyup="noEspacios(this);"/>
                         <b:inputText size="10" id="nombreUsuario"  label="#{bundle.lblNombreUsuario}" value="#{usuarioController.nombreUser}" placeholder="#{bundle.lblNombreUsuarioReq }"/>
                         <b:inputText size="10" id="apellidoUsuario"  label="#{bundle.lblApellidoUsuario}" value="#{usuarioController.apellidoUser}" placeholder="#{bundle.lblApellidoUsuarioReq}"/>
                         <b:inputSecret size="10" id="userPass" label="#{bundle.lblPass1}" value="#{usuarioController.passUser}" placeholder="#{bundle.lblPassUsuarioReq}" />

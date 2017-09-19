@@ -107,7 +107,7 @@ public class PartidoController {
             }
         } catch (IOException e) {
             msgFileLogo = vb.getMsgBundle("lblFileUploadError");
-            vb.updateComponent("partidoFormo:msgFileLogo");
+            vb.updateComponent("partidoForm:msgFileLogo");
             if (logo != null) {
                 if (vb.deleteFile(destino + logo.getFileName())) {
                     logo = null;
@@ -155,7 +155,7 @@ public class PartidoController {
             pf.create(selectedPartido);
             limpiar();
             listaPartidos = pf.obtenerPartidos();
-            vb.lanzarMensaje("info", "lblMantMuni","lblAgregarSuccess" );
+            vb.lanzarMensaje("info", "lblMantPart","lblAgregarSuccess" );
         }   
         }else{
         vb.lanzarMensaje("warn", "lblMantPart", "lblPartReqLimp");
@@ -169,7 +169,7 @@ public class PartidoController {
             pf.edit(selectedPartido);
             limpiar();
             listaPartidos = pf.obtenerPartidos();
-            vb.lanzarMensaje("info", "lblMantMuni","lblbtnModifiarSucces" );
+            vb.lanzarMensaje("info", "lblMantPart","lblbtnModifiarSucces" );
         }  
         }else{
         vb.lanzarMensaje("warn", "lblMantPart", "lblPartReqMod");

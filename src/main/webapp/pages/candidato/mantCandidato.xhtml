@@ -1,12 +1,96 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/WEB-INF/templates/template.xhtml">
+        <ui:define name="content">
+            <h:form id="candidatoForm">
+                <b:tabView tabPosition="left" content-style="padding:10px">
+                    <b:tab title="" style="background-color: white;">
+                        <b:row>
+
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{candidatoController.insert()}" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  actionListener="#{candidatoController.validarModificar()}"  />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" look="danger" style="width:100%" actionListener="#{candidatoController.validarEliminar()}"/>
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" actionListener="#{candidatoController.limpiar()}"/>
+                            </b:column>
+                        </b:row>
+                         <b:modal  id="amodal" title="#{bundle['lblMantCand']}" styleClass="modalPseudoClass">
+                             <p>#{bundle['lblRegEliminar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{candidatoController.cerrarDialogo()}" />
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnOk']}" look="primary"  actionListener="#{candidatoController.eliminar()}"/>
+                            </f:facet>
+                        </b:modal>
+                        <b:modal  id="bmodal" title="#{bundle['lblMantCand']}" styleClass="modalPseudoClass2">
+                             <p>#{bundle['lblRegModificar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{candidatoController.cerrarDialogo2()}" />
+                                <b:commandButton  ajax="false"  value="#{bundle['lblbtnModifiar']}" look="primary"  actionListener="#{candidatoController.modificar()}"/>
+                            </f:facet>
+                        </b:modal>
+                    </b:tab>
+                   
+                </b:tabView>
+                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
+                    <b:tab title="#{bundle.lblMantCand}" >
+                        <b:messages/>
+                        <b:selectOneMenu id="Depto" value="#{candidatoController.iddepto}" label="#{bundle.lblDepartamento}"  >
+                            <f:selectItems  value="#{candidatoController.listaDeptos}" var="depto" itemValue="#{depto.iddepto}" itemLabel="#{depto.nomdepto}" />
+                        </b:selectOneMenu>
+                        
+                        <b:selectOneMenu id="Part" value="#{candidatoController.idpartido}" label="#{bundle.lblPartido}" onchange="ajax:candidatoController.onChange();" ajax="true" update="tblCand" >
+                            <f:selectItems  value="#{candidatoController.listaPartidos}" var="part" itemValue="#{part.idpartido}" itemLabel="#{part.nompartido}" />
+                        </b:selectOneMenu>
+                        
+                        <b:inputText size="10" id="nomcand"  label="#{bundle.lblNombreCand}" value="#{candidatoController.nomcand}" placeholder="#{bundle.lblNombreCandReq}" />
+                        <b:inputText size="10" id="apecand"  label="#{bundle.lblApellidoCand}" value="#{candidatoController.apecand}" placeholder="#{bundle.lblApellidoCandReq}"/>
+                        <b:inputText size="10" id="fnaccand" mask="dd/mm/yyyy" label="#{bundle.lblFNacCand}" value="#{candidatoController.fnaccand}" />
+                        
+                        
+                        <p:fileUpload label="#{bundle['lblImageUploadFotoCand']}" invalidFileMessage="#{bundle['lblFileInvalid']}" id="fotoCand" fileUploadListener="#{candidatoController.handleFileUploadFoto}" mode="advanced"
+                                       auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        <b:label id="msgFileFoto" text="#{candidatoController.msgFileFoto}"></b:label>
+                        
+                        <p:separator></p:separator>
+                     <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
+                                  id="tblCand"
+                                  value="#{candidatoController.listaCandidatos}"
+                                         var="cand"
+                                         select="true"
+                                         selectionMode="single"
+                                         onselect="ajax:candidatoController.onSelect(cand);"
+                                         ondeselect="ajax:candidatoController.deSelect();"
+                                         ajax="true"
+                                         update="@form"
+                                         >
+                                <b:dataTableColumn label="#{bundle.lblNombreCand}" value="#{cand.nomcand}"/>
+                                <b:dataTableColumn label="#{bundle.lblApellidoCand}" value="#{cand.apecand}"/>   
+                               <b:dataTableColumn label="#{bundle.lblFNacCand}" value="#{cand.fnaccand}"/> 
+                               <b:dataTableColumn label="#{bundle.lblPartido}" value="#{cand.idpartido.nompartido}"/> 
+                            </b:dataTable>
+                      
+                    </b:tab>
+                </b:tabView>
+
+            </h:form>  
+        </ui:define>
+    </ui:composition>
 </html>
+
+
+
 
