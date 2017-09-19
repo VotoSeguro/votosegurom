@@ -33,7 +33,7 @@ public class CandidatoFacade extends AbstractFacade<Tblcandidato>{
     }
     
     public List<Tblcandidato> obtenerCandidatos(String idpart){
-        String sql = "select * from Tblcandidato where idpartido = " + idpart;
+        String sql = "select * from Tblcandidato where estadodel = 'A' and idpartido = " + idpart;
      Query q = getEntityManager().createNativeQuery(sql, Tblcandidato.class);
      List<Tblcandidato> listaEntity;
         try {

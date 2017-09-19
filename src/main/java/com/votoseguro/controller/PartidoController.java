@@ -223,7 +223,7 @@ public class PartidoController {
                 && vb.validarCampoVacio(logoPartido, "warn", "lblMantPart", "lblLogoReqPart")
                 && vb.validarCampoVacio(banderaPartido, "warn", "lblMantPart", "lblBandReqPart")) {
             flag = true;
-            selectedPartido.setNompartido(nomPartido);
+            selectedPartido.setNompartido(nomPartido.toUpperCase());
             selectedPartido.setLogopartido(logoPartido);
             selectedPartido.setBanderapartido(banderaPartido);
             selectedPartido.setEstadodel("A");

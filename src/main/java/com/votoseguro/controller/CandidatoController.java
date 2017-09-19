@@ -14,6 +14,7 @@ import com.votoseguro.facade.PartidoFacade;
 import com.votoseguro.util.ValidationBean;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -94,6 +95,7 @@ public class CandidatoController {
       fotourl = "";
       foto = null;
       fnaccand = "";
+      msgFileFoto= "";
     }
     
     public void onSelect(Tblcandidato cand){
@@ -118,16 +120,32 @@ public class CandidatoController {
     public void insert(){
         if (selectedCand == null || selectedCand.getIdcandidato() == null) {
             if (setValores()) {
-                System.out.println("uh uh");
+                cf.create(selectedCand);
+                limpiar();
+                vb.lanzarMensaje("info", "lblMantCand", "lblAgregarSuccess");
+                listaCandidatos = cf.obtenerCandidatos(String.valueOf(idpartido));
             }
         }else{
         vb.lanzarMensaje("warn", "lblMantCand", "lblLimpCand");
         }
     }
     
-    public void modificar(){}
+    public void modificar(){
+        
+        cf.edit(selectedCand);
+        limpiar();
+        vb.lanzarMensaje("info", "lblMantCand", "lblbtnModifiarSucces");
+        listaCandidatos = cf.obtenerCandidatos(String.valueOf(idpartido));
+    }
     
-    public void eliminar(){}
+    public void eliminar(){
+    selectedCand.setEstadodel("I");
+    cf.edit(selectedCand);
+    limpiar();
+    vb.lanzarMensaje("info", "lblMantCand", "lblEliminarSuccess");
+    listaCandidatos = cf.obtenerCandidatos(String.valueOf(listaPartidos.get(0).getIdpartido()));
+    
+    }
     
     public void cerrarDialogo() {
         limpiar();
@@ -140,9 +158,24 @@ public class CandidatoController {
         vb.ejecutarJavascript("$('.modalPseudoClass2').modal('hide'); ");
     }
     
-    public void validarEliminar(){}
+    public void validarEliminar(){
+        if (selectedCand != null || selectedCand.getIdcandidato() != null) {
+            vb.ejecutarJavascript("$('.modalPseudoClass').modal('show'); ");
+        }else{
+        vb.lanzarMensaje("error", "lblMantCand", "lblSelectCand");
+        }
     
-    public void validarModificar(){}
+    }
+    
+    public void validarModificar(){
+        if (selectedCand != null || selectedCand.getIdcandidato() != null) {
+            if (setValores()) {
+             vb.ejecutarJavascript("$('.modalPseudoClass2').modal('show'); ");   
+            }
+        }else{
+        vb.lanzarMensaje("error", "lblMantCand", "lblSelectCand");
+        }
+    }
     
     public boolean  setValores(){
     boolean flag = false;
@@ -152,8 +185,18 @@ public class CandidatoController {
                 && vb.validarCampoVacio(apecand.trim(), "warn", "lblMantCand", "lblApellidoCandReq")
                 && vb.validarSoloLetras(apecand, "warn", "lblMantCand", "lblApellidoCandLetras")
                 && vb.validarLongitudCampo(apecand, 4, 30, "warn", "lblMantCand", "lblApellidoCandLong")
-                && vb.validarCampoVacio(fnaccand, "warn", "lblMantCand", "lblFNacCandReq")) {
+                && vb.validarCampoVacio(fnaccand, "warn", "lblMantCand", "lblFNacCandReq")
+                && vb.validarCampoVacio(fotourl, "warn", "lblMantCand", "lblFotoReq")
+                && vb.validarLongitudCampo(fnaccand, 10, 10,"warn" , "lblMantCand","lblFNacCandReq" )
+                && vb.validarFecha(fnaccand,"warn" , "lblMantCand", "lblFechaInvalida")) {
             flag = true;
+            selectedCand.setNomcand(nomcand.toUpperCase());
+            selectedCand.setApecand(apecand.toUpperCase());
+            selectedCand.setFnaccand(fnaccand);
+            selectedCand.setFotourl(fotourl);
+            selectedCand.setIddepto(df.find(new BigDecimal(iddepto)));
+            selectedCand.setIdpartido(pf.find(new BigDecimal(idpartido)));
+            selectedCand.setEstadodel("A");
         }
     
     return flag;
@@ -167,20 +210,20 @@ public class CandidatoController {
                 foto = event.getFile();
                 vb.copyFile(event.getFile().getFileName(), destino, event.getFile().getInputstream());
                 msgFileFoto = vb.getMsgBundle("lblFileSuccess");
-                vb.updateComponent("candidatoForm");
+                vb.updateComponent("candidatoForm:msgFileFoto");
                 fotourl = "/"+SAVE_DIR.substring(0, 7)+"/"+event.getFile().getFileName();
             } else {
                 if (vb.deleteFile(destino + foto.getFileName())) {
                     foto = event.getFile();
                     vb.copyFile(event.getFile().getFileName(), destino, event.getFile().getInputstream());
                     msgFileFoto = vb.getMsgBundle("lblFileSuccess");
-                    vb.updateComponent("candidatoForm");
+                    vb.updateComponent("candidatoForm:msgFileFoto");
                     fotourl = "/"+SAVE_DIR.substring(0, 7)+"/"+event.getFile().getFileName();
                 }
             }
         } catch (IOException e) {
             msgFileFoto = vb.getMsgBundle("lblFileUploadError");
-            vb.updateComponent("candidatoForm");
+            vb.updateComponent("candidatoForm:msgFileFoto");
             if (foto != null) {
                 if (vb.deleteFile(destino + foto.getFileName())) {
                     foto = null;

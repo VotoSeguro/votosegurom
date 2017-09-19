@@ -58,8 +58,9 @@
                         
                         <b:inputText size="10" id="nomcand"  label="#{bundle.lblNombreCand}" value="#{candidatoController.nomcand}" placeholder="#{bundle.lblNombreCandReq}" />
                         <b:inputText size="10" id="apecand"  label="#{bundle.lblApellidoCand}" value="#{candidatoController.apecand}" placeholder="#{bundle.lblApellidoCandReq}"/>
-                        <b:inputText size="10" id="fnaccand" mask="dd/mm/yyyy" label="#{bundle.lblFNacCand}" value="#{candidatoController.fnaccand}" />
                         
+                        <p:outputLabel for="fnaccand" value="#{bundle.lblFNacCand}" /><br></br>
+                        <p:inputMask id="fnaccand" value="#{candidatoController.fnaccand}" mask="99/99/9999"  style="width: 100%;" />
                         
                         <p:fileUpload label="#{bundle['lblImageUploadFotoCand']}" invalidFileMessage="#{bundle['lblFileInvalid']}" id="fotoCand" fileUploadListener="#{candidatoController.handleFileUploadFoto}" mode="advanced"
                                        auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
@@ -80,7 +81,10 @@
                                 <b:dataTableColumn label="#{bundle.lblNombreCand}" value="#{cand.nomcand}"/>
                                 <b:dataTableColumn label="#{bundle.lblApellidoCand}" value="#{cand.apecand}"/>   
                                <b:dataTableColumn label="#{bundle.lblFNacCand}" value="#{cand.fnaccand}"/> 
-                               <b:dataTableColumn label="#{bundle.lblPartido}" value="#{cand.idpartido.nompartido}"/> 
+                               <b:dataTableColumn label="#{bundle.lblDepartamento}" value="#{cand.iddepto.nomdepto}"/> 
+                               <b:dataTableColumn label="#{bundle.lblImageUploadFotoCand}" >
+                                   <p:graphicImage value="#{cand.fotourl}" style="width: 84px;height: 84px;" />
+                               </b:dataTableColumn>
                             </b:dataTable>
                       
                     </b:tab>

@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -122,7 +123,7 @@ public class DeptoController {
                     && vb.validarSoloNumeros(maxCand, "warn", "lblMantDepto", "lblNumCDeptoNum")
                     && vb.validarLongitudCampo(maxCand, 1, 2, "warn", "lblMantDepto", "lblNumCDeptoLong")) {
                 flag = true;
-                depto.setNomdepto(nomDepto);
+                depto.setNomdepto(nomDepto.toUpperCase());
                 depto.setMaxcand(new BigInteger(maxCand));
             }
         } catch (Exception e) {

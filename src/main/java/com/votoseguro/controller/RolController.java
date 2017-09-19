@@ -122,7 +122,7 @@ public class RolController {
                     && vb.validarSoloLetras(nomRol, "warn", "lblMantRol", "lblNomDRolLetras")
                     && vb.validarLongitudCampo(nomRol, 4, 30, "warn", "lblMantRol", "lblLongNomRol")) {
                 flag = true;
-                rol.setNomrol(nomRol);
+                rol.setNomrol(nomRol.toUpperCase());
             }
         } catch (Exception e) {
             System.out.println("com.votoseguro.controller.RolController.setValores()");

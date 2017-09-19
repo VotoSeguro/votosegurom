@@ -145,7 +145,7 @@ public class MunicipioController {
                     && vb.validarSoloLetras(nomMuni, "warn", "lblMantMuni", "lblNomDMuniLetras")
                     && vb.validarLongitudCampo(nomMuni, 4, 30, "warn", "lblMantMuni", "lblLongNomMuni")) {
                 flag = true;
-                muni.setNommuni(nomMuni);
+                muni.setNommuni(nomMuni.toUpperCase());
             }
         } catch (Exception e) {
             System.out.println("com.votoseguro.controller.MunicipioController.setValores()");

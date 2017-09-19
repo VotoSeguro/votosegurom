@@ -190,8 +190,8 @@ public class UsuarioController {
                     if (uf.revisarUsername(userName, op) == 0) {
                         flag = true;
                         selectedUsuario.setUsername(userName);
-                        selectedUsuario.setNombreuser(nombreUser);
-                        selectedUsuario.setApellidouser(apellidoUser);
+                        selectedUsuario.setNombreuser(nombreUser.toUpperCase());
+                        selectedUsuario.setApellidouser(apellidoUser.toUpperCase());
                         selectedUsuario.setPassuser(passUser);
                         selectedUsuario.setEstadodel("A");
                         selectedUsuario.setIdrol(rf.find(new BigDecimal(idRol)));
