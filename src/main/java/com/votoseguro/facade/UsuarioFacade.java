@@ -5,7 +5,7 @@
  */
 package com.votoseguro.facade;
 
-import com.votoseguro.entity.Tblrol;
+
 import com.votoseguro.entity.Tblusuario;
 import java.util.ArrayList;
 import java.util.List;

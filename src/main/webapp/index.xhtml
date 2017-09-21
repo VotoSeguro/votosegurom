@@ -4,14 +4,18 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         Hello from Facelets
-<h:graphicImage id="banner"  
-                    value="/uploads/logoarena2.jpg" />
+        <ui:repeat value="#{permisoController.listaPermiso}" var="perm">
+            <h:link value="#{perm.nombrepermiso}" outcome="#{perm.urlpermiso}" /> 
+        <br></br>
+        </ui:repeat>
+        
        
     </h:body>
 </html>
