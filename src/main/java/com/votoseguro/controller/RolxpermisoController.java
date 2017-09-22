@@ -109,12 +109,20 @@ public class RolxpermisoController {
 
         if (SelectedRolxpermiso  == null || SelectedRolxpermiso.getIdrolxpermiso() == null) {
             if (setValores()) {
-                rpf.create(SelectedRolxpermiso);
+                
+                if (rpf.revisarRepetido(String.valueOf(SelectedRolxpermiso.getIdrol().getIdrol()),
+                        String.valueOf(SelectedRolxpermiso.getIdpermiso().getIdpermiso())) == 0) {
+                   rpf.create(SelectedRolxpermiso);
                 listaRolesxpermiso = rpf.obtenerPermisosxrol(idRol);
                 limpiar();
 
                 vb.lanzarMensaje("info", "lblMantRolxperm", "lblAgregarSuccess");
-
+ 
+                }else{
+                 vb.lanzarMensaje("error", "lblMantRolxperm", "lblRolxpermRepetido");
+                }
+                
+                
             }
         } else {
             vb.lanzarMensaje("warn", "lblMantRolxperm", "lblLimpRolxperm");
@@ -162,7 +170,15 @@ public class RolxpermisoController {
     public void validarModificar() {
         if (SelectedRolxpermiso != null && SelectedRolxpermiso.getIdrolxpermiso() != null) {
             if (setValores()) {
-                vb.ejecutarJavascript("$('.modalPseudoClass2').modal('show');");
+                if (rpf.revisarRepetido(String.valueOf(SelectedRolxpermiso.getIdrol().getIdrol()),
+                        String.valueOf(SelectedRolxpermiso.getIdpermiso().getIdpermiso()),
+                        String.valueOf(SelectedRolxpermiso.getIdrolxpermiso())) == 0) {
+                    vb.ejecutarJavascript("$('.modalPseudoClass2').modal('show');");
+                }else{
+                vb.lanzarMensaje("error", "lblMantRolxperm", "lblRolxpermRepetido");
+                }
+                
+                
             }
 
         } else {
@@ -174,12 +190,12 @@ public class RolxpermisoController {
    public boolean setValores() {
         boolean flag = false;
         try {
-            if (flag) {
+            
                 flag = true;
-                SelectedRolxpermiso.setIdrol(rf.find(idRol));
-                SelectedRolxpermiso.setIdpermiso(pf.find(idPermiso));
+                SelectedRolxpermiso.setIdrol(rf.find(new BigDecimal(idRol)));
+                SelectedRolxpermiso.setIdpermiso(pf.find(new BigDecimal(idPermiso)));
                 SelectedRolxpermiso.setNivelpermiso(new BigInteger(nivelPermiso));
-            }
+            
 
         } catch (Exception e) {
             System.out.println("com.votoseguro.controller.UsuarioController.setValores()");

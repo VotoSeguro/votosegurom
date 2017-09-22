@@ -43,4 +43,34 @@ public class RolxpermisoFacade extends AbstractFacade<Tblrolxpermiso>{
         return listaEntity;
     }
     
+     public int revisarRepetido(String idrol, String idperm){
+         String sql = "select * from Tblrolxpermiso where idrol = " + idrol + " and idpermiso = " + idperm;
+     Query q = getEntityManager().createNativeQuery(sql, Tblrolxpermiso.class);
+     List<Tblrolxpermiso> listaEntity;
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntity = new ArrayList<Tblrolxpermiso>();
+            }
+        } catch (Exception e) {
+            listaEntity = new ArrayList<Tblrolxpermiso>();
+        }
+        return listaEntity.size();
+    }
+    
+     public int revisarRepetido(String idrol, String idperm , String idrolxperm){
+         String sql = "select * from Tblrolxpermiso where idrol = " + idrol 
+                 + " and idpermiso = " + idperm +" and idrolxpermiso != " + idrolxperm;
+     Query q = getEntityManager().createNativeQuery(sql, Tblrolxpermiso.class);
+     List<Tblrolxpermiso> listaEntity;
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntity = new ArrayList<Tblrolxpermiso>();
+            }
+        } catch (Exception e) {
+            listaEntity = new ArrayList<Tblrolxpermiso>();
+        }
+        return listaEntity.size();
+    }
 }

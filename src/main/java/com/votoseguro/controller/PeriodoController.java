@@ -85,16 +85,17 @@ public class PeriodoController {
                     && vb.validarLongitudCampo(anio, 4, 4, "warn", "lblMantPer", "lblAnioPerLong")
                     && vb.validarCampoVacio(fechainicio, "warn", "lblMantPer", "lblFechaPer")
                     && vb.validarFecha(fechainicio, "warn", "lblMantPer", "lblFechaPerVal")) {
-                if (pf.revisarActivo() == 0) {
-                    flag = true;
-                    selectedPeriodo.setAnio(new BigInteger(anio));
-                    selectedPeriodo.setEstadodel("A");
+
+                flag = true;
+                selectedPeriodo.setAnio(new BigInteger(anio));
+                selectedPeriodo.setEstadodel("A");
+                if (selectedPeriodo.getEstadoper() == null) {
                     selectedPeriodo.setEstadoper("ACTIVO");
-                    selectedPeriodo.setFechainicio(fechainicio);
-                    selectedPeriodo.setNomper(nomper);
-                } else {
-                    vb.lanzarMensaje("warn", "lblMantPer", "lblPerActivo");
                 }
+                
+                selectedPeriodo.setFechainicio(fechainicio);
+                selectedPeriodo.setNomper(nomper);
+                selectedPeriodo.setFechafin(" ");
 
             }
 
@@ -108,14 +109,18 @@ public class PeriodoController {
     }
 
     public void insert() {
-        Tblperiodo periodo = new Tblperiodo();
+
         if (selectedPeriodo == null || selectedPeriodo.getIdperiodo() == null) {
             if (setValores()) {
+                if (pf.revisarActivo() == 0) {
+                    pf.create(selectedPeriodo);
+                    vb.lanzarMensaje("info", "lblMantPer", "lblAgregarSuccess");
+                    listaPeriodo = pf.obtenerPeriodos();
+                    limpiar();
+                } else {
+                    vb.lanzarMensaje("warn", "lblMantPer", "lblPerActivo");
+                }
 
-                pf.create(periodo);
-                vb.lanzarMensaje("info", "lblMantPer", "lblAgregarSuccess");
-                listaPeriodo = pf.obtenerPeriodos();
-                limpiar();
             }
         } else {
 
@@ -150,10 +155,12 @@ public class PeriodoController {
         listaPeriodo = pf.obtenerPeriodos();
         vb.ejecutarJavascript("$('.modalPseudoClass2').modal('hide'); ");
     }
-public void cerrarDialogo3() {
+
+    public void cerrarDialogo3() {
         limpiar();
         vb.ejecutarJavascript("$('.modalPseudoClass3').modal('hide'); ");
     }
+
     public void validarEliminar() {
         if (selectedPeriodo != null && selectedPeriodo.getIdperiodo() != null) {
             vb.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
@@ -177,17 +184,18 @@ public void cerrarDialogo3() {
     }
 
     public void terminar() {
+        selectedPeriodo.setEstadoper("TERMINADO");
+        pf.edit(selectedPeriodo);
         limpiar();
+        vb.lanzarMensaje("info", "lblMantPer", "lblPerTerSuccess");
         listaPeriodo = pf.obtenerPeriodos();
     }
 
     public void terminarPer() {
         if (selectedPeriodo != null && selectedPeriodo.getIdperiodo() != null) {
             if (selectedPeriodo.getEstadoper().equals("ACTIVO")) {
-                selectedPeriodo.setEstadoper("TERMINADO");
-                pf.edit(selectedPeriodo);
-                vb.lanzarMensaje("info", "lblMantPer", "lblPerTerSuccess");
-                //llamar modal
+
+                vb.ejecutarJavascript("$('.modalPseudoClass3').modal('show');");
             } else {
                 vb.lanzarMensaje("error", "lblMantPer", "lblPerReqActivo");
             }

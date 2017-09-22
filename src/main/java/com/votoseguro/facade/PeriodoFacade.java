@@ -50,7 +50,7 @@ public class PeriodoFacade extends AbstractFacade<Tblperiodo>{
     public int revisarActivo(){
       
      Query q = getEntityManager().createNativeQuery("select * from tblperiodo where"
-             + " estadoper = 'ACTIVO'", Tblperiodo.class);
+             + " estadoper = 'ACTIVO' and estadodel = 'A'", Tblperiodo.class);
      List<Tblperiodo> listaEntity;
         try {
             listaEntity = q.getResultList();
@@ -62,4 +62,6 @@ public class PeriodoFacade extends AbstractFacade<Tblperiodo>{
         }
         return listaEntity.size();
     }
+    
+    
 }
