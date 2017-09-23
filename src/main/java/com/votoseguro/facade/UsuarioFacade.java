@@ -81,5 +81,25 @@ public class UsuarioFacade extends AbstractFacade<Tblusuario>{
         }
         return listaEntity.size();
     }
+     
+      public Tblusuario loguear(String username,String password){
+          String sql = "select * from Tblusuario where estadodel = 'A' and username = " + username +" and passuser = " + password ;
+     Query q = getEntityManager().createNativeQuery(sql, Tblusuario.class);
+     List<Tblusuario> listaEntity;
+     Tblusuario user = null;
+        try {
+            listaEntity = q.getResultList();
+            
+            user = listaEntity.get(0);
+            if (listaEntity.isEmpty()) {
+                listaEntity = new ArrayList<Tblusuario>();
+            }
+        } catch (Exception e) {
+            listaEntity = new ArrayList<Tblusuario>();
+        }
+        
+        
+        return user;
+    }
     
 }
