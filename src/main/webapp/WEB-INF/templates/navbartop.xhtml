@@ -24,8 +24,10 @@
                 <b:navLink></b:navLink>
                 <b:navLink header="Nav header"></b:navLink>
                 <b:navLink value="Separated link" href="#"></b:navLink>-->
+                
                 <ui:repeat value="#{loginMant.logedUser.idrol.tblrolxpermisoList}" var="per" >
-                    <b:navLink value="#{per.idpermiso.nombrepermiso}" href="#{request.contextPath.concat('/').concat(per.idpermiso.urlpermiso)}" onclick="ajax:loginMant.setearNivel(per);"  ></b:navLink>
+                    <b:navLink value="#{per.idpermiso.nombrepermiso}" href="#{request.contextPath.concat('/').concat(per.idpermiso.urlpermiso)}"  onclick="ajax:loginMant.setearNivel(per);"  >
+                    </b:navLink>
                     
                 </ui:repeat>
                 

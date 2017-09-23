@@ -17,19 +17,19 @@
                         <b:row>
 
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" rendered="#{Integer.valueOf(loginMant.nivelpermiso) > 3}" look="info" style="width:100%" actionListener="#{periodoController.insert()}" />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" rendered="#{loginMant.nivelpermiso > 3}" look="info" style="width:100%" actionListener="#{periodoController.insert()}" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{Integer.valueOf(loginMant.nivelpermiso) > 3}" look="warning" style="width:100%"  actionListener="#{periodoController.validarModificar()}"  />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{loginMant.nivelpermiso > 3}" look="warning" style="width:100%"  actionListener="#{periodoController.validarModificar()}"  />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{Integer.valueOf(loginMant.nivelpermiso) > 3}" look="danger" style="width:100%" actionListener="#{periodoController.validarEliminar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{loginMant.nivelpermiso > 3}" look="danger" style="width:100%" actionListener="#{periodoController.validarEliminar()}"/>
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" rendered="#{Integer.valueOf(loginMant.nivelpermiso) > 3}" look="success" style="width:100%" actionListener="#{periodoController.limpiar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" rendered="#{loginMant.nivelpermiso > 3}" look="success" style="width:100%" actionListener="#{periodoController.limpiar()}"/>
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnTerminar']}" rendered="#{Integer.valueOf(loginMant.nivelpermiso) > 3}" style="width:100%;background-color: #660000;color: #f0f0f0" actionListener="#{periodoController.terminarPer()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnTerminar']}" rendered="#{loginMant.nivelpermiso > 3}" style="width:100%;background-color: #660000;color: #f0f0f0" actionListener="#{periodoController.terminarPer()}"/>
                             </b:column>
                         </b:row>
                          <b:modal  id="amodal" title="#{bundle['lblMantPer']}" styleClass="modalPseudoClass">
@@ -72,7 +72,7 @@
                      <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
                                   id="tblUser"
                                   value="#{periodoController.listaPeriodo}"
-                                  rendered="#{Integer.valueOf(loginMant.nivelpermiso) > 0}"
+                                  rendered="#{loginMant.nivelpermiso > 0}"
                                          var="per"
                                          select="true"
                                          selectionMode="single"
