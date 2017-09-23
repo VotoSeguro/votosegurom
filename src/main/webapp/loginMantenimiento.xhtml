@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/WEB-INF/templates/template.xhtml">
+        <ui:define name="content">
+            <c:if test="#{!loginMant.loggedIn}">
+             <h:form id="loginForm">
+                <b:panel>
+                   <b:container fluid="true">
+                       <b:row>
+                           <b:column span="12">
+                               <b:well style-class="danger" >SOLO PERSONAL AUTORIZADO</b:well>
+                           </b:column>
+                       </b:row>
+                <b:row>
+                    <b:column medium-screen="2">
+                        <h:outputText value="Username"/>
+                    </b:column>
+                    <b:column medium-screen="4">
+                        <b:inputText placeholder="Username" value="#{loginMant.userName}" />
+                    </b:column>
+                    <b:column medium-screen="6">
+                        <b:messages/>
+                    </b:column>
+                </b:row>
+                     
+                     <b:row>
+                         <b:column medium-screen="2" > <h:outputText value="Password"/></b:column>
+                         <b:column medium-screen="4"> <b:inputSecret   value="#{loginMant.userpass}" /></b:column>
+                         <b:column medium-screen="6" ></b:column>
+                     </b:row>
+                     <b:row>
+                         <b:column span="2" offset="2" ><b:commandButton value="login" look="primary" style="width:100%" action="#{loginMant.logear()}" icon="chevron-right" iconAlign="right" /></b:column>
+                         <b:column span="2" ><b:commandButton value="password forgotten" look="danger" style="width:100%" /></b:column>
+                     </b:row>
+            </b:container>  
+                    
+                    
+                </b:panel>
+                
+            </h:form>
+            </c:if>
+        </ui:define>
+    </ui:composition>
+</html>
+
+
+
+
+

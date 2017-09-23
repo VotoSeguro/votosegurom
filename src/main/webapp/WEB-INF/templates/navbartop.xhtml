@@ -4,28 +4,53 @@
   xmlns:h="http://java.sun.com/jsf/html"
   xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:f="http://java.sun.com/jsf/core"
-  xmlns:b="http://bootsfaces.net/ui">
+  xmlns:b="http://bootsfaces.net/ui"
+  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
   <ui:remove>
     <!--
 	    	Hint to editors: The menus follow the Chicago style of capitalization. Please capitalize everything but the "smaller" words. 
 	     -->
   </ui:remove>
-    <b:navBar brand="Brand" brandHref="#" inverse="true" fixed="top">
-        <b:navbarLinks>
+    <b:navBar brand="Brand" brandHref="#" inverse="true" fixed="top" >
+        <b:navbarLinks  >
             <b:navLink value="Link" href="#"></b:navLink>
             <b:navLink value="Link" href="#"></b:navLink>
-            <b:dropMenu value="Dropdown">
-                <b:navLink value="Action" href="#"></b:navLink>
+            
+            <b:dropMenu value="#{bundle.lblGestionar}" rendered="#{loginMant.loggedIn}" >
+                <!--<b:navLink value="Action" href="#"></b:navLink>
                 <b:navLink value="Another action" href="#"></b:navLink>
                 <b:navLink value="Something else here" href="#"></b:navLink>
                 <b:navLink></b:navLink>
                 <b:navLink header="Nav header"></b:navLink>
-                <b:navLink value="Separated link" href="#"></b:navLink>
-                <b:navLink value="One more separated link" href="#"></b:navLink>
-            </b:dropMenu>
+                <b:navLink value="Separated link" href="#"></b:navLink>-->
+                <ui:repeat value="#{loginMant.logedUser.idrol.tblrolxpermisoList}" var="per" >
+                    <b:navLink value="#{per.idpermiso.nombrepermiso}" href="#{request.contextPath.concat('/').concat(per.idpermiso.urlpermiso)}" onclick="ajax:loginMant.setearNivel(per);"  ></b:navLink>
+                    
+                </ui:repeat>
+                
+                
+            </b:dropMenu>                
+            
         </b:navbarLinks>
         <h:form styleClass="navbar-form navbar-right">
+            <b:navbarLinks rendered="#{loginMant.loggedIn}">
+                <b:dropMenu value="#{loginMant.nombreuser}">
+                    <b:column col-md="12"  style="text-align: center;">
+                        <h:panelGrid columns="1">
+                            
+                            <h:outputText value="#{loginMant.userName}" style="color:green;"></h:outputText>
+
+                            <b:commandButton size="sm" type="submit" icon-rotate="l" iconAwesome="thumbs-up"
+                                             value="#{bundle['lblBtnCerrarSession']}" action="#{loginMant.logout()}"
+                                             look="danger" title="#{bundle['lblBtnCerrarSession']}" />
+                        </h:panelGrid>
+                    </b:column>
+                </b:dropMenu>
+            </b:navbarLinks>
+        </h:form>
+        <c:if test="#{!loginMant.loggedIn}">
+         <h:form styleClass="navbar-form navbar-right">
             <div class="form-group">
                 <b:inputText placeholder="Email" fieldSize="sm"/>
                 <!--input type="text" class="form-control" placeholder="Search"/-->
@@ -36,6 +61,7 @@
             #{' '}
             <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
         </h:form>
+        </c:if>
     </b:navBar>
 
 </ui:fragment>

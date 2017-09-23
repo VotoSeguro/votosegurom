@@ -26,10 +26,10 @@
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{usuarioController.insert()}" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  actionListener="#{usuarioController.validarModificar()}"  />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{loginMant.nivelpermiso > 2}" look="warning" style="width:100%"  actionListener="#{usuarioController.validarModificar()}"  />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" look="danger" style="width:100%" actionListener="#{usuarioController.validarEliminar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{loginMant.nivelpermiso > 3}" look="danger" style="width:100%" actionListener="#{usuarioController.validarEliminar()}"/>
                             </b:column>
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" actionListener="#{usuarioController.limpiar()}"/>
@@ -67,6 +67,7 @@
                      <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
                                   id="tblUser"
                                   value="#{usuarioController.listaUsuarios}"
+                                  rendered="#{loginMant.nivelpermiso > 1}"
                                          var="user"
                                          select="true"
                                          selectionMode="single"

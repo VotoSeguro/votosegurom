@@ -16,16 +16,19 @@
                         <b:row>
 
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{permisoController.insert()}" />
+                                
+                                <c:if test="#{loginMant.nivelpermiso > 3}">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}"  look="info" style="width:100%" actionListener="#{permisoController.insert()}" />
+                            </c:if>
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  actionListener="#{permisoController.validarModificar()}"  />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{loginMant.nivelpermiso > 3}" look="warning" style="width:100%"  actionListener="#{permisoController.validarModificar()}"  />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" look="danger" style="width:100%" actionListener="#{permisoController.validarEliminar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{loginMant.nivelpermiso > 3}" look="danger" style="width:100%" actionListener="#{permisoController.validarEliminar()}"/>
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" actionListener="#{permisoController.limpiar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" rendered="#{loginMant.nivelpermiso > 3}" look="success" style="width:100%" actionListener="#{permisoController.limpiar()}"/>
                             </b:column>
                         </b:row>
                          <b:modal  id="amodal" title="#{bundle['lblMantPerm']}" styleClass="modalPseudoClass">
@@ -56,6 +59,7 @@
                         <p:separator></p:separator>
                      <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
                                   id="tblPerm"
+                                  rendered="#{loginMant.nivelpermiso > 0}"
                                   value="#{permisoController.listaPermiso}"
                                          var="perm"
                                          select="true"

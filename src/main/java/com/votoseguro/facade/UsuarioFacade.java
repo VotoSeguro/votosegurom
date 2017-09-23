@@ -83,7 +83,7 @@ public class UsuarioFacade extends AbstractFacade<Tblusuario>{
     }
      
       public Tblusuario loguear(String username,String password){
-          String sql = "select * from Tblusuario where estadodel = 'A' and username = " + username +" and passuser = " + password ;
+          String sql = "select * from Tblusuario where estadodel = 'A' and username = '" + username +"' and passuser = '" + password+"'" ;
      Query q = getEntityManager().createNativeQuery(sql, Tblusuario.class);
      List<Tblusuario> listaEntity;
      Tblusuario user = null;
