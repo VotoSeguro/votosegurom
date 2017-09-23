@@ -89,7 +89,7 @@ public class LoginMantController implements Serializable {
                 .getExternalContext().getSession(false);
         session.invalidate();
         
-        return "/loginMantenimiento.xhtml";
+        return "/loginMantenimiento.xhtml?faces-redirect=true";
     }
     
    public void setearNivel(Tblrolxpermiso rp){
