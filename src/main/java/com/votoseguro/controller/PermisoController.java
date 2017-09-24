@@ -4,16 +4,20 @@
  * and open the template in the editor.
  */
 package com.votoseguro.controller;
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import com.votoseguro.entity.Tblpermiso;
+import com.votoseguro.entity.Tblrolxpermiso;
 import com.votoseguro.facade.PermisoFacade;
 import com.votoseguro.util.ValidationBean;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import lombok.Getter;
 import lombok.Setter;
 /**
@@ -47,10 +51,17 @@ public class PermisoController {
     @Getter
     String nombrepermiso = "";
     
+    @ManagedProperty(value="#{loginMant}")
+    private @Getter @Setter LoginMantController  login;
+    
+    private @Getter @Setter String nivelPermiso = "";
+    
     @PostConstruct
     public void init() {
-
+       
         listaPermiso = pf.obtenerPermisos();
+        nivelPermiso= asignarNivel("mantpermiso.xhtml");
+        
 
     }
     
@@ -162,5 +173,18 @@ public class PermisoController {
 
         return flag;
 
+    }
+    
+    
+     public String asignarNivel(String keyword){
+        String res = "";
+    for (Tblrolxpermiso t : login.getLogedUser().getIdrol().getTblrolxpermisoList()) {
+            if (t.getIdpermiso().getUrlpermiso().toLowerCase().contains(keyword)) {
+                res = String.valueOf(t.getNivelpermiso());
+                
+               
+            }
+        }
+    return res;
     }
 }

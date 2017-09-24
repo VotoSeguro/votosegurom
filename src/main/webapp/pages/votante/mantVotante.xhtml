@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/WEB-INF/templates/template.xhtml">
+        <ui:define name="content">
+            
+            
+            <h:form id="votanteForm">
+                <b:tabView tabPosition="left" content-style="padding:10px">
+                    <b:tab title="" style="background-color: white;">
+                        <b:row>
+
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{votanteController.insert()}" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{loginMant.nivelpermiso > 2}" look="warning" style="width:100%"  actionListener="#{votanteController.validarModificar()}"  />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{loginMant.nivelpermiso > 3}" look="danger" style="width:100%" actionListener="#{votanteController.validarEliminar()}"/>
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" actionListener="#{votanteController.limpiar()}"/>
+                            </b:column>
+                        </b:row>
+                         <b:modal  id="amodal" title="#{bundle['lblMantVot']}" styleClass="modalPseudoClass">
+                             <p>#{bundle['lblRegEliminar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{votanteController.cerrarDialogo()}" />
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnOk']}" look="primary"  actionListener="#{votanteController.eliminar()}"/>
+                            </f:facet>
+                        </b:modal>
+                        <b:modal  id="bmodal" title="#{bundle['lblMantVot']}" styleClass="modalPseudoClass2">
+                             <p>#{bundle['lblRegModificar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{votanteController.cerrarDialogo2()}" />
+                                <b:commandButton  ajax="false"  value="#{bundle['lblbtnModifiar']}" look="primary"  actionListener="#{votanteController.modificar()}"/>
+                            </f:facet>
+                        </b:modal>
+                    </b:tab>
+                   
+                </b:tabView>
+                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
+                    <b:tab title="#{bundle.lblMantVot}" >
+                        <b:messages/>
+                        <b:selectOneMenu id="Muni" value="#{votanteController.idMuni}" label="#{bundle.lblMuni}" onchange="ajax:votanteController.onChange();" ajax="true" update="tblVot" >
+                            <f:selectItems  value="#{votanteController.listaMunicipios}" var="muni" itemValue="#{muni.idmuni}" itemLabel="#{muni.nommuni}" />
+                        </b:selectOneMenu>
+                        <b:inputText size="10" id="nombrev"  label="#{bundle.lblNomVot}" value="#{votanteController.nombrev}" placeholder="#{bundle.lblNomReqVot}" />
+                        <b:inputText size="10" id="apelidov"  label="#{bundle.lblApeVot}" value="#{votanteController.apellidov}" placeholder="#{bundle.lblApeReqVot }"/>
+                       
+                        <p:separator></p:separator>
+                     <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
+                                  id="tblUser"
+                                  value="#{usuarioController.listaUsuarios}"
+                                  rendered="#{loginMant.nivelpermiso > 1}"
+                                         var="user"
+                                         select="true"
+                                         selectionMode="single"
+                                         onselect="ajax:usuarioController.onSelect(user);"
+                                         ondeselect="ajax:usuarioController.deSelect();"
+                                         ajax="true"
+                                         update="@form"
+                                         >
+                                <b:dataTableColumn label="#{bundle.lblUserName}" value="#{user.username}"/>
+                                <b:dataTableColumn label="#{bundle.lblNombreUsuario}" value="#{user.nombreuser}"/>   
+                               <b:dataTableColumn label="#{bundle.lblApellidoUsuario}" value="#{user.apellidouser}"/> 
+                               <b:dataTableColumn label="#{bundle.lblRol}" value="#{user.idrol.nomrol}"/> 
+                            </b:dataTable>
+                      
+                    </b:tab>
+                </b:tabView>
+
+            </h:form>  
+        </ui:define>
+    </ui:composition>
+</html>
+
+
+
+
+

@@ -5,6 +5,8 @@
  */
 package com.votoseguro.util;
 
+import com.votoseguro.controller.LoginMantController;
+import com.votoseguro.entity.Tblrolxpermiso;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,7 +30,10 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.primefaces.context.RequestContext;
 
@@ -38,6 +43,9 @@ import org.primefaces.context.RequestContext;
  */
 @Stateless
 public class ValidationBean {
+    
+    
+    
 
     public boolean validarCampoVacio(String c, String tipoMsg, String tituloMsg, String descMsg) {
         boolean flag;
@@ -302,4 +310,8 @@ public class ValidationBean {
         }
         return flag;
     }
+    
+    
+    
+   
 }

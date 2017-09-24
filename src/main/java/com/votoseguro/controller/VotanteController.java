@@ -193,15 +193,39 @@ public class VotanteController {
 
     }
     
-    public boolean setValores(String op) {
+    public boolean setValores() {
         boolean flag = false;
         try {
-            if (flag) {
-
-               
-
-                    
-                        flag = true;
+            if (vb.validarCampoVacio(nombrev.trim(), "warn", "lblMantVot", "lblNomReqVot")
+                    && vb.validarLongitudCampo(nombrev, 4, 50, "warn", "lblMantVot", "lblLongVotName")
+                    && vb.validarSoloLetras(nombrev,  "warn", "lblMantVot", "lblLetrasVotName")
+                    && vb.validarCampoVacio(apellidov.trim(), "warn", "lblMantVot", "lblApeReqVot")
+                    && vb.validarLongitudCampo(apellidov, 4, 50, "warn", "lblMantVot", "lblLongVotApe")
+                    && vb.validarSoloLetras(apellidov,  "warn", "lblMantVot", "lblLetrasVotApe")
+                    && vb.validarLongitudCampo(dui.trim(), 10, 10, "warn", "lblMantVot", "lblLongVotDui")
+                    && vb.validarCampoVacio(dui.trim(), "warn", "lblMantVot", "lblDuiReqVot")
+                    && vb.validarCampoVacio(respuesta.trim(), "warn", "lblMantVot", "lblRespReqVot")
+                    && vb.validarLongitudCampo(respuesta, 4, 50, "warn", "lblMantVot", "lblLongVotResp")
+                    && vb.validarSoloLetras(respuesta,  "warn", "lblMantVot", "lblLetrasVotResp")
+                    && vb.validarCampoVacio(fnac, "warn", "lblMantVot", "lblFnacReqVot")
+                    && vb.validarLongitudCampo(fnac, 10, 10, "warn", "lblMantVot", "lblLongVotFnac")
+                    && vb.validarCampoVacio(genero, "warn", "lblMantVot", "lblGenReqVot")
+                    && vb.validarCampoVacio(passvotante, "warn", "lblMantVot", "lblPassReqVot")
+                    && vb.validarLongitudCampo(passvotante, 4, 8, "warn", "lblMantVot", "lblLongVotPassre")
+                    && vb.validarCampoVacio(passvotantere, "warn", "lblMantVot", "lblPassreReqVot")
+                    && vb.validarLongitudCampo(passvotantere, 4, 8, "warn", "lblMantVot", "lblLongVotPassre")
+                    ) {
+                                 if (passvotante.equals(passvotantere)) {
+                     flag = true;
+                      selectedVotante.setNombrev(nombrev);
+                      selectedVotante.setApellidov(apellidov);
+                      selectedVotante.setDui(dui);
+                      selectedVotante.setPregunta(pregunta);
+                      selectedVotante.setRespuesta(respuesta);
+                      selectedVotante.setPassvotante(passvotante);
+                      selectedVotante.setGenero(genero);
+                      selectedVotante.setFnac(fnac);
+                      selectedVotante.setEstadodel("A");
                         /*selectedUsuario.setUsername(userName);
                         selectedUsuario.setNombreuser(nombreUser.toUpperCase());
                         selectedUsuario.setApellidouser(apellidoUser.toUpperCase());
@@ -209,6 +233,13 @@ public class VotanteController {
                         selectedUsuario.setEstadodel("A");
                         selectedUsuario.setIdrol(rf.find(new BigDecimal(idRol)));
                    */
+                }else{
+                                     vb.lanzarMensaje("warn", "lblMantVot", "lblPasEqualsVot");
+                                 }
+               
+
+                    
+                       
                
 
             }
