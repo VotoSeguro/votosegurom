@@ -10,8 +10,8 @@
 
     <ui:composition template="/WEB-INF/templates/template.xhtml">
         <ui:define name="content">
-            
-            
+
+
             <h:form id="votanteForm">
                 <b:tabView tabPosition="left" content-style="padding:10px">
                     <b:tab title="" style="background-color: white;">
@@ -21,31 +21,31 @@
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{votanteController.insert()}" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{loginMant.nivelpermiso > 2}" look="warning" style="width:100%"  actionListener="#{votanteController.validarModificar()}"  />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  actionListener="#{votanteController.validarModificar()}"  />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{loginMant.nivelpermiso > 3}" look="danger" style="width:100%" actionListener="#{votanteController.validarEliminar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}"  look="danger" style="width:100%" actionListener="#{votanteController.validarEliminar()}"/>
                             </b:column>
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" actionListener="#{votanteController.limpiar()}"/>
                             </b:column>
                         </b:row>
-                         <b:modal  id="amodal" title="#{bundle['lblMantVot']}" styleClass="modalPseudoClass">
-                             <p>#{bundle['lblRegEliminar']}</p>
+                        <b:modal  id="amodal" title="#{bundle['lblMantVot']}" styleClass="modalPseudoClass">
+                            <p>#{bundle['lblRegEliminar']}</p>
                             <f:facet name="footer">
                                 <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{votanteController.cerrarDialogo()}" />
                                 <b:commandButton  ajax="false"  value="#{bundle['lblBtnOk']}" look="primary"  actionListener="#{votanteController.eliminar()}"/>
                             </f:facet>
                         </b:modal>
                         <b:modal  id="bmodal" title="#{bundle['lblMantVot']}" styleClass="modalPseudoClass2">
-                             <p>#{bundle['lblRegModificar']}</p>
+                            <p>#{bundle['lblRegModificar']}</p>
                             <f:facet name="footer">
                                 <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{votanteController.cerrarDialogo2()}" />
                                 <b:commandButton  ajax="false"  value="#{bundle['lblbtnModifiar']}" look="primary"  actionListener="#{votanteController.modificar()}"/>
                             </f:facet>
                         </b:modal>
                     </b:tab>
-                   
+
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle.lblMantVot}" >
@@ -55,26 +55,48 @@
                         </b:selectOneMenu>
                         <b:inputText size="10" id="nombrev"  label="#{bundle.lblNomVot}" value="#{votanteController.nombrev}" placeholder="#{bundle.lblNomReqVot}" />
                         <b:inputText size="10" id="apelidov"  label="#{bundle.lblApeVot}" value="#{votanteController.apellidov}" placeholder="#{bundle.lblApeReqVot }"/>
-                       
+                        <p:outputLabel for="dui" value="#{bundle.lblVotDui}" /><br></br>
+                        <p:inputMask id="dui" value="#{votanteController.dui}" mask="99999999-9"  style="width: 100%;" placeholder="#{bundle.lblVotDuiReq}" />
+
+                        <b:panelGrid size="xs" columns="2">
+                            <b:radiobutton value="#{votanteController.genero}" itemLabel="#{bundle.lblVotGenM}" itemValue="M"  />
+                            <b:radiobutton value="#{votanteController.genero}" itemLabel="#{bundle.lblVotGenF}" itemValue="F" />
+              
+                        </b:panelGrid>
+
+                        <p:outputLabel for="fnac" value="#{bundle.lblVotFnac}" /><br></br>
+                        <p:inputMask id="fnac" value="#{votanteController.fnac}" mask="99/99/9999"  style="width: 100%;" placeholder="#{bundle.lblVotFnacReq}" />
+                        <b:inputSecret id="pass" value="#{votanteController.passvotante}" maxlength="10" label="#{lblVotPass}" placeholder="#{lblVotPassReq}" /> 
+                        <b:inputSecret id="pass" value="#{votanteController.passvotantere}" maxlength="10" label="#{lblVotPassRe}" placeholder="#{lblVotPassReReq}" />
+                        <b:selectOneMenu id="Pregunta" value="#{votanteController.pregunta}" label="#{bundle.lblVotPregunta}" >
+                            <f:selectItem  value="#{lblPregunta1}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
+                            <f:selectItem  value="#{lblPregunta2}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
+                            <f:selectItem  value="#{lblPregunta3}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
+                            <f:selectItem  value="#{lblPregunta4}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
+                            <f:selectItem  value="#{lblPregunta5}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
+                            <f:selectItem  value="#{lblPregunta6}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
+                        </b:selectOneMenu>
+                        <b:inputText size="10" id="respuesta"  label="#{bundle.lblVotRespuesta}" value="#{votanteController.respuesta}" placeholder="#{bundle.lblVotRespuestaReq}"  maxlength="250"/>
                         <p:separator></p:separator>
-                     <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
-                                  id="tblUser"
-                                  value="#{usuarioController.listaUsuarios}"
-                                  rendered="#{loginMant.nivelpermiso > 1}"
-                                         var="user"
-                                         select="true"
-                                         selectionMode="single"
-                                         onselect="ajax:usuarioController.onSelect(user);"
-                                         ondeselect="ajax:usuarioController.deSelect();"
-                                         ajax="true"
-                                         update="@form"
-                                         >
-                                <b:dataTableColumn label="#{bundle.lblUserName}" value="#{user.username}"/>
-                                <b:dataTableColumn label="#{bundle.lblNombreUsuario}" value="#{user.nombreuser}"/>   
-                               <b:dataTableColumn label="#{bundle.lblApellidoUsuario}" value="#{user.apellidouser}"/> 
-                               <b:dataTableColumn label="#{bundle.lblRol}" value="#{user.idrol.nomrol}"/> 
-                            </b:dataTable>
-                      
+                        <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
+                                     id="tblVot"
+                                     value="#{votanteController.listaVotantes}"
+
+                                     var="vot"
+                                     select="true"
+                                     selectionMode="single"
+                                     onselect="ajax:votanteController.onSelect(vot);"
+                                     ondeselect="ajax:usuarioController.deSelect();"
+                                     ajax="true"
+                                     update="@form"
+                                     >
+                            <b:dataTableColumn label="#{bundle.lblVotDui}" value="#{vot.dui}"/>
+                            <b:dataTableColumn label="#{bundle.lblNombreVot}" value="#{vot.nombrev}"/>   
+                            <b:dataTableColumn label="#{bundle.lblApellidoVot}" value="#{vot.apellidov}"/> 
+                            <b:dataTableColumn label="#{bundle.lblGenVot}" value="#{vot.genero}"/> 
+                            <b:dataTableColumn label="#{bundle.lblFnacVot}" value="#{vot.fnac}"/> 
+                        </b:dataTable>
+
                     </b:tab>
                 </b:tabView>
 
