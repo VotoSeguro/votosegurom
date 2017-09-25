@@ -7,7 +7,6 @@ package com.votoseguro.controller;
 import com.votoseguro.entity.Tblpermiso;
 import com.votoseguro.entity.Tblrol;
 import com.votoseguro.entity.Tblrolxpermiso;
-import com.votoseguro.entity.Tblusuario;
 import com.votoseguro.facade.PermisoFacade;
 import com.votoseguro.facade.RolFacade;
 import com.votoseguro.facade.RolxpermisoFacade;
@@ -19,6 +18,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,6 +45,15 @@ public class RolxpermisoController {
     private @Getter
     @Setter
     List<Tblrol> listaRoles = new ArrayList<>();
+    
+     @ManagedProperty(value = "#{loginMant}")
+    private @Getter
+    @Setter
+    LoginMantController login;
+
+    private @Getter
+    @Setter
+    String nivel = "";
     
     private @Getter
     @Setter
@@ -74,7 +83,19 @@ public class RolxpermisoController {
 
         listaRoles = rf.obtenerRoles();
         listaPermisos = pf.obtenerPermisos();
+        nivel = asignarNivel("mantrolxpermiso.xhtml");
         listaRolesxpermiso = rpf.obtenerPermisosxrol(String.valueOf(listaRoles.get(0).getIdrol()));
+    }
+    
+    public String asignarNivel(String keyword) {
+        String res = "";
+        for (Tblrolxpermiso t : login.getLogedUser().getIdrol().getTblrolxpermisoList()) {
+            if (t.getIdpermiso().getUrlpermiso().toLowerCase().contains(keyword.toLowerCase())) {
+                res = String.valueOf(t.getNivelpermiso());
+
+            }
+        }
+        return res;
     }
     
     public void onSelect(Tblrolxpermiso rxp) {

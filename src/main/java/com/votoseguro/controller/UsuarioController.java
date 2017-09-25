@@ -6,6 +6,7 @@
 package com.votoseguro.controller;
 
 import com.votoseguro.entity.Tblrol;
+import com.votoseguro.entity.Tblrolxpermiso;
 import com.votoseguro.entity.Tblusuario;
 import com.votoseguro.facade.RolFacade;
 import com.votoseguro.facade.UsuarioFacade;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,14 +65,36 @@ public class UsuarioController {
     @Getter
     String passRe = "";
 
+     @ManagedProperty(value = "#{loginMant}")
+    private @Getter
+    @Setter
+    LoginMantController login;
+
+    private @Getter
+    @Setter
+    String nivelPermiso = "";
+    
     @PostConstruct
     public void init() {
 
         listaRoles = rf.obtenerRoles();
         listaUsuarios = uf.obtenerUsuarios(String.valueOf(listaRoles.get(0).getIdrol()));
-
+         
+nivelPermiso = asignarNivel("mantusuario.xhtml");
     }
 
+    
+public String asignarNivel(String keyword) {
+        String res = "";
+        for (Tblrolxpermiso t : login.getLogedUser().getIdrol().getTblrolxpermisoList()) {
+            if (t.getIdpermiso().getUrlpermiso().toLowerCase().contains(keyword.toLowerCase())) {
+                res = String.valueOf(t.getNivelpermiso());
+
+            }
+        }
+        return res;
+    }
+    
     public void onSelect(Tblusuario usuario) {
 
         selectedUsuario = usuario;

@@ -18,9 +18,11 @@ import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
 import com.votoseguro.entity.Tblmunicipio;
+import com.votoseguro.entity.Tblrolxpermiso;
 import com.votoseguro.facade.DepartamentoFacade;
 import com.votoseguro.facade.MunicipioFacade;
 import java.math.BigDecimal;
+import javax.faces.bean.ManagedProperty;
 
 /**
  *
@@ -51,14 +53,37 @@ public class MunicipioController {
     private @Getter
     @Setter
     String idDepto = "";
+    
+     @ManagedProperty(value = "#{loginMant}")
+    private @Getter
+    @Setter
+    LoginMantController login;
+
+    private @Getter
+    @Setter
+    String nivelPermiso = "";
 
     @PostConstruct
     public void init() {
         listaDeptos = df.obtenerDeptos();
         listaMunis = mf.obtenerMunicipios(String.valueOf(listaDeptos.get(0).getIddepto()));
-
+        nivelPermiso = asignarNivel("mantmunicipio.xhtml");
     }
 
+    
+    
+public String asignarNivel(String keyword) {
+        String res = "";
+        for (Tblrolxpermiso t : login.getLogedUser().getIdrol().getTblrolxpermisoList()) {
+            if (t.getIdpermiso().getUrlpermiso().toLowerCase().contains(keyword.toLowerCase())) {
+                res = String.valueOf(t.getNivelpermiso());
+
+            }
+        }
+        return res;
+    }
+    
+    
     public void onSelect(Tblmunicipio muni) {
 
         selectedMuni = muni;

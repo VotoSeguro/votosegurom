@@ -6,25 +6,21 @@
 package com.votoseguro.controller;
 
 import com.votoseguro.entity.Tblpartido;
-import com.votoseguro.entity.Tblrol;
+import com.votoseguro.entity.Tblrolxpermiso;
 import com.votoseguro.facade.PartidoFacade;
 import com.votoseguro.util.ValidationBean;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -78,14 +74,36 @@ public class PartidoController {
     private @Getter
     @Setter
     String msgFileBandera;
+    
+     @ManagedProperty(value = "#{loginMant}")
+    private @Getter
+    @Setter
+    LoginMantController login;
+
+    private @Getter
+    @Setter
+    String nivelPermiso = "";
 
     @PostConstruct
     public void init() {
 
         listaPartidos = pf.obtenerPartidos();
+        
+nivelPermiso = asignarNivel("mantpartido.xhtml");
 
     }
 
+    public String asignarNivel(String keyword) {
+        String res = "";
+        for (Tblrolxpermiso t : login.getLogedUser().getIdrol().getTblrolxpermisoList()) {
+            if (t.getIdpermiso().getUrlpermiso().toLowerCase().contains(keyword.toLowerCase())) {
+                res = String.valueOf(t.getNivelpermiso());
+
+            }
+        }
+        return res;
+    }
+    
     public void handleFileUploadLogo(FileUploadEvent event) {
         
         

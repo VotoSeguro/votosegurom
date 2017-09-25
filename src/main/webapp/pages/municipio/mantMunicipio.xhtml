@@ -19,10 +19,10 @@
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{municipioController.insert()}" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{loginMant.nivelpermiso > 2}" look="warning" style="width:100%"  actionListener="#{municipioController.modificar()}"  />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{municipioController.nivelPermiso > 2}" look="warning" style="width:100%"  actionListener="#{municipioController.modificar()}"  />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{loginMant.nivelpermiso > 3}" look="danger" style="width:100%" actionListener="#{municipioController.validarEliminar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{municipioController.nivelPermiso > 3}" look="danger" style="width:100%" actionListener="#{municipioController.validarEliminar()}"/>
                             </b:column>
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" actionListener="#{municipioController.limpiar()}"/>
@@ -49,7 +49,7 @@
                      <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
                                   id="tblMuni"
                                   value="#{municipioController.listaMunis}"
-                                  rendered="#{loginMant.nivelpermiso > 1}"
+                                  rendered="#{municipioController.nivelPermiso > 1}"
                                          var="muni"
                                          select="true"
                                          selectionMode="single"

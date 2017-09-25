@@ -6,6 +6,7 @@
 package com.votoseguro.controller;
 
 import com.votoseguro.entity.Tbldepartamento;
+import com.votoseguro.entity.Tblrolxpermiso;
 import com.votoseguro.facade.DepartamentoFacade;
 import com.votoseguro.util.ValidationBean;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,12 +46,33 @@ public class DeptoController {
     @Setter
     String maxCand;
 
+     @ManagedProperty(value = "#{loginMant}")
+    private @Getter
+    @Setter
+    LoginMantController login;
+
+    private @Getter
+    @Setter
+    String nivelPermiso = "";
+    
     @PostConstruct
     public void init() {
         listaDeptos = df.obtenerDeptos();
-
+nivelPermiso = asignarNivel("mantdepto.xhtml");
     }
 
+    
+public String asignarNivel(String keyword) {
+        String res = "";
+        for (Tblrolxpermiso t : login.getLogedUser().getIdrol().getTblrolxpermisoList()) {
+            if (t.getIdpermiso().getUrlpermiso().toLowerCase().contains(keyword.toLowerCase())) {
+                res = String.valueOf(t.getNivelpermiso());
+
+            }
+        }
+        return res;
+    }
+    
     public void insert() {
      
          if (selectedDepto == null || selectedDepto.getIddepto() == null) {

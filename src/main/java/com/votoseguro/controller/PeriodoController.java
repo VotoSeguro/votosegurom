@@ -5,8 +5,8 @@
  */
 package com.votoseguro.controller;
 
-import com.votoseguro.entity.Tbldepartamento;
 import com.votoseguro.entity.Tblperiodo;
+import com.votoseguro.entity.Tblrolxpermiso;
 import com.votoseguro.facade.PeriodoFacade;
 import com.votoseguro.util.ValidationBean;
 import java.math.BigInteger;
@@ -15,6 +15,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,13 +50,34 @@ public class PeriodoController {
     @Setter
     String fechainicio = "";
 
+     @ManagedProperty(value = "#{loginMant}")
+    private @Getter
+    @Setter
+    LoginMantController login;
+
+    private @Getter
+    @Setter
+    String nivelPermiso = "";
+    
     @PostConstruct
     public void init() {
 
         listaPeriodo = pf.obtenerPeriodos();
+        nivelPermiso = asignarNivel("mantperiodo.xhtml");
 
     }
 
+    public String asignarNivel(String keyword) {
+        String res = "";
+        for (Tblrolxpermiso t : login.getLogedUser().getIdrol().getTblrolxpermisoList()) {
+            if (t.getIdpermiso().getUrlpermiso().toLowerCase().contains(keyword.toLowerCase())) {
+                res = String.valueOf(t.getNivelpermiso());
+
+            }
+        }
+        return res;
+    }
+    
     public void onSelect(Tblperiodo p) {
 
         selectedPeriodo = p;

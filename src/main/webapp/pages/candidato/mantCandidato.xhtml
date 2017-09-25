@@ -19,10 +19,10 @@
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{candidatoController.insert()}" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{loginMant.nivelpermiso > 2}" look="warning" style="width:100%"  actionListener="#{candidatoController.validarModificar()}"  />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{candidatoController.nivelPermiso > 2}" look="warning" style="width:100%"  actionListener="#{candidatoController.validarModificar()}"  />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{loginMant.nivelpermiso > 3}" look="danger" style="width:100%" actionListener="#{candidatoController.validarEliminar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{candidatoController.nivelPermiso > 3}" look="danger" style="width:100%" actionListener="#{candidatoController.validarEliminar()}"/>
                             </b:column>
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" actionListener="#{candidatoController.limpiar()}"/>
@@ -69,7 +69,7 @@
                         <p:separator></p:separator>
                      <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
                                   id="tblCand"
-                                  rendered="#{loginMant.nivelpermiso> 1}"
+                                  rendered="#{candidatoController.nivelPermiso > 1}"
                                   value="#{candidatoController.listaCandidatos}"
                                          var="cand"
                                          select="true"

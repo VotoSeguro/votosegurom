@@ -19,10 +19,10 @@
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{deptoController.insert()}"/>
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{loginMant.nivelpermiso > 2}" look="warning" style="width:100%"  actionListener="#{deptoController.modificar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" rendered="#{deptoController.nivelPermiso > 2}" look="warning" style="width:100%"  actionListener="#{deptoController.modificar()}"/>
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{loginMant.nivelpermiso > 3}" look="danger" style="width:100%" actionListener="#{deptoController.validarEliminar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}" rendered="#{deptoController.nivelPermiso > 3}" look="danger" style="width:100%" actionListener="#{deptoController.validarEliminar()}"/>
                             </b:column>
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" actionListener="#{deptoController.limpiar()}" look="success" style="width:100%" />
@@ -46,7 +46,7 @@
                         <p:separator></p:separator>
                         <p:dataTable style="background-color: black" 
                                      id="tblDepto"
-                                     rendered="#{loginMant.nivelpermiso > 1}"
+                                     rendered="#{deptoController.nivelPermiso > 1}"
                                      var="depto" 
                                      value="#{deptoController.listaDeptos}" 
                                      selectionMode="single" 
