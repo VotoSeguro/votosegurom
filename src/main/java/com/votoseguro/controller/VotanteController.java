@@ -211,7 +211,7 @@ public class VotanteController {
                     && vb.validarLongitudCampo(fnac, 10, 10, "warn", "lblMantVot", "lblLongVotFnac")
                     && vb.validarCampoVacio(genero, "warn", "lblMantVot", "lblGenReqVot")
                     && vb.validarCampoVacio(passvotante, "warn", "lblMantVot", "lblPassReqVot")
-                    && vb.validarLongitudCampo(passvotante, 4, 8, "warn", "lblMantVot", "lblLongVotPassre")
+                    && vb.validarLongitudCampo(passvotante, 4, 8, "warn", "lblMantVot", "lblLongVotPass")
                     && vb.validarCampoVacio(passvotantere, "warn", "lblMantVot", "lblPassreReqVot")
                     && vb.validarLongitudCampo(passvotantere, 4, 8, "warn", "lblMantVot", "lblLongVotPassre")
                     ) {

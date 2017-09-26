@@ -66,8 +66,8 @@
 
                         <p:outputLabel for="fnac" value="#{bundle.lblVotFnac}" /><br></br>
                         <p:inputMask id="fnac" value="#{votanteController.fnac}" mask="99/99/9999"  style="width: 100%;" placeholder="#{bundle.lblVotFnacReq}" />
-                        <b:inputSecret id="pass" value="#{votanteController.passvotante}" maxlength="10" label="#{lblVotPass}" placeholder="#{lblVotPassReq}" /> 
-                        <b:inputSecret id="pass" value="#{votanteController.passvotantere}" maxlength="10" label="#{lblVotPassRe}" placeholder="#{lblVotPassReReq}" />
+                        <b:inputSecret id="pass" value="#{votanteController.passvotante}" maxlength="10" label="#{bundle.lblVotPass}" placeholder="#{lblVotPassReq}" /> 
+                        <b:inputSecret id="pass" value="#{votanteController.passvotantere}" maxlength="10" label="#{bundle.lblVotPassRe}" placeholder="#{lblVotPassReReq}" />
                         <b:selectOneMenu id="Pregunta" value="#{votanteController.pregunta}" label="#{bundle.lblVotPregunta}" >
                             <f:selectItem  value="#{lblPregunta1}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
                             <f:selectItem  value="#{lblPregunta2}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
