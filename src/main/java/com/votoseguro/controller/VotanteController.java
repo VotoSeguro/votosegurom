@@ -6,11 +6,11 @@
 package com.votoseguro.controller;
 
 import com.votoseguro.entity.Tblmunicipio;
-import com.votoseguro.entity.Tblusuario;
+import com.votoseguro.entity.Tblrolxpermiso;
 import com.votoseguro.entity.Tblvotante;
 import com.votoseguro.facade.MunicipioFacade;
-import com.votoseguro.facade.UsuarioFacade;
 import com.votoseguro.facade.VotanteFacade;
+
 import com.votoseguro.util.ValidationBean;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
@@ -79,10 +80,19 @@ public class VotanteController {
     private @Setter
     @Getter
     String idMuni = "";
+    
+     @ManagedProperty(value = "#{loginMant}")
+    private @Getter
+    @Setter
+    LoginMantController login;
+
+    private @Getter
+    @Setter
+    String nivelPermiso = "";
 
     @PostConstruct
     public void init() {
-
+        nivelPermiso = asignarNivel("mantvotante.xhtml");
         listaMunicipios = mf.obtenerMunicipios();
         listaVotantes = vf.obtenerVotantes(String.valueOf(listaMunicipios.get(0).getIdmuni()));
 
@@ -152,6 +162,18 @@ public class VotanteController {
         vb.lanzarMensaje("info", "lblMantVot", "lblbtnModifiarSucces");
 
     }
+    
+    public String asignarNivel(String keyword) {
+        String res = "";
+        for (Tblrolxpermiso t : login.getLogedUser().getIdrol().getTblrolxpermisoList()) {
+            if (t.getIdpermiso().getUrlpermiso().toLowerCase().contains(keyword.toLowerCase())) {
+                res = String.valueOf(t.getNivelpermiso());
+
+            }
+        }
+        return res;
+    }
+    
 
     public void eliminar() {
         selectedVotante.setEstadodel("I");
@@ -207,8 +229,9 @@ public class VotanteController {
                     && vb.validarCampoVacio(respuesta.trim(), "warn", "lblMantVot", "lblRespReqVot")
                     && vb.validarLongitudCampo(respuesta, 4, 50, "warn", "lblMantVot", "lblLongVotResp")
                     && vb.validarSoloLetras(respuesta,  "warn", "lblMantVot", "lblLetrasVotResp")
-                    && vb.validarCampoVacio(fnac, "warn", "lblMantVot", "lblFnacReqVot")
+                    && vb.validarCampoVacio(fnac, "warn", "lblMantVot", "lblVotFnacReq")
                     && vb.validarLongitudCampo(fnac, 10, 10, "warn", "lblMantVot", "lblLongVotFnac")
+                    && vb.validarFecha(fnac, "warn", "lblMantVot", "lblFnacVotValid")
                     && vb.validarCampoVacio(genero, "warn", "lblMantVot", "lblGenReqVot")
                     && vb.validarCampoVacio(passvotante, "warn", "lblMantVot", "lblPassReqVot")
                     && vb.validarLongitudCampo(passvotante, 4, 8, "warn", "lblMantVot", "lblLongVotPass")
@@ -226,13 +249,10 @@ public class VotanteController {
                       selectedVotante.setGenero(genero);
                       selectedVotante.setFnac(fnac);
                       selectedVotante.setEstadodel("A");
-                        /*selectedUsuario.setUsername(userName);
-                        selectedUsuario.setNombreuser(nombreUser.toUpperCase());
-                        selectedUsuario.setApellidouser(apellidoUser.toUpperCase());
-                        selectedUsuario.setPassuser(passUser);
-                        selectedUsuario.setEstadodel("A");
-                        selectedUsuario.setIdrol(rf.find(new BigDecimal(idRol)));
-                   */
+                      selectedVotante.setIdmuni(mf.find(new BigDecimal(idMuni)));
+                      selectedVotante.setIduser(login.getLogedUser());
+                      
+                     
                 }else{
                                      vb.lanzarMensaje("warn", "lblMantVot", "lblPasEqualsVot");
                                  }

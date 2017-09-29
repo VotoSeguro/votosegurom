@@ -18,13 +18,13 @@
                         <b:row>
 
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" actionListener="#{votanteController.insert()}" />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%"    actionListener="#{votanteController.insert()}" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  actionListener="#{votanteController.validarModificar()}"  />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  rendered="#{votanteController.nivelPermiso > 2}"  actionListener="#{votanteController.validarModificar()}"  />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}"  look="danger" style="width:100%" actionListener="#{votanteController.validarEliminar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnEliminar']}"  look="danger" style="width:100%" rendered="#{votanteController.nivelPermiso > 3}"  actionListener="#{votanteController.validarEliminar()}"/>
                             </b:column>
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" actionListener="#{votanteController.limpiar()}"/>
@@ -56,18 +56,20 @@
                         <b:inputText size="10" id="nombrev"  label="#{bundle.lblNomVot}" value="#{votanteController.nombrev}" placeholder="#{bundle.lblNomReqVot}" />
                         <b:inputText size="10" id="apelidov"  label="#{bundle.lblApeVot}" value="#{votanteController.apellidov}" placeholder="#{bundle.lblApeReqVot }"/>
                         <p:outputLabel for="dui" value="#{bundle.lblVotDui}" /><br></br>
-                        <p:inputMask id="dui" value="#{votanteController.dui}" mask="99999999-9"  style="width: 100%;" placeholder="#{bundle.lblVotDuiReq}" />
-
-                        <b:panelGrid size="xs" columns="2">
+                        <p:inputMask id="dui" value="#{votanteController.dui}" mask="99999999-9"  style="width: 100%;" placeholder="#{bundle.lblDuiReqVot}" />
+                        <br></br>
+                        <p>#{bundle.lblGenVot}</p>
+                        <b:panelGrid size="xs" columns="1">
                             <b:radiobutton value="#{votanteController.genero}" itemLabel="#{bundle.lblVotGenM}" itemValue="M"  />
                             <b:radiobutton value="#{votanteController.genero}" itemLabel="#{bundle.lblVotGenF}" itemValue="F" />
               
                         </b:panelGrid>
+                       
 
                         <p:outputLabel for="fnac" value="#{bundle.lblVotFnac}" /><br></br>
                         <p:inputMask id="fnac" value="#{votanteController.fnac}" mask="99/99/9999"  style="width: 100%;" placeholder="#{bundle.lblVotFnacReq}" />
                         <b:inputSecret id="pass" value="#{votanteController.passvotante}" maxlength="10" label="#{bundle.lblVotPass}" placeholder="#{lblVotPassReq}" /> 
-                        <b:inputSecret id="pass" value="#{votanteController.passvotantere}" maxlength="10" label="#{bundle.lblVotPassRe}" placeholder="#{lblVotPassReReq}" />
+                        <b:inputSecret id="passre" value="#{votanteController.passvotantere}" maxlength="10" label="#{bundle.lblVotPassRe}" placeholder="#{lblVotPassReReq}" />
                         <b:selectOneMenu id="Pregunta" value="#{votanteController.pregunta}" label="#{bundle.lblVotPregunta}" >
                             <f:selectItem  value="#{lblPregunta1}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
                             <f:selectItem  value="#{lblPregunta2}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
@@ -76,12 +78,13 @@
                             <f:selectItem  value="#{lblPregunta5}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
                             <f:selectItem  value="#{lblPregunta6}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
                         </b:selectOneMenu>
+                        
                         <b:inputText size="10" id="respuesta"  label="#{bundle.lblVotRespuesta}" value="#{votanteController.respuesta}" placeholder="#{bundle.lblVotRespuestaReq}"  maxlength="250"/>
                         <p:separator></p:separator>
                         <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
                                      id="tblVot"
                                      value="#{votanteController.listaVotantes}"
-
+                                    rendered="#{votanteController.nivelPermiso > 1}"
                                      var="vot"
                                      select="true"
                                      selectionMode="single"
@@ -91,10 +94,10 @@
                                      update="@form"
                                      >
                             <b:dataTableColumn label="#{bundle.lblVotDui}" value="#{vot.dui}"/>
-                            <b:dataTableColumn label="#{bundle.lblNombreVot}" value="#{vot.nombrev}"/>   
-                            <b:dataTableColumn label="#{bundle.lblApellidoVot}" value="#{vot.apellidov}"/> 
+                            <b:dataTableColumn label="#{bundle.lblNomVot}" value="#{vot.nombrev}"/>   
+                            <b:dataTableColumn label="#{bundle.lblApeVot}" value="#{vot.apellidov}"/> 
                             <b:dataTableColumn label="#{bundle.lblGenVot}" value="#{vot.genero}"/> 
-                            <b:dataTableColumn label="#{bundle.lblFnacVot}" value="#{vot.fnac}"/> 
+                            <b:dataTableColumn label="#{bundle.lblVotFnac}" value="#{vot.fnac}"/> 
                         </b:dataTable>
 
                     </b:tab>

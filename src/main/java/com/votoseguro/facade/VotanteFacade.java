@@ -7,8 +7,10 @@ package com.votoseguro.facade;
 
 import com.votoseguro.entity.Tblusuario;
 import com.votoseguro.entity.Tblvotante;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -17,6 +19,7 @@ import javax.persistence.Query;
  *
  * @author Luis Eduardo Valdez
  */
+@Stateless
 public class VotanteFacade extends AbstractFacade<Tblvotante>{
     @PersistenceContext(unitName = "votoseguroPU")
      private EntityManager em;   
@@ -42,5 +45,23 @@ public class VotanteFacade extends AbstractFacade<Tblvotante>{
             listaEntity = new ArrayList<Tblvotante>();
         }
         return listaEntity;
+    }
+    
+    
+    
+    public void enviarEmail(String receptor,String asunto, String mensaje){
+    
+        try {
+            Connection cn = em.unwrap(java.sql.Connection.class);
+            CallableStatement cs = cn.prepareCall("{call SYS.PR_ENVIAR_EMAIL('hayteguachoprueba@gmail.com',?,?,?)}");
+            cs.setString(1, receptor);
+            cs.setString(2, asunto);
+            cs.setString(3, mensaje);
+            cs.execute();
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.facade.VotanteFacade.enviarEmail()");
+            e.printStackTrace();
+        }
+    
     }
 }
