@@ -116,6 +116,19 @@ public class ValidationBean {
         return flag;
     }
 
+    public boolean validarSoloLetrasNumeros(String c, String tipoMsg, String tituloMsg, String descMsg) {
+        Pattern patron = Pattern.compile("^[a-zA-Z0-9_.-]*$");
+        Matcher validar = patron.matcher(c);
+        boolean flag;
+        if (!validar.find()) {
+            flag = false;
+            lanzarMensaje(tipoMsg, tituloMsg, descMsg);
+        } else {
+            flag = true;
+        }
+        return flag;
+    }
+    
     public boolean validarSoloNumeros(String c, String tipoMsg, String tituloMsg, String descMsg) {
         Pattern patron = Pattern.compile("[^0-9]");
         Matcher validar = patron.matcher(c);

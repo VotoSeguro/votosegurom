@@ -18,7 +18,7 @@
                         <b:row>
 
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%"    actionListener="#{votanteController.insert()}" />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%"     actionListener="#{votanteController.insert()}" />
                             </b:column>
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnModifiar']}" look="warning" style="width:100%"  rendered="#{votanteController.nivelPermiso > 2}"  actionListener="#{votanteController.validarModificar()}"  />

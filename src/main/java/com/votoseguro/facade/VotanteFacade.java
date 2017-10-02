@@ -64,4 +64,51 @@ public class VotanteFacade extends AbstractFacade<Tblvotante>{
         }
     
     }
+    
+    public int revisarDui(String dui, String id){
+    String sql = "";
+        if (id.equals("0")) {
+            sql = "SELECT * FROM TBLVOTANTE WHERE estadodel = 'A'  and dui = '" + dui + "'";
+        }else{
+          sql = "SELECT * FROM TBLVOTANTE WHERE estadodel = 'A'  and dui = '" + dui + "' and idvotante != " + id;
+        }
+        
+        Query q = em.createNativeQuery(sql, Tblvotante.class);
+        List<Tblvotante> listaEntity;
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntity = new ArrayList<Tblvotante>();
+            }
+        } catch (Exception e) {
+            listaEntity = new ArrayList<Tblvotante>();
+        }
+        return listaEntity.size();
+   
+    }
+    
+    
+    public Tblvotante logear(String dui, String pass){
+    Tblvotante v = null;
+   
+
+        try {
+             Query q = em.createQuery(
+    "SELECT * FROM tblvotante v WHERE dui = :duiv and passvotante = :passv",Tblvotante.class);
+    q.setParameter("duiv", dui);
+    q.setParameter("passv", pass);       
+    
+        List<Tblvotante> resultList = q.getResultList();
+            for (Tblvotante tblvotante : resultList) {
+                v = tblvotante;
+            }
+            
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.facade.VotanteFacade.logear()");
+            e.printStackTrace();
+        }
+    
+    
+    return v;
+    }
 }

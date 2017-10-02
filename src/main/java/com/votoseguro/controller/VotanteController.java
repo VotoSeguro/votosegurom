@@ -142,11 +142,15 @@ public class VotanteController {
 
         if (selectedVotante == null || selectedVotante.getIdvotante() == null) {
             if (setValores()) {
-                vf.create(selectedVotante);
+                if (vf.revisarDui(selectedVotante.getDui(), "0") == 0) {
+                     vf.create(selectedVotante);
                 listaVotantes = vf.obtenerVotantes(idMuni);
                 limpiar();
 
                 vb.lanzarMensaje("info", "lblMantVot", "lblAgregarSuccess");
+                }else{
+                    vb.lanzarMensaje("error", "lblMantVot", "lblDuiRepetido");
+                }
 
             }
         } else {
@@ -206,8 +210,17 @@ public class VotanteController {
     public void validarModificar() {
         if (selectedVotante!= null && selectedVotante.getIdvotante() != null) {
             if (setValores()) {
+                int revisarDui = vf.revisarDui(selectedVotante.getDui(), String.valueOf(selectedVotante.getIdvotante()));
+                if (revisarDui == 0) {
+                
                 vb.ejecutarJavascript("$('.modalPseudoClass2').modal('show');");
-            }
+                
+            }else{
+                    vb.lanzarMensaje("error", "lblMantVot", "lblDuiRepetido");
+                    listaVotantes = vf.obtenerVotantes(String.valueOf(idMuni));
+                }
+                
+                }
 
         } else {
             vb.lanzarMensaje("error", "lblMantVot", "lblVotReqMod");
