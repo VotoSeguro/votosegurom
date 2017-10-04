@@ -18,7 +18,7 @@ import lombok.Setter;
  */
 @ViewScoped
 @ManagedBean(name = "loginController")
-public class LoginVotController {
+public class Pruebas {
    private @Getter @Setter String receptor;
    private @Getter @Setter String asunto;
    private @Getter @Setter String mensaje;

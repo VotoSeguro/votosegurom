@@ -12,6 +12,8 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,6 +48,7 @@ public class VotLoginController implements Serializable {
             loggedVotante = vf.logear(dui, pass);
             if (loggedVotante != null) {
                 outcome = "/index.xhtml?faces-redirect=true";
+                votLogged = true;
             }else{
             vb.lanzarMensaje("warn", "titleLogin", "lblErrorLogin");
             }
@@ -55,4 +58,18 @@ public class VotLoginController implements Serializable {
         }
     return outcome;
     }
+    
+     public String logout(){
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        session.invalidate();
+        
+        return "/index.xhtml?faces-redirect=true";
+    }
+     
+     public String getFullName(){
+     String nombrecompleto = this.loggedVotante.getNombrev().toUpperCase() + "  " + this.loggedVotante.getApellidov().toUpperCase();
+     return nombrecompleto;
+     }
+    
 }

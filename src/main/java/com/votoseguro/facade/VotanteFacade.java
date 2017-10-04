@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -93,10 +94,9 @@ public class VotanteFacade extends AbstractFacade<Tblvotante>{
    
 
         try {
-             Query q = em.createQuery(
-    "SELECT * FROM tblvotante v WHERE dui = :duiv and passvotante = :passv",Tblvotante.class);
-    q.setParameter("duiv", dui);
-    q.setParameter("passv", pass);       
+             Query q = em.createNativeQuery("select * from tblvotante where dui = ? and passvotante = ? and estadodel = 'A'",Tblvotante.class);
+    q.setParameter(1, dui);
+    q.setParameter(2, pass);       
     
         List<Tblvotante> resultList = q.getResultList();
             for (Tblvotante tblvotante : resultList) {

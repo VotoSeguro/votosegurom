@@ -5,7 +5,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>BootsFaces: the next-gen JSF Framework based on Bootstrap</title>
         <meta name="author" content="Riccardo Massera" />
@@ -33,6 +34,7 @@
             }</style>
     </h:head>
     <h:body style="padding-top: 85px;padding-bottom: 85px;"  >
+        <b:growl  id="growl"  showDetail="true"></b:growl>
         <b:scrollUp distance="200" animation="fade" text=""  name="scrollUpCustom" />
         <!--
         <h:outputScript library="sh" name="js/shCore.js"         target="head"/>

@@ -45,7 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Tblvotante.findByPassvotante", query = "SELECT t FROM Tblvotante t WHERE t.passvotante = :passvotante")
     , @NamedQuery(name = "Tblvotante.findByGenero", query = "SELECT t FROM Tblvotante t WHERE t.genero = :genero")
     , @NamedQuery(name = "Tblvotante.findByFnac", query = "SELECT t FROM Tblvotante t WHERE t.fnac = :fnac")
-    , @NamedQuery(name = "Tblvotante.findByEstadodel", query = "SELECT t FROM Tblvotante t WHERE t.estadodel = :estadodel")})
+    , @NamedQuery(name = "Tblvotante.findByEstadodel", query = "SELECT t FROM Tblvotante t WHERE t.estadodel = :estadodel")
+    , @NamedQuery(name = "Tblvotante.Login", query= "SELECT t FROM Tblvotante t WHERE t.dui = :duiv and t.passvotante = :passv")})
 public class Tblvotante implements Serializable {
 
     private static final long serialVersionUID = 1L;

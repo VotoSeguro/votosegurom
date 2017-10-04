@@ -13,7 +13,7 @@
 	    	Hint to editors: The menus follow the Chicago style of capitalization. Please capitalize everything but the "smaller" words. 
 	     -->
   </ui:remove>
-    <b:navBar brand="Brand" brandHref="#" inverse="true" fixed="top" >
+    <b:navBar brand="Inicio" brandHref="index.xhtml" inverse="true" fixed="top" >
         <b:navbarLinks  >
             <b:navLink value="Link" href="#"></b:navLink>
             <b:navLink value="Link" href="#"></b:navLink>
@@ -37,6 +37,20 @@
             
         </b:navbarLinks>
         <h:form styleClass="navbar-form navbar-right">
+            <b:navbarLinks rendered="#{votController.votLogged}">
+                <b:dropMenu value="#{votController.fullName}" >
+                    <b:column col-md="12"  style="text-align: center;">
+                        <h:panelGrid columns="1">
+                            
+                            <h:outputText value="#{votController.dui}" style="color:green;"></h:outputText>
+
+                            <b:commandButton size="sm"  icon-rotate="l" iconAwesome="thumbs-up"
+                                             value="#{bundle['lblBtnCerrarSession']}" action="#{votController.logout()}"
+                                             look="danger" title="#{bundle['lblBtnCerrarSession']}" />
+                        </h:panelGrid>
+                    </b:column>
+                </b:dropMenu>
+            </b:navbarLinks>
             <b:navbarLinks rendered="#{loginMant.loggedIn}">
                 <b:dropMenu value="#{loginMant.nombreuser}">
                     <b:column col-md="12"  style="text-align: center;">
@@ -54,6 +68,7 @@
         </h:form>
         <c:if test="#{(!votController.votLogged) and (!loginMant.loggedIn) }">
          <h:form styleClass="navbar-form navbar-right">
+            
             <div class="form-group">
                 <p:inputMask mask="99999999-9" placeholder="DUI" class="form-control" value="#{votController.dui}"/>
                 <!--input type="text" class="form-control" placeholder="Search"/-->
