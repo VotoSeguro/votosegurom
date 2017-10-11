@@ -5,7 +5,9 @@
  */
 package com.votoseguro.filter;
 
+import com.votoseguro.controller.VotLoginController;
 import java.io.IOException;
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -20,22 +22,28 @@ import javax.servlet.http.HttpServletResponse;
  * @author Luis Eduardo Valdez
  */
 public class Filtro implements Filter{
+    
+    @Inject
+    VotLoginController login;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String[] url= ((HttpServletRequest)request).getRequestURI().toString().split("/pages/");
+        String url= ((HttpServletRequest)request).getRequestURI().toString();
         System.err.println(url);
-        System.err.println(url[1]);
-        String contextPath = ((HttpServletRequest)request).getContextPath();
-       
+        //System.err.println(url[1]);//votante/Votar.xhtml
+        String contextPath = ((HttpServletRequest)request).getContextPath(); //votosegurom
+        System.out.println("com.votoseguro.filter.Filtro.doFilter()");
             //String contextPath = ((HttpServletRequest)request).getContextPath();
-            if(contextPath.contains("/faces")){
-                ((HttpServletResponse)response).sendRedirect(contextPath + "/advertencia.xhtml");
+            if(url.contains("loginMantenimiento.xhtml")){
+                if (!login.isAccesoMant()) {
+                    ((HttpServletResponse)response).sendRedirect(contextPath + "/advertencia.xhtml");
+                }
+                
                 
             }
         
@@ -46,7 +54,7 @@ public class Filtro implements Filter{
 
     @Override
     public void destroy() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
     
 }

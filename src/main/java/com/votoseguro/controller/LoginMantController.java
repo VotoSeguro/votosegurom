@@ -98,6 +98,12 @@ public class LoginMantController implements Serializable {
        
        
    }
+   
+   public String getSaludo(){
+   String saludo = vb.getMsgBundle("lblBienvenidoMant")+ " "  + logedUser.getIdrol().getNomrol().toLowerCase().substring(0, 1).toUpperCase() + logedUser.getIdrol().getNomrol().substring(1).toLowerCase() +
+           " "+ logedUser.getNombreuser().substring(0,1) + logedUser.getNombreuser().substring(1).toLowerCase()+ " "+logedUser.getApellidouser().substring(0,1) +logedUser.getApellidouser().substring(1).toLowerCase();
+   return saludo;
+   }
     
    
 }
