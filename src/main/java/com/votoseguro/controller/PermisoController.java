@@ -4,20 +4,20 @@
  * and open the template in the editor.
  */
 package com.votoseguro.controller;
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
+
 import com.votoseguro.entity.Tblpermiso;
 import com.votoseguro.entity.Tblrolxpermiso;
 import com.votoseguro.facade.PermisoFacade;
 import com.votoseguro.util.ValidationBean;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+
 import lombok.Getter;
 import lombok.Setter;
 /**

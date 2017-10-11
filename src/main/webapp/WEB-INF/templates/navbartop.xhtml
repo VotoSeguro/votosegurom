@@ -13,7 +13,8 @@
 	    	Hint to editors: The menus follow the Chicago style of capitalization. Please capitalize everything but the "smaller" words. 
 	     -->
   </ui:remove>
-    <b:navBar brand="Inicio" brandHref="index.xhtml" inverse="true" fixed="top" >
+    <b:navBar brand="Inicio" brandHref="index.xhtml" inverse="true" fixed="top" style="background-color:#3c5b99 " >
+        
         <b:navbarLinks  >
             <b:navLink value="Link" href="#"></b:navLink>
             <b:navLink value="Link" href="#"></b:navLink>
@@ -70,14 +71,14 @@
          <h:form styleClass="navbar-form navbar-right">
             
             <div class="form-group">
-                <p:inputMask mask="99999999-9" placeholder="DUI" class="form-control" value="#{votController.dui}"/>
+                <p:inputMask mask="99999999-9" placeholder="#{bundle.lblIngresarDui}" class="form-control" value="#{votController.dui}"/>
                 <!--input type="text" class="form-control" placeholder="Search"/-->
             </div>
             <div class="form-group">
-                <b:inputSecret maxlength="10" placeholder="Password" fieldSize="sm" value="#{votController.pass}"/>
+                <b:inputSecret maxlength="10" placeholder="#{bundle.lblPass1}" fieldSize="sm" value="#{votController.pass}"/>
             </div> 
             #{' '}
-            <b:commandButton action="#{votController.login()}" value="Iniciar Sesi&oacute;n" look="success" icon="chevron-right" iconAlign="right" />
+            <b:commandButton action="#{votController.login()}" value="#{bundle.lblIniciarSesion}" look="success" icon="chevron-right" iconAlign="right" />
         </h:form>
         </c:if>
     </b:navBar>

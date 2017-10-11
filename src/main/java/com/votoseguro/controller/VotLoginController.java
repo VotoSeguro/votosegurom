@@ -33,6 +33,8 @@ public class VotLoginController implements Serializable {
     private @Getter @Setter Tblvotante loggedVotante = new Tblvotante();
     private @Getter @Setter String dui;
     private @Getter @Setter String pass;
+    private @Getter @Setter String opentag="<div data-carousel-3d>";
+    private @Getter @Setter String closetag="</div>";
     
     @EJB
     VotanteFacade vf;
