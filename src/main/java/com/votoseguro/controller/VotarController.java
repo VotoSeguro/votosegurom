@@ -33,6 +33,8 @@ public class VotarController {
     PartidoFacade pf; 
    @EJB
     CandidatoFacade cf;
+   
+   
    private @Getter
     @Setter
     List<Tblpartido> listaPartidos = new ArrayList<>();
