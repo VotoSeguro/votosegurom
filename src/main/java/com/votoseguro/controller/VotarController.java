@@ -5,6 +5,7 @@ import com.votoseguro.entity.Tblcandidato;
 import com.votoseguro.entity.Tblpartido;
 import com.votoseguro.facade.CandidatoFacade;
 import com.votoseguro.facade.PartidoFacade;
+import com.votoseguro.util.ValidationBean;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +34,8 @@ public class VotarController {
     PartidoFacade pf; 
    @EJB
     CandidatoFacade cf;
+   @EJB
+   ValidationBean vb;
    
    
    private @Getter
@@ -73,13 +76,20 @@ public class VotarController {
        
        
        if (partido.getEstadodel().equals("A")) {
-           
-         partido.setEstadodel("S");
-         SelectedPartidos.add(partido);  
+           if (SelectedPartidos.isEmpty()) {
+            partido.setEstadodel("S");
+             SelectedPartidos.add(partido);   
+             System.out.println("agrega");
+           }else{
+             isNulo =true;
+             System.out.println("nulo");
+           }
+          
        }else 
            if (partido.getEstadodel().equals("S")) {
           SelectedPartidos.remove(partido);
           partido.setEstadodel("A");
+               System.out.println("remueve");
           
        }
 {
@@ -96,10 +106,12 @@ public class VotarController {
            
          candidato.setEstadodel("S");
          SelectedCandidatos.add(candidato);  
+         System.out.println("agrega");
        }else 
            if (candidato.getEstadodel().equals("S")) {
           SelectedCandidatos.remove(candidato);
           candidato.setEstadodel("A");
+          System.out.println("remueve");
           
        }
    
