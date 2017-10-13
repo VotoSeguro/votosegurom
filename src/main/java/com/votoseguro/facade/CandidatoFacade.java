@@ -46,4 +46,22 @@ public class CandidatoFacade extends AbstractFacade<Tblcandidato>{
         }
         return listaEntity;
     }
+    
+    public List<Tblcandidato> obtenerCandidatos(String idpart, String iddepto){
+        String sql = "select * from Tblcandidato where estadodel = 'A' and idpartido = ? and iddepto = ?";
+        
+     Query q = getEntityManager().createNativeQuery(sql, Tblcandidato.class);
+     q.setParameter(1, idpart);
+     q.setParameter(2, iddepto);
+     List<Tblcandidato> listaEntity;
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntity = new ArrayList<Tblcandidato>();
+            }
+        } catch (Exception e) {
+            listaEntity = new ArrayList<Tblcandidato>();
+        }
+        return listaEntity;
+    }
 }

@@ -13,10 +13,10 @@
 	    	Hint to editors: The menus follow the Chicago style of capitalization. Please capitalize everything but the "smaller" words. 
 	     -->
   </ui:remove>
-    <b:navBar brand="Inicio" brandHref="index.xhtml" inverse="true" fixed="top" style="background-color:#3c5b99 " >
+    <b:navBar brand="Inicio" brandHref="#{request.contextPath}/index.xhtml" inverse="true" fixed="top" style="background-color:#3c5b99 " >
         
         <b:navbarLinks  >
-            <b:navLink value="Link" href="#"></b:navLink>
+            <b:navLink value="Votar" href="#{request.contextPath}/pages/votante/Votar.xhtml"></b:navLink>
             <b:navLink value="Link" href="#"></b:navLink>
             
             <b:dropMenu value="#{bundle.lblGestionar}" rendered="#{loginMant.loggedIn}" >

@@ -39,9 +39,11 @@ public class VotarController {
     @Setter
     List<Tblpartido> listaPartidos = new ArrayList<>();
    
-   private @Getter @Setter List<Tblpartido> SelectedPartidos;
+   private @Getter @Setter List<Tblpartido> SelectedPartidos = new ArrayList<>();
    
-   private @Getter @Setter List<Tblcandidato> SelectedCandidatos;
+   private @Getter @Setter List<Tblcandidato> SelectedCandidatos= new ArrayList<>();
+   
+   private @Getter @Setter boolean isNulo = false;
    
    @Inject
    VotLoginController login;
@@ -52,7 +54,8 @@ public class VotarController {
         listaPartidos = pf.obtenerPartidos();
        
          for (Tblpartido partido : listaPartidos) {
-           partido.setTblcandidatoList(cf.obtenerCandidatos(String.valueOf(partido.getIdpartido())));
+           partido.setTblcandidatoList(cf.obtenerCandidatos(String.valueOf(partido.getIdpartido()),
+                   String.valueOf(login.getLoggedVotante().getIdmuni().getIddepto().getIddepto())));
        }
         
 
@@ -67,19 +70,43 @@ public class VotarController {
    
    public void onClickPartido(Tblpartido partido){
        System.out.println(partido.getNompartido());
-       SelectedPartidos.add(partido);
+       
+       
+       if (partido.getEstadodel().equals("A")) {
+           
+         partido.setEstadodel("S");
+         SelectedPartidos.add(partido);  
+       }else 
+           if (partido.getEstadodel().equals("S")) {
+          SelectedPartidos.remove(partido);
+          partido.setEstadodel("A");
+          
+       }
+{
+       
+       }
+       
    
    }
+      
+   public void onClickCandidato(Tblcandidato candidato){
    
+      
+         if (candidato.getEstadodel().equals("A")) {
+           
+         candidato.setEstadodel("S");
+         SelectedCandidatos.add(candidato);  
+       }else 
+           if (candidato.getEstadodel().equals("S")) {
+          SelectedCandidatos.remove(candidato);
+          candidato.setEstadodel("A");
+          
+       }
+   
+   }
    public String candName(Tblcandidato candidato){
    
    return candidato.getNomcand() + " " + candidato.getApecand();
    }
-   
-   public void onClickCandidato(Tblcandidato candidato){
-   
-       System.out.println(candidato.getNomcand());
-       SelectedCandidatos.add(candidato);
-   
-   }
+
 }
