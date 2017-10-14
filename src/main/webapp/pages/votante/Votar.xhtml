@@ -14,18 +14,26 @@
                 <b:row>
                 <ui:repeat value="#{sufragioController.listaPartidos}" var="partido" >
                     
-                    <b:column span="3"  >
+                    <b:column col-md="3"  >
                         <b:panel  onclick="ajax:sufragioController.onClickPartido(partido);"   >
                         <p:graphicImage value="#{partido.banderapartido}" style="width:100%;height: 100% ; padding: 10px;" /> 
                         <p:outputLabel value="#{partido.nompartido}" />
                         </b:panel>
-                        <ui:repeat value="#{partido.tblcandidatoList}" var="cand" >
+                        
+                       
+                            <ui:repeat value="#{partido.tblcandidatoList}" var="cand" >
+                                
                         <b:panel  onclick="ajax:sufragioController.onClickCandidato(cand);" >
                             
                             <p:graphicImage value="#{cand.fotourl}" style="width:140px;height: 100px;padding: 10px;"  />
                             <p:outputLabel value="#{sufragioController.candName(cand)}" />
                             </b:panel>
-                        </ui:repeat>
+                        </ui:repeat> 
+                            
+                        
+                        
+                        
+                 
                     
                     </b:column>
                         
@@ -33,7 +41,7 @@
                 
                 </ui:repeat>
                 </b:row>
-            
+               
             </h:form>
             
         </ui:define>
