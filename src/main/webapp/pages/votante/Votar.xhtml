@@ -57,7 +57,7 @@ ctx.drawImage(img, 0, 0, img.width, img.height,
                         <b:panel  onclick="ajax:sufragioController.onClickPartido(partido);"   >
                             
                             <img src="../..#{partido.banderapartido}" style="display: none;" onload="cargar(this.src,'#{partido.idpartido}');"  />
-                            <canvas id="myCanvas#{partido.idpartido}" width="300" height="250" onclick="draw('#{partido.idpartido}');"></canvas>
+                            <canvas id="myCanvas#{partido.idpartido}" style="flex: auto;" width="300" height="250" ></canvas>
                             
                             
                         <p:outputLabel value="#{partido.nompartido}" />
@@ -68,7 +68,8 @@ ctx.drawImage(img, 0, 0, img.width, img.height,
                                 
                         <b:panel  onclick="ajax:sufragioController.onClickCandidato(cand);" >
                             
-                            <p:graphicImage value="#{cand.fotourl}" style="width:140px;height: 100px;padding: 10px;"  />
+                            <img src="../..#{cand.fotourl}" style="display: none;" onload="cargar(this.src,'#{cand.idcandidato}');"  />
+                            <canvas id="myCanvas#{cand.idcandidato}" width="300" height="250" ></canvas>
                             <p:outputLabel value="#{sufragioController.candName(cand)}" />
                             </b:panel>
                         </ui:repeat> 

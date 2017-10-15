@@ -1,6 +1,5 @@
 package com.votoseguro.controller;
 
-
 import com.votoseguro.entity.Tblcandidato;
 import com.votoseguro.entity.Tblpartido;
 import com.votoseguro.facade.CandidatoFacade;
@@ -22,7 +21,6 @@ import lombok.Setter;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Luis Eduardo Valdez
@@ -30,105 +28,132 @@ import lombok.Setter;
 @ViewScoped
 @ManagedBean(name = "sufragioController")
 public class VotarController {
-   @EJB
-    PartidoFacade pf; 
-   @EJB
+
+    @EJB
+    PartidoFacade pf;
+    @EJB
     CandidatoFacade cf;
-   @EJB
-   ValidationBean vb;
-   
-   
-   private @Getter
+    @EJB
+    ValidationBean vb;
+
+    private @Getter
     @Setter
     List<Tblpartido> listaPartidos = new ArrayList<>();
-   
-   private @Getter @Setter List<Tblpartido> SelectedPartidos = new ArrayList<>();
-   
-   private @Getter @Setter List<Tblcandidato> SelectedCandidatos= new ArrayList<>();
-  private @Getter @Setter List<Tblcandidato> mostrarCandidatos= new ArrayList<>();
-   private @Getter @Setter boolean isNulo = false;
-   
-   @Inject
-   VotLoginController login;
-   
-   @PostConstruct
+
+    private @Getter
+    @Setter
+    List<Tblpartido> SelectedPartidos = new ArrayList<>();
+
+    private @Getter
+    @Setter
+    List<Tblcandidato> SelectedCandidatos = new ArrayList<>();
+    private @Getter
+    @Setter
+    List<Tblcandidato> mostrarCandidatos = new ArrayList<>();
+    private @Getter
+    @Setter
+    boolean isNulo = false;
+
+    @Inject
+    VotLoginController login;
+
+    @PostConstruct
     public void init() {
-        
+
         listaPartidos = pf.obtenerPartidos();
-       
-         
-         
-         for (Tblpartido partido : listaPartidos) {
-             
-           partido.setTblcandidatoList(cf.obtenerCandidatos(String.valueOf(partido.getIdpartido()),
-                   String.valueOf(login.getLoggedVotante().getIdmuni().getIddepto().getIddepto())));
-          
-          
-       }
-      
-       
-       System.out.println("com.votoseguro.controller.VotarController.init()");         
-     
-         
-      
+
+        for (Tblpartido partido : listaPartidos) {
+
+            partido.setTblcandidatoList(cf.obtenerCandidatos(String.valueOf(partido.getIdpartido()),
+                    String.valueOf(login.getLoggedVotante().getIdmuni().getIddepto().getIddepto())));
+
+        }
+
+        System.out.println("com.votoseguro.controller.VotarController.init()");
 
     }
-   
-   public void probar(){
-   
-      
-   
-   }
-   
-   
-   public void onClickPartido(Tblpartido partido){
-       System.out.println(partido.getNompartido());
+
+    public void probar() {
+
+    }
+
+    public void onClickPartido(Tblpartido partido) {
+        System.out.println(partido.getNompartido());
+        boolean y =false;
+        for (Tblcandidato cands : SelectedCandidatos) {
+            if (cands.getIdpartido().equals(partido)) {
+                y = true;
+            }
+        }
+        if (SelectedCandidatos.isEmpty()) {
+            y = true;
+        }
+        if (y) {
+            if (partido.getEstadodel().equals("A")) {
+            if (SelectedPartidos.isEmpty()) {
+                partido.setEstadodel("S");
+                SelectedPartidos.add(partido);
+                vb.ejecutarJavascript("draw('" + partido.getIdpartido() + "');");
+                System.out.println("agregapart");
+                for (Tblcandidato candidato : partido.getTblcandidatoList()) {
+                    
+                    onClickCandidato(candidato);
+                }
+            } else {
+                isNulo = true;
+                System.out.println("nulo 2 partidos selec");
+            }
+
+        } else if (partido.getEstadodel().equals("S")) {
+            SelectedPartidos.remove(partido);
+            vb.ejecutarJavascript("limpiar('../.." + partido.getBanderapartido() + "','" + partido.getIdpartido() + "');");
+            partido.setEstadodel("A");
+                for (Tblcandidato candidato : SelectedCandidatos) {
+                    onClickCandidato(candidato);
+                }
+            System.out.println("remuevepart");
+
+        }
+        }else{
+            System.out.println("nulo por seleccionar un partido teniendo un candidato de otro partido seleccionado");
+        }
+        
+        
        
-       
-       if (partido.getEstadodel().equals("A")) {
-           if (SelectedPartidos.isEmpty()) {
-            partido.setEstadodel("S");
-             SelectedPartidos.add(partido);   
-             System.out.println("agrega");
-           }else{
-             isNulo =true;
-             System.out.println("nulo");
-           }
-          
-       }else 
-           if (partido.getEstadodel().equals("S")) {
-          SelectedPartidos.remove(partido);
-          partido.setEstadodel("A");
-               System.out.println("remueve");
-          
-       }
-{
-       
-       }
-       
-   
-   }
-      
-   public void onClickCandidato(Tblcandidato candidato){
-   
-      
-         if (candidato.getEstadodel().equals("A")) {
-           
-         candidato.setEstadodel("S");
-         SelectedCandidatos.add(candidato);  
-         System.out.println("agrega");
-       }else 
-           if (candidato.getEstadodel().equals("S")) {
-          SelectedCandidatos.remove(candidato);
-          candidato.setEstadodel("A");
-          System.out.println("remueve");
-          
-       }
-   
-   }
-   public String candName(Tblcandidato candidato){
-   
-   return candidato.getNomcand() + " " + candidato.getApecand();
-   }
+
+    }
+
+    public void onClickCandidato(Tblcandidato candidato) {
+        int maxcand = Integer.parseInt(String.valueOf(login.getLoggedVotante().getIdmuni().getIddepto().getMaxcand()));
+
+        if (SelectedPartidos.isEmpty() || SelectedPartidos.get(0).equals(candidato.getIdpartido())) {
+            System.out.println("agrega cand");
+            if (candidato.getEstadodel().equals("A")) {
+                if (SelectedCandidatos.size() < maxcand) {
+                    candidato.setEstadodel("S");
+                    SelectedCandidatos.add(candidato);
+                    vb.ejecutarJavascript("draw('" + candidato.getIdcandidato() + "');");
+                    System.out.println("agregacand");
+                } else {
+                    System.out.println("no puede seleccionar mas de " + maxcand);
+                }
+            } else if (candidato.getEstadodel().equals("S")) {
+                SelectedCandidatos.remove(candidato);
+                candidato.setEstadodel("A");
+                vb.ejecutarJavascript("limpiar('../.." + candidato.getFotourl() + "','" + candidato.getIdcandidato() + "');");
+                System.out.println("remuevecand");
+
+            }
+
+        } else {
+            System.out.println("nulo añadio candidato de otro partido selec");
+        }
+
+    }
+
+    public String candName(Tblcandidato candidato) {
+
+        return candidato.getNomcand() + " " + candidato.getApecand();
+    }
 
 }
