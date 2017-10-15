@@ -10,13 +10,56 @@
 
     <ui:composition template="/WEB-INF/templates/template.xhtml">
         <ui:define name="content">
+                <script type="text/javascript">
+//cargar("character_themuppets_gonzo_9c3596c6.jpeg");
+
+function cargar(imgSrc,obj){
+console.log(imgSrc);
+var canvass = document.getElementById('myCanvas'+obj);
+        var ctxx = canvass.getContext('2d');
+var img = new Image();
+img.src = imgSrc;
+ctxx.drawImage(img, 0, 0, img.width, img.height,
+	0,0,canvass.width, canvass.height);	
+}
+
+    function draw(obj) {
+      var canvas = document.getElementById('myCanvas'+obj);
+        var ctx = canvas.getContext('2d');  
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(canvas.width, canvas.height);
+        ctx.stroke();
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width, 0);
+        ctx.lineTo(0,canvas.height);
+        ctx.stroke();
+        
+    }
+	
+	function limpiar(imgSrc,obj) {
+        var cnvs= document.getElementById("myCanvas"+obj);
+        var ctx = cnvs.getContext("2d");
+	ctx.clearRect(0, 0, cnvs.width, cnvs.height); 
+	var img = new Image();
+img.src = imgSrc;
+ctx.drawImage(img, 0, 0, img.width, img.height,
+	0,0,cnvs.width, cnvs.height);
+}
+</script>    
             <h:form>
                 <b:row>
                 <ui:repeat value="#{sufragioController.listaPartidos}" var="partido" >
                     
                     <b:column col-md="3"  >
                         <b:panel  onclick="ajax:sufragioController.onClickPartido(partido);"   >
-                        <p:graphicImage value="#{partido.banderapartido}" style="width:100%;height: 100% ; padding: 10px;" /> 
+                            
+                            <img src="../..#{partido.banderapartido}" style="display: none;" onload="cargar(this.src,'#{partido.idpartido}');"  />
+                            <canvas id="myCanvas#{partido.idpartido}" width="300" height="250" onclick="draw('#{partido.idpartido}');"></canvas>
+                            
+                            
                         <p:outputLabel value="#{partido.nompartido}" />
                         </b:panel>
                         

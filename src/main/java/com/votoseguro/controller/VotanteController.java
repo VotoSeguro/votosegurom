@@ -5,9 +5,11 @@
  */
 package com.votoseguro.controller;
 
+import com.votoseguro.entity.Tbldepartamento;
 import com.votoseguro.entity.Tblmunicipio;
 import com.votoseguro.entity.Tblrolxpermiso;
 import com.votoseguro.entity.Tblvotante;
+import com.votoseguro.facade.DepartamentoFacade;
 import com.votoseguro.facade.MunicipioFacade;
 import com.votoseguro.facade.VotanteFacade;
 
@@ -20,6 +22,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,11 +40,17 @@ public class VotanteController {
     MunicipioFacade mf;
     @EJB
     VotanteFacade vf;
+    @EJB
+    DepartamentoFacade df;
 
     private @Getter
     @Setter
     List<Tblvotante> listaVotantes = new ArrayList<>();
 
+    private @Getter
+    @Setter
+    List<Tbldepartamento> listaDeptos = new ArrayList<>();
+    
     private @Getter
     @Setter
     List<Tblmunicipio> listaMunicipios = new ArrayList<>();
@@ -80,11 +89,58 @@ public class VotanteController {
     private @Setter
     @Getter
     String idMuni = "";
-    
-     @ManagedProperty(value = "#{loginMant}")
-    private @Getter
-    @Setter
+    private @Setter
+    @Getter
+    String idDepto = "";
+     @Inject
+    private 
     LoginMantController login;
+     private @Setter
+    @Getter
+    String nacionalidad;
+     private @Setter
+    @Getter
+    String lugarnac;
+     private @Setter
+    @Getter
+    String fechaexp;
+     private @Setter
+    @Getter
+    String lugarexp;
+     private @Setter
+    @Getter
+    String fechavenc;
+     private @Setter
+    @Getter
+    String direccion;
+     private @Setter
+    @Getter
+    String tramite;
+     private @Setter
+    @Getter
+    String nit;
+     private @Setter
+    @Getter
+    String codzona;
+     private @Setter
+    @Getter
+    String nommadre;
+     private @Setter
+    @Getter
+    String nompadre;
+     private @Setter
+    @Getter
+    String estadocivil;
+     private @Setter
+    @Getter
+    String nomconyuge;
+     private @Setter
+    @Getter
+    String tiposangre;
+     private @Setter
+    @Getter
+    String profesion;
+     
 
     private @Getter
     @Setter
@@ -93,7 +149,8 @@ public class VotanteController {
     @PostConstruct
     public void init() {
         nivelPermiso = asignarNivel("mantvotante.xhtml");
-        listaMunicipios = mf.obtenerMunicipios();
+        listaDeptos = df.obtenerDeptos();
+        listaMunicipios = mf.obtenerMunicipios(String.valueOf(listaDeptos.get(0).getIddepto()));
         listaVotantes = vf.obtenerVotantes(String.valueOf(listaMunicipios.get(0).getIdmuni()));
 
     }
@@ -119,7 +176,11 @@ public class VotanteController {
         limpiar();
 
     }
+ public void onChangeDepto() {
+        listaMunicipios = mf.obtenerMunicipios(idDepto);
+        limpiar();
 
+    }
     public void deSelect() {
         limpiar();
     }
@@ -264,7 +325,21 @@ public class VotanteController {
                       selectedVotante.setEstadodel("A");
                       selectedVotante.setIdmuni(mf.find(new BigDecimal(idMuni)));
                       selectedVotante.setIduser(login.getLogedUser());
-                      
+                      selectedVotante.setNacionalidad(nacionalidad);
+                      selectedVotante.setLugarnac(lugarnac);
+                      selectedVotante.setLugarexp(lugarexp);
+                      selectedVotante.setFechaexp(fechaexp);
+                      selectedVotante.setFechavenc(fechavenc);
+                      selectedVotante.setDireccion(direccion);
+                      selectedVotante.setTramite(tramite);
+                      selectedVotante.setNit(nit);
+                      selectedVotante.setCodzona(codzona);
+                      selectedVotante.setNommadre(nommadre);
+                      selectedVotante.setNompadre(nompadre);
+                      selectedVotante.setEstadocivil(estadocivil);
+                      selectedVotante.setNomconyuge(nomconyuge);
+                      selectedVotante.setTiposangre(tiposangre);
+                      selectedVotante.setProfesion(profesion);
                      
                 }else{
                                      vb.lanzarMensaje("warn", "lblMantVot", "lblPasEqualsVot");

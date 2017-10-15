@@ -45,7 +45,7 @@ public class VotarController {
    private @Getter @Setter List<Tblpartido> SelectedPartidos = new ArrayList<>();
    
    private @Getter @Setter List<Tblcandidato> SelectedCandidatos= new ArrayList<>();
-  
+  private @Getter @Setter List<Tblcandidato> mostrarCandidatos= new ArrayList<>();
    private @Getter @Setter boolean isNulo = false;
    
    @Inject
@@ -55,17 +55,19 @@ public class VotarController {
     public void init() {
         
         listaPartidos = pf.obtenerPartidos();
-    
+       
          
          
          for (Tblpartido partido : listaPartidos) {
              
            partido.setTblcandidatoList(cf.obtenerCandidatos(String.valueOf(partido.getIdpartido()),
                    String.valueOf(login.getLoggedVotante().getIdmuni().getIddepto().getIddepto())));
-         
+          
           
        }
-         
+      
+       
+       System.out.println("com.votoseguro.controller.VotarController.init()");         
      
          
       

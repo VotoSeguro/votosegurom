@@ -49,7 +49,11 @@
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle.lblMantVot}" >
+                        <div id="fields">
                         <b:messages/>
+                        <b:selectOneMenu id="Depto"  label="#{bundle.lblDepartamento}" value="#{votanteController.idDepto}" onchange="ajax:votanteController.onChangeDepto();" ajax="true" update="Muni" >
+                            <f:selectItems  value="#{votanteController.listaDeptos}" var="depto" itemValue="#{depto.iddepto}" itemLabel="#{depto.nomdepto}" />
+                        </b:selectOneMenu>
                         <b:selectOneMenu id="Muni" value="#{votanteController.idMuni}" label="#{bundle.lblMuni}" onchange="ajax:votanteController.onChange();" ajax="true" update="tblVot" >
                             <f:selectItems  value="#{votanteController.listaMunicipios}" var="muni" itemValue="#{muni.idmuni}" itemLabel="#{muni.nommuni}" />
                         </b:selectOneMenu>
@@ -68,36 +72,81 @@
 
                         <p:outputLabel for="fnac" value="#{bundle.lblVotFnac}" /><br></br>
                         <p:inputMask id="fnac" value="#{votanteController.fnac}" mask="99/99/9999"  style="width: 100%;" placeholder="#{bundle.lblVotFnacReq}" />
+                        
+                        <b:inputText size="10" id="nacionalidad"  label="#{bundle.lblNacionalidad}" value="#{votanteController.nacionalidad}" placeholder="#{bundle.lblNacionalidadReq}" maxlength="30" />
+                        <b:inputText size="10" id="lugarnac"  label="#{bundle.lblLugarNac}" value="#{votanteController.lugarnac}" placeholder="#{bundle.lblLugarNacReq}" maxlength="50" />
+                        <p:outputLabel for="fechaexp" value="#{bundle.lblFechaExp}" /><br></br>
+                        <p:inputMask id="fechaexp" value="#{votanteController.fechaexp}" mask="99/99/9999"  style="width: 100%;" placeholder="#{bundle.lblFechaExpReq}" />
+                        <b:inputText size="10" id="lugarexp"  label="#{bundle.lblLugarExp}" value="#{votanteController.lugarexp}" placeholder="#{bundle.lblLugarExpReq}" maxlength="50" />
+                        <p:outputLabel for="fechavenc" value="#{bundle.lblFechaVenc}" /><br></br>
+                        <p:inputMask id="fechavenc" value="#{votanteController.fechavenc}" mask="99/99/9999"  style="width: 100%;" placeholder="#{bundle.lblFechaVencReq}" />
+                        <b:inputTextarea id="direccion" label="#{bundle.lblDireccion }" placeholder="#{bundle.lblDireccionReq}" value="#{votanteController.direccion}" size="10" maxlength="150"   />
+                        <b:inputText size="10" id="tramite"  label="#{bundle.lblTramite}" value="#{votanteController.tramite}" placeholder="#{bundle.lblTramiteReq}" maxlength="15" />
+                        <p:outputLabel for="nit" value="#{bundle.lblNit}"  /><br></br>
+                        <p:inputMask id="nit" value="#{votanteController.nit}" mask="9999-999999-999-9"  style="width: 100%;" placeholder="#{bundle.lblNitReq}" />
+                        <b:inputText size="10" id="codzona"  label="#{bundle.lblCodZona}" value="#{votanteController.codzona}" placeholder="#{bundle.lblCodZonaReq}" maxlength="15" />
+                        <b:inputText size="10" id="nommadre"  label="#{bundle.lblNomMadre}" value="#{votanteController.nommadre}" placeholder="#{bundle.lblNomMadreReq}" maxlength="50" />
+                        <b:inputText size="10" id="nompadre"  label="#{bundle.lblNomPadre}" value="#{votanteController.nompadre}" placeholder="#{bundle.lblNomPadreReq}" maxlength="50" />
+                        
+                        <b:selectOneMenu id="estadocivil" value="#{votanteController.estadocivil}" label="#{bundle.lblEstadoCivil}" >
+                            <f:selectItem    itemValue="#{bundle.lblSoltero}" itemLabel="#{bundle.lblSoltero}" />
+                            <f:selectItem   itemValue="#{bundle.lblCasado}" itemLabel="#{bundle.lblCasado}" />
+                            <f:selectItem    itemValue="#{bundle.lblViudo}" itemLabel="#{bundle.lblViudo}" />
+                            <f:selectItem   itemValue="#{bundle.lblDivorciado}" itemLabel="#{bundle.lblDivorciado}" />
+                           
+                        </b:selectOneMenu>
+                        <b:inputText size="10" id="nomconyuge"  label="#{bundle.lblNomConyuge}" value="#{votanteController.nomconyuge}" placeholder="#{bundle.lblNomConyugeReq}" maxlength="50" />
+                        <b:inputText size="10" id="tiposangre"  label="#{bundle.lblTipoSangre}" value="#{votanteController.tiposangre}" placeholder="#{bundle.lblTipoSangreReq}" maxlength="10" />
+                        <b:inputText size="10" id="profesion"  label="#{bundle.lblProfesion}" value="#{votanteController.profesion}" placeholder="#{bundle.lblProfesionReq}" maxlength="50" />
                         <b:inputSecret id="pass" value="#{votanteController.passvotante}" maxlength="10" label="#{bundle.lblVotPass}" placeholder="#{lblVotPassReq}" /> 
-                        <b:inputSecret id="passre" value="#{votanteController.passvotantere}" maxlength="10" label="#{bundle.lblVotPassRe}" placeholder="#{lblVotPassReReq}" />
+                        <b:inputSecret id="passre" value="#{votanteController.passvotantere}" maxlength="10" label="#{bundle.lblVotPassRe}" placeholder="#{lblVotPassReReq}"   />
+                        
+                        
                         <b:selectOneMenu id="Pregunta" value="#{votanteController.pregunta}" label="#{bundle.lblVotPregunta}" >
-                            <f:selectItem  value="#{lblPregunta1}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
-                            <f:selectItem  value="#{lblPregunta2}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
-                            <f:selectItem  value="#{lblPregunta3}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
-                            <f:selectItem  value="#{lblPregunta4}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
-                            <f:selectItem  value="#{lblPregunta5}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
-                            <f:selectItem  value="#{lblPregunta6}"  itemValue="#{bundle.lblVotPregunta}" itemLabel="#{bundle.lblVotPregunta}" />
+                            <f:selectItem    itemValue="#{bundle.lblPregunta1}" itemLabel="#{bundle.lblPregunta1}" />
+                            <f:selectItem  itemValue="#{bundle.lblPregunta6}" itemLabel="#{bundle.lblPregunta6}" />
+                            <f:selectItem   itemValue="#{bundle.lblPregunta2}" itemLabel="#{bundle.lblPregunta2}" />
+                            <f:selectItem   itemValue="#{bundle.lblPregunta3}" itemLabel="#{bundle.lblPregunta3}" />
+                            <f:selectItem   itemValue="#{bundle.lblPregunta4}" itemLabel="#{bundle.lblPregunta4}" />
+                            <f:selectItem   itemValue="#{bundle.lblPregunta5}" itemLabel="#{bundle.lblPregunta5}" />
                         </b:selectOneMenu>
                         
                         <b:inputText size="10" id="respuesta"  label="#{bundle.lblVotRespuesta}" value="#{votanteController.respuesta}" placeholder="#{bundle.lblVotRespuestaReq}"  maxlength="250"/>
                         <p:separator></p:separator>
+                        </div>
                         <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
                                      id="tblVot"
                                      value="#{votanteController.listaVotantes}"
                                     rendered="#{votanteController.nivelPermiso > 1}"
                                      var="vot"
+                                     responsive="true"
                                      select="true"
                                      selectionMode="single"
                                      onselect="ajax:votanteController.onSelect(vot);"
-                                     ondeselect="ajax:usuarioController.deSelect();"
+                                     
                                      ajax="true"
-                                     update="@form"
+                                     update="votanteForm:fields"
                                      >
                             <b:dataTableColumn label="#{bundle.lblVotDui}" value="#{vot.dui}"/>
                             <b:dataTableColumn label="#{bundle.lblNomVot}" value="#{vot.nombrev}"/>   
                             <b:dataTableColumn label="#{bundle.lblApeVot}" value="#{vot.apellidov}"/> 
                             <b:dataTableColumn label="#{bundle.lblGenVot}" value="#{vot.genero}"/> 
-                            <b:dataTableColumn label="#{bundle.lblVotFnac}" value="#{vot.fnac}"/> 
+                            <b:dataTableColumn label="#{bundle.lblVotFnac}" value="#{vot.fnac}"/>
+                            <b:dataTableColumn label="#{bundle.lblNacionalidad}" value="#{vot.nacionalidad}"/>
+                            <b:dataTableColumn label="#{bundle.lblLugarNac}" value="#{vot.lugarnac}"/>
+                            <b:dataTableColumn label="#{bundle.lblFechaExp}" value="#{vot.fechaexp}"/>
+                            <b:dataTableColumn label="#{bundle.lblLugarExp}" value="#{vot.lugarexp}"/>
+                            <b:dataTableColumn label="#{bundle.lblFechaVenc}" value="#{vot.fechavenc}"/>
+                            <b:dataTableColumn label="#{bundle.lblDireccion}" value="#{vot.direccion}"/>
+                            <b:dataTableColumn label="#{bundle.lblTramite}" value="#{vot.tramite}"/>
+                            <b:dataTableColumn label="#{bundle.lblNit}" value="#{vot.nit}"/>
+                            <b:dataTableColumn label="#{bundle.lblCodZona}" value="#{vot.codzona}"/>
+                            <b:dataTableColumn label="#{bundle.lblNomMadre}" value="#{vot.nommadre}"/>
+                            <b:dataTableColumn label="#{bundle.lblNomPadre}" value="#{vot.nompadre}"/>
+                            <b:dataTableColumn label="#{bundle.lblEstadoCivil}" value="#{vot.estadocivil}"/>
+                            <b:dataTableColumn label="#{bundle.lblNomConyuge}" value="#{vot.nomconyuge}"/>
+                            <b:dataTableColumn label="#{bundle.lblTipoSangre}" value="#{vot.tiposangre}"/>
+                            <b:dataTableColumn label="#{bundle.lblProfesion}" value="#{vot.profesion}"/>
                         </b:dataTable>
 
                     </b:tab>

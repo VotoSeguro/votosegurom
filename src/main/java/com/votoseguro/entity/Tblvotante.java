@@ -103,6 +103,37 @@ public class Tblvotante implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "ESTADODEL")
     private String estadodel;
+    @Column(name = "NACIONALIDAD")
+    private String nacionalidad;
+    @Column(name = "LUGARNAC")
+    private String lugarnac;
+    @Column(name = "FECHAEXP")
+    private String fechaexp;
+    @Column(name = "LUGAREXP")
+    private String lugarexp;
+    @Column(name = "FECHAVENC")
+    private String fechavenc;
+    @Column(name = "DIRECCION")
+    private String direccion;
+    @Column(name = "TRAMITE")
+    private String tramite;
+    @Column(name = "NIT")
+    private String nit;
+    @Column(name = "CODZONA")
+    private String codzona;
+    @Column(name = "NOMMADRE")
+    private String nommadre;
+    @Column(name = "NOMPADRE")
+    private String nompadre;
+    @Column(name = "ESTADOCIVIL")
+    private String estadocivil;
+    @Column(name = "NOMCONYUGE")
+    private String nomconyuge;
+    @Column(name = "TIPOSANGRE")
+    private String tiposangre;
+    @Column(name = "PROFESION")
+    private String profesion;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idvotante")
     private List<Tblvoto> tblvotoList;
     @JoinColumn(name = "IDMUNI", referencedColumnName = "IDMUNI")
@@ -166,6 +197,126 @@ public class Tblvotante implements Serializable {
 
     public String getPregunta() {
         return pregunta;
+    }
+
+    public String getNacionalidad() {
+        return nacionalidad;
+    }
+
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+
+    public String getLugarnac() {
+        return lugarnac;
+    }
+
+    public void setLugarnac(String lugarnac) {
+        this.lugarnac = lugarnac;
+    }
+
+    public String getFechaexp() {
+        return fechaexp;
+    }
+
+    public void setFechaexp(String fechaexp) {
+        this.fechaexp = fechaexp;
+    }
+
+    public String getLugarexp() {
+        return lugarexp;
+    }
+
+    public void setLugarexp(String lugarexp) {
+        this.lugarexp = lugarexp;
+    }
+
+    public String getFechavenc() {
+        return fechavenc;
+    }
+
+    public void setFechavenc(String fechavenc) {
+        this.fechavenc = fechavenc;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTramite() {
+        return tramite;
+    }
+
+    public void setTramite(String tramite) {
+        this.tramite = tramite;
+    }
+
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public String getCodzona() {
+        return codzona;
+    }
+
+    public void setCodzona(String codzona) {
+        this.codzona = codzona;
+    }
+
+    public String getNommadre() {
+        return nommadre;
+    }
+
+    public void setNommadre(String nommadre) {
+        this.nommadre = nommadre;
+    }
+
+    public String getNompadre() {
+        return nompadre;
+    }
+
+    public void setNompadre(String nompadre) {
+        this.nompadre = nompadre;
+    }
+
+    public String getEstadocivil() {
+        return estadocivil;
+    }
+
+    public void setEstadocivil(String estadocivil) {
+        this.estadocivil = estadocivil;
+    }
+
+    public String getNomconyuge() {
+        return nomconyuge;
+    }
+
+    public void setNomconyuge(String nomconyuge) {
+        this.nomconyuge = nomconyuge;
+    }
+
+    public String getTiposangre() {
+        return tiposangre;
+    }
+
+    public void setTiposangre(String tiposangre) {
+        this.tiposangre = tiposangre;
+    }
+
+    public String getProfesion() {
+        return profesion;
+    }
+
+    public void setProfesion(String profesion) {
+        this.profesion = profesion;
     }
 
     public void setPregunta(String pregunta) {
