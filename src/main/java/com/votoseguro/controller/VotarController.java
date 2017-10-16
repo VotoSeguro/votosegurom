@@ -79,43 +79,51 @@ public class VotarController {
 
     public void onClickPartido(Tblpartido partido) {
         System.out.println(partido.getNompartido());
-        boolean y =false;
+        int y =0;
         for (Tblcandidato cands : SelectedCandidatos) {
-            if (cands.getIdpartido().equals(partido)) {
-                y = true;
+            if (!cands.getIdpartido().equals(partido)) {
+                y++;
             }
         }
-        if (SelectedCandidatos.isEmpty()) {
+        /*if (SelectedCandidatos.isEmpty()) {
             y = true;
-        }
-        if (y) {
+        }*/
+       if (y == 0) {
             if (partido.getEstadodel().equals("A")) {
             if (SelectedPartidos.isEmpty()) {
                 partido.setEstadodel("S");
                 SelectedPartidos.add(partido);
                 vb.ejecutarJavascript("draw('" + partido.getIdpartido() + "');");
                 System.out.println("agregapart");
+                vb.lanzarMensaje("info", "lblVotar","lblAgregarPartido");
+                vb.updateComponent("growl");
+                SelectedCandidatos = new ArrayList<>();
                 for (Tblcandidato candidato : partido.getTblcandidatoList()) {
-                    
-                    onClickCandidato(candidato);
+                    candidato.setEstadodel("S");
+                    SelectedCandidatos.add(candidato);
+                    vb.ejecutarJavascript("draw('" + candidato.getIdcandidato() + "');");
                 }
             } else {
                 isNulo = true;
                 System.out.println("nulo 2 partidos selec");
+                vb.lanzarMensaje("error", "lblVotar","lblNulo2Part");
+                vb.updateComponent("growl");
             }
 
         } else if (partido.getEstadodel().equals("S")) {
             SelectedPartidos.remove(partido);
             vb.ejecutarJavascript("limpiar('../.." + partido.getBanderapartido() + "','" + partido.getIdpartido() + "');");
             partido.setEstadodel("A");
-                for (Tblcandidato candidato : SelectedCandidatos) {
-                    onClickCandidato(candidato);
-                }
+           
             System.out.println("remuevepart");
+            vb.lanzarMensaje("warn", "lblVotar","lblRemoverPartido");
+                vb.updateComponent("growl");
 
         }
         }else{
             System.out.println("nulo por seleccionar un partido teniendo un candidato de otro partido seleccionado");
+             vb.lanzarMensaje("error", "lblVotar","lblPartidoCO");
+                vb.updateComponent("growl");
         }
         
         
@@ -134,7 +142,11 @@ public class VotarController {
                     SelectedCandidatos.add(candidato);
                     vb.ejecutarJavascript("draw('" + candidato.getIdcandidato() + "');");
                     System.out.println("agregacand");
+                    vb.lanzarMensaje("info", "lblVotar","lblAgregarCandidato");
+                vb.updateComponent("growl");
                 } else {
+                    vb.lanzarMensaje("error", "lblVotar", "lblMaxCand");
+                    vb.updateComponent("growl");
                     System.out.println("no puede seleccionar mas de " + maxcand);
                 }
             } else if (candidato.getEstadodel().equals("S")) {
@@ -142,11 +154,14 @@ public class VotarController {
                 candidato.setEstadodel("A");
                 vb.ejecutarJavascript("limpiar('../.." + candidato.getFotourl() + "','" + candidato.getIdcandidato() + "');");
                 System.out.println("remuevecand");
-
+                 vb.lanzarMensaje("warn", "lblVotar","lblRemoverCandidato");
+                vb.updateComponent("growl");
             }
 
         } else {
             System.out.println("nulo añadio candidato de otro partido selec");
+            vb.lanzarMensaje("error", "lblVotar","lblSelectCandOP");
+                vb.updateComponent("growl");
         }
 
     }
