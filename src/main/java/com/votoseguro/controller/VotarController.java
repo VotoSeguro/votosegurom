@@ -114,7 +114,8 @@ public class VotarController {
             SelectedPartidos.remove(partido);
             vb.ejecutarJavascript("limpiar('../.." + partido.getBanderapartido() + "','" + partido.getIdpartido() + "');");
             partido.setEstadodel("A");
-           
+           //aqui
+                limpiar();
             System.out.println("remuevepart");
             vb.lanzarMensaje("warn", "lblVotar","lblRemoverPartido");
                 vb.updateComponent("growl");
@@ -171,4 +172,12 @@ public class VotarController {
         return candidato.getNomcand() + " " + candidato.getApecand();
     }
 
+    
+      public void limpiar(){
+      for (Tblcandidato SelectedCandidato : SelectedCandidatos) {
+                  vb.ejecutarJavascript("limpiar('../.." + SelectedCandidato.getFotourl() + "','" + SelectedCandidato.getIdcandidato() + "');"); 
+                  SelectedCandidato.setEstadodel("A");
+                }
+                SelectedCandidatos = new ArrayList<>();
+      }
 }
