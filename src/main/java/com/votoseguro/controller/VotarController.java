@@ -4,6 +4,8 @@ import com.votoseguro.entity.Tblcandidato;
 import com.votoseguro.entity.Tblpartido;
 import com.votoseguro.facade.CandidatoFacade;
 import com.votoseguro.facade.PartidoFacade;
+import com.votoseguro.facade.PeriodoFacade;
+import com.votoseguro.facade.VotoFacade;
 import com.votoseguro.util.ValidationBean;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +37,11 @@ public class VotarController {
     CandidatoFacade cf;
     @EJB
     ValidationBean vb;
+    @EJB
+    PeriodoFacade perf;
+    @EJB
+    VotoFacade vf;
+   
 
     private @Getter
     @Setter
@@ -179,5 +186,13 @@ public class VotarController {
                   SelectedCandidato.setEstadodel("A");
                 }
                 SelectedCandidatos = new ArrayList<>();
+      }
+      
+      
+      
+      public void votar(){
+          
+          vf.votar(SelectedCandidatos, perf.obtenerPeriodoHab(), login.getLoggedVotante());
+      
       }
 }

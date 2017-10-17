@@ -63,5 +63,19 @@ public class PeriodoFacade extends AbstractFacade<Tblperiodo>{
         return listaEntity.size();
     }
     
-    
+    public Tblperiodo obtenerPeriodoHab(){
+      
+     Query q = getEntityManager().createNativeQuery("select * from tblperiodo where"
+             + " estadoper = 'HABILITADO' and estadodel = 'A'", Tblperiodo.class);
+     List<Tblperiodo> listaEntity;
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntity = new ArrayList<Tblperiodo>();
+            }
+        } catch (Exception e) {
+            listaEntity = new ArrayList<Tblperiodo>();
+        }
+        return listaEntity.get(0);
+    }
 }
