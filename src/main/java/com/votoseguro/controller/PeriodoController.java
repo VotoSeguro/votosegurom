@@ -215,9 +215,32 @@ public class PeriodoController {
 
     public void terminarPer() {
         if (selectedPeriodo != null && selectedPeriodo.getIdperiodo() != null) {
-            if (selectedPeriodo.getEstadoper().equals("ACTIVO")) {
+            if (selectedPeriodo.getEstadoper().equals("HABILITADO")) {
 
                 vb.ejecutarJavascript("$('.modalPseudoClass3').modal('show');");
+            } else {
+                vb.lanzarMensaje("error", "lblMantPer", "lblPerReqHab");
+            }
+
+        } else {
+            vb.lanzarMensaje("error", "lblMantPer", "lblPerReqMod");
+        }
+
+    }
+    
+    public void habilitar(){
+    selectedPeriodo.setEstadoper("HABILITADO");
+        pf.edit(selectedPeriodo);
+        limpiar();
+        vb.lanzarMensaje("info", "lblMantPer", "lblPerHabSuccess");
+        listaPeriodo = pf.obtenerPeriodos();
+    }
+    
+    public void validarHabilitar(){
+     if (selectedPeriodo != null && selectedPeriodo.getIdperiodo() != null) {
+            if (selectedPeriodo.getEstadoper().equals("ACTIVO")) {
+
+                vb.ejecutarJavascript("$('.modalPseudoClass4').modal('show');");
             } else {
                 vb.lanzarMensaje("error", "lblMantPer", "lblPerReqActivo");
             }
@@ -225,7 +248,11 @@ public class PeriodoController {
         } else {
             vb.lanzarMensaje("error", "lblMantPer", "lblPerReqMod");
         }
-
+    }
+    
+    public void cerrarDialogo4(){
+     limpiar();
+        vb.ejecutarJavascript("$('.modalPseudoClass4').modal('hide'); ");
     }
 
 }

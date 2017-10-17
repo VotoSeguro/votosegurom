@@ -31,6 +31,9 @@
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lblbtnTerminar']}" rendered="#{periodoController.nivelPermiso > 3}" style="width:100%;background-color: #660000;color: #f0f0f0" actionListener="#{periodoController.terminarPer()}"/>
                             </b:column>
+                             <b:column span="2">
+                                 <b:commandButton update="@form" ajax="true"  value="#{bundle['lblPeriodoPr']}" rendered="#{periodoController.nivelPermiso > 3}" style="width:100%;background-color: #33ff33;color: black" actionListener="#{periodoController.validarHabilitar()}"/>
+                            </b:column>
                         </b:row>
                          <b:modal  id="amodal" title="#{bundle['lblMantPer']}" styleClass="modalPseudoClass">
                              <p>#{bundle['lblRegEliminar']}</p>
@@ -39,18 +42,25 @@
                                 <b:commandButton  ajax="false"  value="#{bundle['lblBtnOk']}" look="primary"  actionListener="#{periodoController.eliminar()}"/>
                             </f:facet>
                         </b:modal>
-                        <b:modal  id="bmodal" title="#{bundle['lblMantUser']}" styleClass="modalPseudoClass2">
+                        <b:modal  id="bmodal" title="#{bundle['lblMantPer']}" styleClass="modalPseudoClass2">
                              <p>#{bundle['lblRegModificar']}</p>
                             <f:facet name="footer">
                                 <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{periodoController.cerrarDialogo2()}" />
                                 <b:commandButton  ajax="false"  value="#{bundle['lblbtnModifiar']}" look="primary"  actionListener="#{periodoController.modificar()}"/>
                             </f:facet>
                         </b:modal>
-                        <b:modal  id="cmodal" title="#{bundle['lblMantUser']}" styleClass="modalPseudoClass3">
+                        <b:modal  id="cmodal" title="#{bundle['lblMantPer']}" styleClass="modalPseudoClass3">
                              <p>#{bundle['lblRegTerminar']}</p>
                             <f:facet name="footer">
                                 <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{periodoController.cerrarDialogo3()}" />
                                 <b:commandButton  ajax="false"  value="#{bundle['lblbtnTerminar']}" look="primary"  actionListener="#{periodoController.terminar()}"/>
+                            </f:facet>
+                        </b:modal>
+                        <b:modal  id="dmodal" title="#{bundle['lblMantPer']}" styleClass="modalPseudoClass4">
+                             <p>#{bundle['lblRegHabilitar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{periodoController.cerrarDialogo4()}" />
+                                <b:commandButton  ajax="false"  value="#{bundle['lblPeriodoPr']}" look="primary"  actionListener="#{periodoController.habilitar()}"/>
                             </f:facet>
                         </b:modal>
                     </b:tab>
