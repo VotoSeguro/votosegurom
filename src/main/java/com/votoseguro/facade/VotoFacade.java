@@ -45,13 +45,14 @@ public class VotoFacade extends AbstractFacade<Tblvoto>{
         int c = 0;
         boolean flag = false;
         List<Tblvoto> voto = new ArrayList<>();
-        String valor = String.valueOf(1/selectedCandidatos.size());
+        Double valor = 1/Double.valueOf(selectedCandidatos.size());
+        String valorS = String.valueOf(valor);
         for (Tblcandidato candidato : selectedCandidatos) {
             Tblvoto v = new Tblvoto();
             v.setIdcandidato(candidato);
             v.setIdperiodo(periodo);
             v.setIdvotante(votante);
-            v.setValor(new BigDecimal(valor));
+            v.setValor(new BigDecimal(valorS));
             voto.add(v);
         }
         for (Tblvoto tblvoto : voto) {
@@ -68,6 +69,28 @@ public class VotoFacade extends AbstractFacade<Tblvoto>{
             flag = true;
             System.out.println("se insertaron todos");
         }
+    
+    }
+    
+    
+    public boolean yaVoto(String idvotante, String idperiodo){
+    boolean flag = true;
+    List<Tblvoto> votos = new ArrayList<>();
+        try {
+            Query q = em.createNativeQuery("select * from tblvoto where idvotante = ? and idperiodo = ?",Tblvoto.class);
+            q.setParameter(1, idvotante);
+            q.setParameter(2, idperiodo);
+            votos = q.getResultList();
+            if (votos.isEmpty()) {
+                flag = false;
+            }
+            
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.facade.VotoFacade.yaVoto()");
+            e.printStackTrace();
+        }
+    
+    return flag;
     
     }
 }

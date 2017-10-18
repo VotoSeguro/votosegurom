@@ -7,6 +7,7 @@ import com.votoseguro.facade.PartidoFacade;
 import com.votoseguro.facade.PeriodoFacade;
 import com.votoseguro.facade.VotoFacade;
 import com.votoseguro.util.ValidationBean;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -191,8 +195,18 @@ public class VotarController {
       
       
       public void votar(){
+          if (!SelectedCandidatos.isEmpty()) {
+             vf.votar(SelectedCandidatos, perf.obtenerPeriodoHab(), login.getLoggedVotante()); 
+          }else {
+      vb.lanzarMensaje("error", "lblVotar","lblSeleccReq");
+                vb.updateComponent("growl");
+      }
           
-          vf.votar(SelectedCandidatos, perf.obtenerPeriodoHab(), login.getLoggedVotante());
       
+      }
+      
+      public void salir() throws IOException{
+          ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+          context.redirect(context.getRequestContextPath() + "/index.xhtml");
       }
 }

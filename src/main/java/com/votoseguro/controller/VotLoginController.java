@@ -6,7 +6,9 @@
 package com.votoseguro.controller;
 
 import com.votoseguro.entity.Tblvotante;
+import com.votoseguro.facade.PeriodoFacade;
 import com.votoseguro.facade.VotanteFacade;
+import com.votoseguro.facade.VotoFacade;
 import com.votoseguro.util.ValidationBean;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -45,6 +47,10 @@ public class VotLoginController implements Serializable {
     VotanteFacade vf;
     @EJB
     ValidationBean vb;
+    @EJB
+    PeriodoFacade pf;
+    @EJB
+    VotoFacade votofacade;
     
     public VotLoginController() {
     }
@@ -92,6 +98,7 @@ public class VotLoginController implements Serializable {
      public  int daysBetweenUsingJoda()
      { 
          Date d1 = new Date();
+         fechaSig = pf.obtenerPeriodoHab().getFechainicio();
          SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
          
          Date d2 = null;
@@ -105,6 +112,23 @@ public class VotLoginController implements Serializable {
                  new LocalDate(d2.getTime())).getDays(); 
      }
 
-
+    public boolean mostrarVotar(){
+    boolean flag = false;
+        if (votLogged) {
+         boolean yaVoto = votofacade.yaVoto(String.valueOf(loggedVotante.getIdvotante()), String.valueOf(pf.obtenerPeriodoHab().getIdperiodo()))   ;
+            if (!yaVoto) {
+                flag = true;
+            }
+      
+                 
+        }
+    
+       
+    
+    
+    return flag;
+    }
+     
+     
     
 }

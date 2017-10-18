@@ -56,13 +56,13 @@ ctx.drawImage(img, 0, 0, img.width, img.height,
                         <b:row>
 
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblEjecutarVoto']}" look="info" style="width:100%"     actionListener="#{sufragioController.votar()}" />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblEjecutarVoto']}" look="info" style="width:100%"     actionListener="#{sufragioController.votar}" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblVotoSalir']}" look="warning" style="width:100%"   actionListener="#{votanteController.validarModificar()}"  />
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblVotoSalir']}" look="warning" style="width:100%"   actionListener="#{sufragioController.salir()}"  />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblVotoLimpiar']}"  look="danger" style="width:100%"  actionListener="#{sufragioController.limpiar()}"/>
+                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblVotoLimpiar']}"  look="danger" style="width:100%;padding-right: 12px;"  actionListener="#{sufragioController.limpiar()}"/>
                             </b:column>
                            
                         </b:row>
