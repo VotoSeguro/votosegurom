@@ -56,6 +56,17 @@ public class FiltroPages implements Filter{
                 
                 
                 
+            }else if(url.contains("confirmacion.xhtml")){
+               
+                if (login.isVotLogged()) {
+                   if (login.mostrarVotar()) {
+                    System.out.println("votarFILTER()");
+                    ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
+                } 
+                }else{
+                ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
+                }
+            
             }else{
                 if (!loginMant.isLoggedIn()) {
                     System.out.println("MANTSFILTER()");
