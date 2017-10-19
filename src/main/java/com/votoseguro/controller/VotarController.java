@@ -192,7 +192,15 @@ public class VotarController {
                 SelectedCandidatos = new ArrayList<>();
       }
       
+      public void limpiarPartido(){
+      SelectedPartidos = new ArrayList<>();
       
+      }
+      
+      public void limpiarTodo(){
+      limpiar();
+      limpiarPartido();
+      }
       
       public void votar(){
           if (!SelectedCandidatos.isEmpty()) {

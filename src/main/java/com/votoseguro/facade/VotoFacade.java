@@ -83,6 +83,9 @@ public class VotoFacade extends AbstractFacade<Tblvoto>{
             votos = q.getResultList();
             if (votos.isEmpty()) {
                 flag = false;
+                if (idperiodo.equals("0")) {
+                    flag = true;
+                }
             }
             
         } catch (Exception e) {

@@ -7,6 +7,7 @@ package com.votoseguro.facade;
 
 import com.votoseguro.entity.Tblcandidato;
 import com.votoseguro.entity.Tblperiodo;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -72,6 +73,7 @@ public class PeriodoFacade extends AbstractFacade<Tblperiodo>{
             listaEntity = q.getResultList();
             if (listaEntity.isEmpty()) {
                 listaEntity = new ArrayList<Tblperiodo>();
+                listaEntity.add(new Tblperiodo(BigDecimal.ZERO));
             }
         } catch (Exception e) {
             listaEntity = new ArrayList<Tblperiodo>();
@@ -81,7 +83,7 @@ public class PeriodoFacade extends AbstractFacade<Tblperiodo>{
     public Tblperiodo obtenerPeriodoHaboAct(){
       
      Query q = getEntityManager().createNativeQuery("select * from tblperiodo where"
-             + " (estadoper = 'HABILITADO' and estadorper='ACTIVO') and estadodel = 'A'", Tblperiodo.class);
+             + " (estadoper = 'ACTIVO' or estadoper = 'HABILITADO') and estadodel = 'A'", Tblperiodo.class);
      List<Tblperiodo> listaEntity;
         try {
             listaEntity = q.getResultList();

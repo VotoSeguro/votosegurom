@@ -98,7 +98,13 @@ public class VotLoginController implements Serializable {
      public  int daysBetweenUsingJoda()
      { 
          Date d1 = new Date();
-         fechaSig = pf.obtenerPeriodoHab().getFechainicio();
+         try {
+             fechaSig = pf.obtenerPeriodoHaboAct().getFechainicio();
+         } catch (Exception e) {
+             System.out.println("com.votoseguro.controller.VotLoginController.daysBetweenUsingJoda()");
+             e.printStackTrace();
+         }
+         
          SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
          
          Date d2 = null;
