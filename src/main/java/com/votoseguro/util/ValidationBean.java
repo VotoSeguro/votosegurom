@@ -5,35 +5,24 @@
  */
 package com.votoseguro.util;
 
-import com.votoseguro.controller.LoginMantController;
-import com.votoseguro.entity.Tblrolxpermiso;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.primefaces.context.RequestContext;
 
@@ -43,9 +32,6 @@ import org.primefaces.context.RequestContext;
  */
 @Stateless
 public class ValidationBean {
-    
-    
-    
 
     public boolean validarCampoVacio(String c, String tipoMsg, String tituloMsg, String descMsg) {
         boolean flag;
@@ -62,21 +48,22 @@ public class ValidationBean {
         }
         return flag;
     }
-    
-    public boolean validarFecha(String c, String tipoMsg, String tituloMsg, String descMsg){
-      Pattern patron = Pattern.compile("^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$");
+
+    public boolean validarFecha(String c, String tipoMsg, String tituloMsg, String descMsg) {
+        Pattern patron = Pattern.compile("^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$");
         Matcher validar = patron.matcher(c);
         boolean flag;
         if (validar.find()) {
             flag = true;
             System.out.println("invalid");
-            
+
         } else {
             flag = false;
             lanzarMensaje(tipoMsg, tituloMsg, descMsg);
-        }System.out.println("valid");
+        }
+        System.out.println("valid");
         return flag;
-    
+
     }
 
     public boolean validarSoloLetras(String c, String tipoMsg, String tituloMsg, String descMsg) {
@@ -128,7 +115,7 @@ public class ValidationBean {
         }
         return flag;
     }
-    
+
     public boolean validarSoloNumeros(String c, String tipoMsg, String tituloMsg, String descMsg) {
         Pattern patron = Pattern.compile("[^0-9]");
         Matcher validar = patron.matcher(c);
@@ -170,12 +157,13 @@ public class ValidationBean {
         String value = bundle.getString(key);
         return value;
     }
-     public void ejecutarJavascript(String codigo){
-        RequestContext requestContext = RequestContext.getCurrentInstance();  
+
+    public void ejecutarJavascript(String codigo) {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute(codigo);
     }
 
-  /*  public String Encriptar(String texto) {
+    /*  public String Encriptar(String texto) {
 
         String secretKey = "infomedicsolutions"; //llave para encriptar datos
         String base64EncryptedString = "";
@@ -261,70 +249,74 @@ public class ValidationBean {
         }
         return flag;
     }*/
-     
-     
-
     public String formatearFecha(String fecha) {
         try {
-            System.err.println("Fecha al formatear fecha:    "+ fecha);
+            System.err.println("Fecha al formatear fecha:    " + fecha);
             //String dateStr = "Mon Jun 18 00:00:00 IST 2012";
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy", Locale.US);
             Date date = (Date) formatter.parse(fecha);
             System.out.println(date);
-            
+
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            String formatedDate = (cal.get(Calendar.DATE)<10?"0"+cal.get(Calendar.DATE):cal.get(Calendar.DATE)) + "/" + ((cal.get(Calendar.MONTH) + 1)<10?"0"+(cal.get(Calendar.MONTH) + 1):(cal.get(Calendar.MONTH) + 1)) + "/" + cal.get(Calendar.YEAR);
+            String formatedDate = (cal.get(Calendar.DATE) < 10 ? "0" + cal.get(Calendar.DATE) : cal.get(Calendar.DATE)) + "/" + ((cal.get(Calendar.MONTH) + 1) < 10 ? "0" + (cal.get(Calendar.MONTH) + 1) : (cal.get(Calendar.MONTH) + 1)) + "/" + cal.get(Calendar.YEAR);
             System.out.println("formatedDate : " + formatedDate);
-            fecha= formatedDate;
+            fecha = formatedDate;
         } catch (ParseException ex) {
-            System.err.println("Fecha al formatear fecha en exception:    "+ fecha);
+            System.err.println("Fecha al formatear fecha en exception:    " + fecha);
             //fecha="";
         }
         return fecha;
     }
-    
-    public void updateComponent(String id){
+
+    public void updateComponent(String id) {
         RequestContext.getCurrentInstance().update(id);
     }
-    
-    public boolean copyFile(String fileName,String destination, InputStream in) {
-           boolean flag= false;
-           try {
-              
-              
-                // write the inputStream to a FileOutputStream
-                OutputStream out = new FileOutputStream(new File(destination + fileName));
-              
-                int read = 0;
-                byte[] bytes = new byte[1024];
-              
-                while ((read = in.read(bytes)) != -1) {
-                    out.write(bytes, 0, read);
-                }
-              
-                in.close();
-                out.flush();
-                out.close();
-              
-                System.out.println("New file created!");
-                flag=true;
-                } catch (IOException e) {
-                System.out.println(e.getMessage());
-                }
-           return flag;
-    }
-    
-    public boolean deleteFile(String file){
-        boolean flag=false;
-        File fichero = new File(file);
-        if (fichero.delete()) {
-            flag=true;
+
+    public boolean copyFile(String fileName, String destination, InputStream in) {
+        boolean flag = false;
+        try {
+
+            // write the inputStream to a FileOutputStream
+            OutputStream out = new FileOutputStream(new File(destination + fileName));
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+
+            in.close();
+            out.flush();
+            out.close();
+
+            System.out.println("New file created!");
+            flag = true;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
         return flag;
     }
-    
-    
-    
-   
+
+    public boolean deleteFile(String file) {
+        boolean flag = false;
+        File fichero = new File(file);
+        if (fichero.delete()) {
+            flag = true;
+        }
+        return flag;
+    }
+
+    public void redirecionar(String pagina) {
+        try {
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + pagina);
+        } catch (IOException e) {
+            System.out.println("com.votoseguro.util.ValidationBean.redirecionar()");
+            e.printStackTrace();
+        }
+
+    }
+
 }

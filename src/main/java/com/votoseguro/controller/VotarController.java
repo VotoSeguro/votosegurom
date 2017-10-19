@@ -204,17 +204,24 @@ public class VotarController {
       
       public void votar(){
           if (!SelectedCandidatos.isEmpty()) {
-             vf.votar(SelectedCandidatos, perf.obtenerPeriodoHab(), login.getLoggedVotante()); 
+              try {
+                  vf.votar(SelectedCandidatos, perf.obtenerPeriodoHab(), login.getLoggedVotante());
+                  vb.redirecionar("/pages/votante/confirmacion.xhtml");
+              } catch (Exception e) {
+                  System.out.println("com.votoseguro.controller.VotarController.votar()");
+                  e.printStackTrace();
+              }
+ 
           }else {
       vb.lanzarMensaje("error", "lblVotar","lblSeleccReq");
                 vb.updateComponent("growl");
+                
       }
           
       
       }
       
       public void salir() throws IOException{
-          ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-          context.redirect(context.getRequestContextPath() + "/index.xhtml");
+          vb.redirecionar("/index.xhtml");
       }
 }

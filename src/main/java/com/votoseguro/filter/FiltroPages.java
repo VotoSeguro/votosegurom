@@ -7,6 +7,7 @@ package com.votoseguro.filter;
 
 import com.votoseguro.controller.LoginMantController;
 import com.votoseguro.controller.VotLoginController;
+import com.votoseguro.entity.Tblrolxpermiso;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.Filter;
@@ -42,15 +43,35 @@ public class FiltroPages implements Filter{
         System.out.println("com.votoseguro.filter.FiltroPages.doFilter()");
             //String contextPath = ((HttpServletRequest)request).getContextPath();
             if(url.contains("Votar.xhtml")){
-                if (login.mostrarVotar()) {
+                
+                if (login.isVotLogged()) {
+                     if (!login.mostrarVotar()) {
+                    System.out.println("votarFILTER()");
                     ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
                 }
+                }else{
+                ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
+                }
+               
+                
                 
                 
             }else{
                 if (!loginMant.isLoggedIn()) {
+                    System.out.println("MANTSFILTER()");
                     ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
+                }else{
+                    String[] urlpieces = url.split("/pages/");
+                    System.out.println("URL AUQI 0" + urlpieces[0]);
+                    System.out.println("URL AUQI 1" + urlpieces[1]);
+                    for (Tblrolxpermiso obj : loginMant.getLogedUser().getIdrol().getTblrolxpermisoList()) {
+                        if (obj.getIdpermiso().getUrlpermiso().contains(urlpieces[0])) {
+                            System.out.println("si la tiene");
+                        }else{System.out.println("no la tiene joder");}
+                    }
+                
                 }
+                
             
             }
         

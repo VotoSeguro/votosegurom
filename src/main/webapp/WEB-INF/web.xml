@@ -4,15 +4,18 @@
         <filter-name>Filtro</filter-name>
         <filter-class>com.votoseguro.filter.Filtro</filter-class>
     </filter>
-    <!--<filter>
+    <filter>
         <filter-name>FiltroPages</filter-name>
         <filter-class>com.votoseguro.filter.FiltroPages</filter-class>
-    </filter>-->       
+    </filter>    
     <filter-mapping>
         <filter-name>Filtro</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/loginMantenimiento.xhtml</url-pattern>
     </filter-mapping>  
-
+<filter-mapping>
+        <filter-name>FiltroPages</filter-name>
+        <url-pattern>/pages/*</url-pattern>
+    </filter-mapping> 
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>

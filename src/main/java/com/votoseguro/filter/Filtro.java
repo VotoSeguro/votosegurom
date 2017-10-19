@@ -37,15 +37,23 @@ public class Filtro implements Filter{
         System.err.println(url);
         //System.err.println(url[1]);//votante/Votar.xhtml
         String contextPath = ((HttpServletRequest)request).getContextPath(); //votosegurom
-        System.out.println("com.votoseguro.filter.Filtro.doFilter()");
+       
             //String contextPath = ((HttpServletRequest)request).getContextPath();
             if(url.contains("loginMantenimiento.xhtml")){
                 if (!login.isAccesoMant()) {
+                    System.out.println("com.votoseguro.filter.Filtro.mant()");
                     ((HttpServletResponse)response).sendRedirect(contextPath + "/advertencia.xhtml");
                 }
                 
                 
             }
+             System.out.println("URL AQUI " + url);
+          /*  if (url.contains("Votar.xhtml")) {
+                if (login.mostrarVotar()) {
+                    System.out.println("com.votoseguro.filter.Filtro.votar()");
+                    ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
+                }
+        }*/
         
       
          
