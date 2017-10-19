@@ -68,17 +68,24 @@ public class FiltroPages implements Filter{
                 }
             
             }else{
+                System.out.println("pages/");
                 if (!loginMant.isLoggedIn()) {
                     System.out.println("MANTSFILTER()");
                     ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
                 }else{
+                    int c = 0;
+                    System.out.println("logeado");
                     String[] urlpieces = url.split("/pages/");
-                    System.out.println("URL AUQI 0" + urlpieces[0]);
-                    System.out.println("URL AUQI 1" + urlpieces[1]);
+                    System.out.println("URL AUQI 0 " + urlpieces[0]);
+                    System.out.println("URL AUQI 1 " + urlpieces[1]);
                     for (Tblrolxpermiso obj : loginMant.getLogedUser().getIdrol().getTblrolxpermisoList()) {
-                        if (obj.getIdpermiso().getUrlpermiso().contains(urlpieces[0])) {
-                            System.out.println("si la tiene");
-                        }else{System.out.println("no la tiene joder");}
+                        if (obj.getIdpermiso().getUrlpermiso().contains(urlpieces[1])) {
+                            c++;
+                        }
+                    }
+                    
+                    if (c == 0) {
+                        ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
                     }
                 
                 }
