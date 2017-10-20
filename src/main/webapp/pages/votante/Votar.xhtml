@@ -78,10 +78,10 @@ ctx.drawImage(img, 0, 0, img.width, img.height,
                 <ui:repeat value="#{sufragioController.listaPartidos}" var="partido" >
                     
                     <b:column col-md="3"  >
-                        <b:panel  onclick="ajax:sufragioController.onClickPartido(partido);"    >
+                        <b:panel  onclick="ajax:sufragioController.onClickPartido(partido);"   style="text-align: center" >
                             
                             <img src="../..#{partido.banderapartido}" style="display: none;" onload="cargar(this.src,'#{partido.idpartido}');"  />
-                            <canvas id="myCanvas#{partido.idpartido}" style="flex: auto;" width="268" height="147" ></canvas>
+                            <canvas id="myCanvas#{partido.idpartido}" style="flex: auto;width: 100%"  ></canvas>
                             
                             
                         <p:outputLabel value="#{partido.nompartido}" />
@@ -90,10 +90,10 @@ ctx.drawImage(img, 0, 0, img.width, img.height,
                        
                             <ui:repeat value="#{partido.tblcandidatoList}" var="cand" >
                                 
-                        <b:panel  onclick="ajax:sufragioController.onClickCandidato(cand);" >
+                                <b:panel  onclick="ajax:sufragioController.onClickCandidato(cand);" style="padding-left: 5%;padding-right:5%;border: 1px solid black; text-align: center" >
                             
                             <img src="../..#{cand.fotourl}" style="display: none;" onload="cargar(this.src,'#{cand.idcandidato}');"  />
-                            <canvas id="myCanvas#{cand.idcandidato}" width="165" height="155" ></canvas>
+                            <canvas id="myCanvas#{cand.idcandidato}" style="width: 100%" ></canvas>
                             <p:outputLabel value="#{sufragioController.candName(cand)}" />
                             </b:panel>
                         </ui:repeat> 
