@@ -62,7 +62,7 @@ public class LoginMantController implements Serializable {
             apellidouser = logedUser.getApellidouser();
             userpass = logedUser.getPassuser();
             loggedIn = true;
-                return "/gestionar.xhtml?faces-redirect=true";
+                return "/pages/usuario/gestionar.xhtml?faces-redirect=true";
             }else{
             vb.lanzarMensaje("warn", "titleLogin", "lblErrorLogin");
             System.err.println("Usuarios incorrecto");

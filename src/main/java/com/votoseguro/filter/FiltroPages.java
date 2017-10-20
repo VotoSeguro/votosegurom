@@ -73,7 +73,13 @@ public class FiltroPages implements Filter{
                     System.out.println("MANTSFILTER()");
                     ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
                 }else{
-                    int c = 0;
+                    
+                    if (url.contains("gestionar.xhtml")) {
+                        if (!loginMant.isLoggedIn()) {
+                            ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
+                        }
+                    }else{
+                     int c = 0;
                     System.out.println("logeado");
                     String[] urlpieces = url.split("/pages/");
                     System.out.println("URL AUQI 0 " + urlpieces[0]);
@@ -87,6 +93,13 @@ public class FiltroPages implements Filter{
                     if (c == 0) {
                         ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
                     }
+                    
+                    
+                    
+                    }
+                    
+                    
+                   
                 
                 }
                 
