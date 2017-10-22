@@ -90,11 +90,12 @@ ctx.drawImage(img, 0, 0, img.width, img.height,
                        
                             <ui:repeat value="#{partido.tblcandidatoList}" var="cand" >
                                 
-                                <b:panel  onclick="ajax:sufragioController.onClickCandidato(cand);" style="padding-left: 5%;padding-right:5%;border: 1px solid black; text-align: center" >
+                                <b:panel  onclick="ajax:sufragioController.onClickCandidato(cand);" style="padding-left: 5%;padding-right:5%;box-shadow: 10px 10px 5px #888888;background-color: #cccccc; text-align: center" >
                             
                             <img src="../..#{cand.fotourl}" style="display: none;" onload="cargar(this.src,'#{cand.idcandidato}');"  />
-                            <canvas id="myCanvas#{cand.idcandidato}" style="width: 100%" ></canvas>
-                            <p:outputLabel value="#{sufragioController.candName(cand)}" />
+                            <canvas id="myCanvas#{cand.idcandidato}" style="width: 100px;height: 114px;" ></canvas><br></br>
+                            <p:outputLabel style="size: 5px" value="#{cand.nomcand}" /><br></br>
+                            <p:outputLabel style="size: 5px" value="#{cand.apecand}" />
                             </b:panel>
                         </ui:repeat> 
                             
