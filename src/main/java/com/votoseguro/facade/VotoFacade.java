@@ -55,6 +55,7 @@ public class VotoFacade extends AbstractFacade<Tblvoto> {
             q.setParameter(1, periodo.getIdperiodo());
             q.setParameter(2, votante.getIdvotante());
             listaEntity = q.getResultList();//valida otra vez si ya voto para evitar fraudes
+            //em.getTransaction().begin();
             if (listaEntity.isEmpty()) {
 
                 Double valor = 1 / Double.valueOf(selectedCandidatos.size());
@@ -76,6 +77,7 @@ public class VotoFacade extends AbstractFacade<Tblvoto> {
                 if (c == selectedCandidatos.size()) {
                     flag = true;
                     System.out.println("se insertaron todos");
+                    //em.getTransaction().commit();
                 }
 
             } else {
@@ -85,6 +87,7 @@ public class VotoFacade extends AbstractFacade<Tblvoto> {
         } catch (Exception e) {
             System.out.println("com.votoseguro.facade.VotoFacade.votar()");
             e.printStackTrace();
+            //em.getTransaction().rollback();
         }
 
     }

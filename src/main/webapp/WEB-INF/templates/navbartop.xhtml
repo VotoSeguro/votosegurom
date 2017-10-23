@@ -26,7 +26,7 @@
     <b:navBar brand="Inicio" brandHref="#{request.contextPath}/index.xhtml" inverse="true" fixed="top" style="background-color:#3c5b99 " >
         
         <b:navbarLinks  >
-            <b:navLink   rendered="#{votController.mostrarVotar()}" value="#{bundle.lblEjecutarVoto}" href="#{request.contextPath}/pages/votante/Votar.xhtml"></b:navLink>
+            <b:navLink   rendered="#{votController.mostrarVotar()}" value="#{bundle.lblPapeleta}" href="#{request.contextPath}/pages/votante/Votar.xhtml"></b:navLink>
             <b:navLink value="#{bundle.lblGestionar}"  href="#{request.contextPath}/pages/usuario/gestionar.xhtml"  rendered="#{loginMant.loggedIn}" ></b:navLink>
             
             <b:dropMenu value="#{bundle.lblGestionar}" rendered="#{loginMant.loggedIn}" >

@@ -81,7 +81,7 @@ public class VotarController {
         }
 
         System.out.println("com.votoseguro.controller.VotarController.init()");
-
+         vb.ejecutarJavascript("$('.modalPseudoClass2').modal('show'); ");
     }
 
     public void probar() {
@@ -154,7 +154,7 @@ public class VotarController {
                     SelectedCandidatos.add(candidato);
                     vb.ejecutarJavascript("draw('" + candidato.getIdcandidato() + "');");
                     System.out.println("agregacand");
-                    vb.lanzarMensaje("info", "lblVotar","lblAgregarCandidato");
+                    //vb.lanzarMensaje("info", "lblVotar","lblAgregarCandidato");
                 vb.updateComponent("growl");
                 } else {
                     vb.lanzarMensaje("error", "lblVotar", "lblMaxCand");
@@ -166,7 +166,7 @@ public class VotarController {
                 candidato.setEstadodel("A");
                 vb.ejecutarJavascript("limpiar('../.." + candidato.getFotourl() + "','" + candidato.getIdcandidato() + "');");
                 System.out.println("remuevecand");
-                 vb.lanzarMensaje("warn", "lblVotar","lblRemoverCandidato");
+                 //vb.lanzarMensaje("warn", "lblVotar","lblRemoverCandidato");
                 vb.updateComponent("growl");
             }
 

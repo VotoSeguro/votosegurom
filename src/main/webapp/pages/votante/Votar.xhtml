@@ -10,109 +10,123 @@
 
     <ui:composition template="/WEB-INF/templates/template.xhtml">
         <ui:define name="content">
-                <script type="text/javascript">
+            <script type="text/javascript">
 //cargar("character_themuppets_gonzo_9c3596c6.jpeg");
 
-function cargar(imgSrc,obj){
-console.log(imgSrc);
-var canvass = document.getElementById('myCanvas'+obj);
-        var ctxx = canvass.getContext('2d');
-var img = new Image();
-img.src = imgSrc;
-ctxx.drawImage(img, 0, 0, img.width, img.height,
-	0,0,canvass.width, canvass.height);	
-}
+                function cargar(imgSrc, obj) {
+                    console.log(imgSrc);
+                    var canvass = document.getElementById('myCanvas' + obj);
+                    var ctxx = canvass.getContext('2d');
+                    var img = new Image();
+                    img.src = imgSrc;
+                    ctxx.drawImage(img, 0, 0, img.width, img.height,
+                            0, 0, canvass.width, canvass.height);
+                }
 
-    function draw(obj) {
-      var canvas = document.getElementById('myCanvas'+obj);
-        var ctx = canvas.getContext('2d');  
-        ctx.lineWidth = 5;
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(canvas.width, canvas.height);
-        ctx.stroke();
-        ctx.lineWidth = 5;
-        ctx.beginPath();
-        ctx.moveTo(canvas.width, 0);
-        ctx.lineTo(0,canvas.height);
-        ctx.stroke();
-        
-    }
-	
-	function limpiar(imgSrc,obj) {
-        var cnvs= document.getElementById("myCanvas"+obj);
-        var ctx = cnvs.getContext("2d");
-	ctx.clearRect(0, 0, cnvs.width, cnvs.height); 
-	var img = new Image();
-img.src = imgSrc;
-ctx.drawImage(img, 0, 0, img.width, img.height,
-	0,0,cnvs.width, cnvs.height);
-}
-</script>    
+                function draw(obj) {
+                    var canvas = document.getElementById('myCanvas' + obj);
+                    var ctx = canvas.getContext('2d');
+                    ctx.lineWidth = 5;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(canvas.width, canvas.height);
+                    ctx.stroke();
+                    ctx.lineWidth = 5;
+                    ctx.beginPath();
+                    ctx.moveTo(canvas.width, 0);
+                    ctx.lineTo(0, canvas.height);
+                    ctx.stroke();
+
+                }
+
+                function limpiar(imgSrc, obj) {
+                    var cnvs = document.getElementById("myCanvas" + obj);
+                    var ctx = cnvs.getContext("2d");
+                    ctx.clearRect(0, 0, cnvs.width, cnvs.height);
+                    var img = new Image();
+                    img.src = imgSrc;
+                    ctx.drawImage(img, 0, 0, img.width, img.height,
+                            0, 0, cnvs.width, cnvs.height);
+                }
+            </script>    
             <h:form id="votarForm">
-                
-                <b:panel>
-                        <b:row>
 
-                            <b:column span="4">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblEjecutarVoto']}" look="info" style="width:100%"     actionListener="#{sufragioController.votar}" />
-                            </b:column>
-                            <b:column span="4">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblVotoSalir']}" look="warning" style="width:100%"   actionListener="#{sufragioController.salir()}"  />
-                            </b:column>
-                            <b:column span="4">
-                                <b:commandButton update="@form" ajax="true"  value="#{bundle['lblVotoLimpiar']}"  look="danger" style="width:100%;padding-right: 12px;"  actionListener="#{sufragioController.limpiarTodo()}"/>
-                            </b:column>
-                           
-                        </b:row>
-                        <b:modal  id="amodal" title="#{bundle['lblVotar']}" styleClass="modalPseudoClass">
-                            <p>#{bundle['lblRegVotar']}</p>
-                            <f:facet name="footer">
-                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{votanteController.cerrarDialogo()}" />
-                                <b:commandButton  ajax="false"  value="#{bundle['lblBtnOk']}" look="primary"  actionListener="#{votanteController.eliminar()}"/>
-                            </f:facet>
-                        </b:modal>
-                       
-               </b:panel>
+                <b:panel>
+                    <b:row>
+
+                        <b:column span="4">
+                            <b:commandButton   value="#{bundle['lblEjecutarVoto']}" look="info" style="width:100%"     actionListener="#{sufragioController.votar}" />
+                        </b:column>
+                        <b:column span="4">
+                            <b:commandButton update="@none" ajax="true"  value="#{bundle['lblVerInstrucciones']}" look="warning" style="width:100%"   onclick="$('.modalPseudoClass2').modal('show');"  >
+                            <f:ajax execute="@form" render="@none" />
+                            </b:commandButton>
+                        </b:column>
+                        <b:column span="4">
+                            <b:commandButton update="@form" ajax="true"  value="#{bundle['lblVotoLimpiar']}"  look="danger" style="width:100%;padding-right: 12px;"  actionListener="#{sufragioController.limpiarTodo()}"/>
+                        </b:column>
+
+                    </b:row>
+                    <b:modal  id="amodal" title="#{bundle['lblPapeleta']}" styleClass="modalPseudoClass">
+                        <p>#{bundle['lblRegVotar']}</p>
+                        <f:facet name="footer">
+                            <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{votanteController.cerrarDialogo()}" />
+                            <b:commandButton  ajax="false"  value="#{bundle['lblBtnOk']}" look="primary"  actionListener="#{votanteController.eliminar()}"/>
+                        </f:facet>
+                    </b:modal>
+
+                </b:panel>
                 <b:row>
-                <ui:repeat value="#{sufragioController.listaPartidos}" var="partido" >
-                    
-                    <b:column col-md="3"  >
-                        <b:panel  onclick="ajax:sufragioController.onClickPartido(partido);"   style="text-align: center" >
-                            
-                            <img src="../..#{partido.banderapartido}" style="display: none;" onload="cargar(this.src,'#{partido.idpartido}');"  />
-                            <canvas id="myCanvas#{partido.idpartido}" style="flex: auto;width: 100%"  ></canvas>
-                            
-                            
-                        <p:outputLabel value="#{partido.nompartido}" />
-                        </b:panel>
-                        
-                       
-                            <ui:repeat value="#{partido.tblcandidatoList}" var="cand" >
-                                
-                                <b:panel  onclick="ajax:sufragioController.onClickCandidato(cand);" style="padding-left: 5%;padding-right:5%;box-shadow: 10px 10px 5px #888888;background-color: #cccccc; text-align: center" >
-                            
-                            <img src="../..#{cand.fotourl}" style="display: none;" onload="cargar(this.src,'#{cand.idcandidato}');"  />
-                            <canvas id="myCanvas#{cand.idcandidato}" style="width: 100px;height: 114px;" ></canvas><br></br>
-                            <p:outputLabel style="size: 5px" value="#{cand.nomcand}" /><br></br>
-                            <p:outputLabel style="size: 5px" value="#{cand.apecand}" />
+                    <ui:repeat value="#{sufragioController.listaPartidos}" var="partido" >
+
+                        <b:column col-md="3"  >
+                            <b:panel  onclick="ajax:sufragioController.onClickPartido(partido);"   style="text-align: center; box-shadow: 10px 10px 5px #888888;background-color:#cccccc" >
+
+                                <img src="../..#{partido.banderapartido}" style="display: none;" onload="cargar(this.src, '#{partido.idpartido}');"  />
+                                <canvas id="myCanvas#{partido.idpartido}" style="flex: auto;width: 100%"  ></canvas>
+
+
+                                <p:outputLabel value="#{partido.nompartido}" />
                             </b:panel>
-                        </ui:repeat> 
-                            
-                        
-                        
-                        
-                 
-                    
-                    </b:column>
-                        
-                    
-                
-                </ui:repeat>
+
+
+                            <ui:repeat value="#{partido.tblcandidatoList}" var="cand" >
+
+                                <b:panel  onclick="ajax:sufragioController.onClickCandidato(cand);" style="padding-left: 5%;padding-right:5%;box-shadow: 10px 10px 5px #888888;background-color: #cccccc; text-align: center" >
+
+                                    <img src="../..#{cand.fotourl}" style="display: none;" onload="cargar(this.src, '#{cand.idcandidato}');"  />
+                                    <canvas id="myCanvas#{cand.idcandidato}" style="width: 100px;height: 114px;" ></canvas><br></br>
+                                    <p:outputLabel style="size: 5px" value="#{cand.nomcand}" /><br></br>
+                                    <p:outputLabel style="size: 5px" value="#{cand.apecand}" />
+                                </b:panel>
+                            </ui:repeat> 
+
+
+
+
+
+
+                        </b:column>
+
+
+
+                    </ui:repeat>
                 </b:row>
-               
+
+
+                <b:modal  id="bmodal" title="#{bundle['lblPapeleta']}" styleClass="modalPseudoClass2">
+                    <h:outputText value="#{bundle['lblInstruccionesCuerpo']}" escape="false" style="font-family: sans-serif; font-weight: bold;text-align: center" /> 
+                                                            <f:facet name="footer">
+
+                                                                <b:commandButton  ajax="true"  value="#{bundle['lblEntendido']}" look="primary"  onclick="$('.modalPseudoClass2').modal('hide');">
+                                                                <f:ajax execute="@form" render="@none" />
+                                                                </b:commandButton>
+                    </f:facet>
+                </b:modal>
+
+
             </h:form>
-            
+
         </ui:define>
     </ui:composition>
 </html>
