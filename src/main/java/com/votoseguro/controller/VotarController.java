@@ -202,6 +202,24 @@ public class VotarController {
       limpiarPartido();
       }
       
+      public void validarVotar(){
+         if (!SelectedCandidatos.isEmpty()) {
+              try {
+                  vb.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
+              } catch (Exception e) {
+                  System.out.println("com.votoseguro.controller.VotarController.votar()");
+                  e.printStackTrace();
+              }
+ 
+          }else {
+      vb.lanzarMensaje("error", "lblVotar","lblSeleccReq");
+                vb.updateComponent("growl");
+                
+      }
+      
+      }
+      
+      
       public void votar(){
           if (!SelectedCandidatos.isEmpty()) {
               try {

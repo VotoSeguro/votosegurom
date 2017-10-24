@@ -10,6 +10,23 @@
 
     <ui:composition template="/WEB-INF/templates/template.xhtml">
         <ui:define name="content">
+            <h:outputStylesheet>
+                .mensajeModal{
+                position: absolute;
+                top: 450px;
+                left: 30px;
+                width: 350px;
+                height: 100px;
+                font-family: 'Franklin Gothic Medium',
+                'Franklin Gothic', 'ITC Franklin Gothic',
+                Arial, sans-serif;
+                font-size: 20px;
+                color: black;
+                line-height: 30px;
+                text-align: center;
+                }
+                
+            </h:outputStylesheet>
             <h:outputScript library="js" name="jssor.slider.min.js" />
             <h:outputScript target="body" >
                 jssor_slider1_init = function () {
@@ -82,6 +99,11 @@
             </b:jumbotron>
                 <p:separator/>
                 <b:container>
+                    <b:row>
+                        <b:column col-md="12">
+                            <h2>#{bundle.lblComoVotar}</h2>
+                        </b:column>
+                    </b:row>
                 <b:row>
                     <b:column col-md="12">
                         <center>
@@ -89,30 +111,36 @@
                      height: 300px;">
                     <!-- Slides Container -->
                     <div u="slides" style="position: absolute; left: 0px; top: 0px; width: 600px; height: 300px; overflow: hidden;">
-                        <div><img u="image" src="resources/img/gallery/980x380/001.jpg" />
-                            <div data-u="caption" data-t="0" 
-                                 style="position: absolute; top: 320px; left: 30px; width: 350px; height: 30px; background-color: rgba(235,81,0,0.5); font-size: 20px; color: #ffffff; line-height: 30px; text-align: center;"
-                                 >
-                                PASO 1
+                        <div><img u="image" src="resources/img/instrucciones/ezgif-4-8e28432737.gif" />
+                            <div data-u="caption" data-t="0" class="mensajeModal">
+                                <b:panel title="#{bundle.lblTitlePaso1}" collapsible="false" look="primary" >
+                                <h:outputText   value="#{bundle.lblPaso1}"  escape="false"  />
+                                </b:panel>
                             </div>
                         </div>
                        
-                        <div><img u="image" src="resources/img/gallery/980x380/003.jpg" />
-                            <div data-u="caption" data-t="2" style="position: absolute; top: 30px; left: -380px; width: 350px; height: 30px; background-color: rgba(235,81,0,0.5); font-size: 20px; color: #ffffff; line-height: 30px; text-align: center;">
-                                PASO 2
+                        <div><img u="image" src="resources/img/instrucciones/paso2.gif" />
+                            <div data-u="caption" data-t="0" class="mensajeModal">
+                                <b:panel title="#{bundle.lblTitlePaso2}" collapsible="false" look="primary" >
+                                <h:outputText   value="#{bundle.lblPaso2}"  escape="false"  />
+                                </b:panel>
                             </div>
                         </div>
-                        <div><img u="image" src="resources/img/gallery/980x380/004.jpg" />
-                            <div data-u="caption" data-t="3" style="position: absolute; top: 30px; left: 30px; width: 350px; height: 30px; background-color: rgba(235,81,0,0.5); font-size: 20px; color: #ffffff; line-height: 30px; text-align: center;">
-                                PASO 3
+                        <div><img u="image" src="resources/img/instrucciones/paso3.gif" />
+                            <div data-u="caption" data-t="0" class="mensajeModal" style="top: 320px;">
+                                <b:panel title="#{bundle.lblTitlePaso3}" collapsed="true" look="primary"  >
+                                <h:outputText   value="#{bundle.lblPaso3}"  escape="false"  />
+                                </b:panel>
                             </div>
                         </div>
-                        <div><img u="image" src="resources/img/gallery/980x380/005.jpg" />
-                            <div data-u="caption" data-t="4" style="position: absolute; top: 30px; left: 30px; width: 350px; height: 30px; background-color: rgba(235,81,0,0.6); font-size: 20px; color: #ffffff; line-height: 30px; text-align: center;">
-                                PASO 4
+                        <div><img u="image" src="resources/img/instrucciones/paso4.gif" />
+                            <div data-u="caption" data-t="0" class="mensajeModal" style="left: 50px" >
+                                <b:panel title="#{bundle.lblTitlePaso4}" collapsed="true" look="primary"  >
+                                <h:outputText   value="#{bundle.lblPaso4}"  escape="false"  />
+                                </b:panel>
                             </div>
                         </div>
-                        <div><img u="image" src="resources/img/gallery/980x380/006.jpg" />
+                       <!-- <div><img u="image" src="resources/img/gallery/980x380/006.jpg" />
                             <div data-u="caption" data-t="5" style="position: absolute; top: 30px; left: 600px; width: 350px; height: 30px; background-color: rgba(235,81,0,0.5); font-size: 20px; color: #ffffff; line-height: 30px; text-align: center;"> 
                                 PASO 5
                             </div>
@@ -123,7 +151,7 @@
                                 PASO 6
                             </div>
 
-                        </div>
+                        </div>-->
                    
                      
 

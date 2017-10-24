@@ -13,17 +13,8 @@
 	    	Hint to editors: The menus follow the Chicago style of capitalization. Please capitalize everything but the "smaller" words. 
 	     -->
   </ui:remove>
-    
-    <h:outputStylesheet>
-        .item{
-            size: 100px;
-        }
-        .item :hover{
-            background-color: black;
-            
-        }
-</h:outputStylesheet>
-    <b:navBar brand="Inicio" brandHref="#{request.contextPath}/index.xhtml" inverse="true" fixed="top" style="background-color:#3c5b99 " >
+  
+    <b:navBar brand="#{bundle.lblInicio}" brandHref="#{request.contextPath}/index.xhtml" inverse="true" fixed="top" style="background-color:#3c5b99 " >
         
         <b:navbarLinks  >
             <b:navLink   rendered="#{votController.mostrarVotar()}" value="#{bundle.lblPapeleta}" href="#{request.contextPath}/pages/votante/Votar.xhtml"></b:navLink>
@@ -38,7 +29,7 @@
                 <b:navLink value="Separated link" href="#"></b:navLink>-->
                 
                 <ui:repeat value="#{loginMant.logedUser.idrol.tblrolxpermisoList}" var="per" >
-                    <b:navLink value="#{per.idpermiso.nombrepermiso}" href="#{request.contextPath.concat('/').concat(per.idpermiso.urlpermiso)}"   styleClass="item" >
+                    <b:navLink value="#{per.idpermiso.nombrepermiso}" href="#{request.contextPath.concat('/').concat(per.idpermiso.urlpermiso)}"   >
                     </b:navLink>
                     
                 </ui:repeat>

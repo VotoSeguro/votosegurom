@@ -55,23 +55,31 @@
                     <b:row>
 
                         <b:column span="4">
-                            <b:commandButton   value="#{bundle['lblEjecutarVoto']}" look="info" style="width:100%"     actionListener="#{sufragioController.votar}" />
+                            <b:commandButton update="@none" ajax="true"   value="#{bundle.lblNada}" look="primary" style="width:100%"     actionListener="#{sufragioController.validarVotar()}" >
+                                 <f:ajax execute="@form" render="@none" />
+                                <p:graphicImage style="width: 64px;height: 64px;"  library="img/instrucciones" name="20279.png"/> </b:commandButton>
                         </b:column>
                         <b:column span="4">
-                            <b:commandButton update="@none" ajax="true"  value="#{bundle['lblVerInstrucciones']}" look="warning" style="width:100%"   onclick="$('.modalPseudoClass2').modal('show');"  >
+                            <b:commandButton update="@none" ajax="true"  value="#{bundle.lblNada}" look="warning" style="width:100%"   onclick="$('.modalPseudoClass2').modal('show');"  >
                             <f:ajax execute="@form" render="@none" />
+                            <p:graphicImage style="width: 64px;height: 64px;"  library="img/instrucciones" name="660441-200.png"/>
                             </b:commandButton>
                         </b:column>
                         <b:column span="4">
-                            <b:commandButton update="@form" ajax="true"  value="#{bundle['lblVotoLimpiar']}"  look="danger" style="width:100%;padding-right: 12px;"  actionListener="#{sufragioController.limpiarTodo()}"/>
+                            <b:commandButton update="@form" ajax="true"  value="#{bundle.lblNada}"  look="danger" style="width:100%;padding-right: 12px;"  actionListener="#{sufragioController.limpiarTodo()}">
+                            <p:graphicImage style="width: 64px;height: 64px;"  library="img/instrucciones" name="kripto-clear-b.png"/>
+                            </b:commandButton>
                         </b:column>
 
                     </b:row>
                     <b:modal  id="amodal" title="#{bundle['lblPapeleta']}" styleClass="modalPseudoClass">
                         <p>#{bundle['lblRegVotar']}</p>
                         <f:facet name="footer">
-                            <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{votanteController.cerrarDialogo()}" />
-                            <b:commandButton  ajax="false"  value="#{bundle['lblBtnOk']}" look="primary"  actionListener="#{votanteController.eliminar()}"/>
+                            <b:commandButton  ajax="true"  value="#{bundle['lblBtnCerrar']}" look="primary"  onclick="$('.modalPseudoClass').modal('hide');">
+                                                                <f:ajax execute="@form" render="@none" />
+                                                                </b:commandButton>
+                            
+                            <b:commandButton  ajax="false"  value="#{bundle['lblEjecutarVoto']}" look="primary"  actionListener="#{sufragioController.votar()}"/>
                         </f:facet>
                     </b:modal>
 
