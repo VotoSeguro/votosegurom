@@ -102,8 +102,8 @@
 
                                 <b:panel  onclick="ajax:sufragioController.onClickCandidato(cand);" style="padding-left: 5%;padding-right:5%;box-shadow: 10px 10px 5px #888888;background-color: #cccccc; text-align: center" >
 
-                                    <img src="../..#{cand.fotourl}" style="display: none;" onload="cargar(this.src, '#{cand.idcandidato}');"  />
-                                    <canvas id="myCanvas#{cand.idcandidato}" style="width: 100px;height: 114px;" ></canvas><br></br>
+                                    <img src="../..#{cand.fotourl}" style="display: none;" onload="cargar(this.src, 'C#{cand.idcandidato}');"  />
+                                    <canvas id="myCanvasC#{cand.idcandidato}" style="width: 100px;height: 114px;" ></canvas><br></br>
                                     <p:outputLabel style="size: 5px" value="#{cand.nomcand}" /><br></br>
                                     <p:outputLabel style="size: 5px" value="#{cand.apecand}" />
                                 </b:panel>

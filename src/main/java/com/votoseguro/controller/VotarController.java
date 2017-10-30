@@ -112,7 +112,7 @@ public class VotarController {
                 for (Tblcandidato candidato : partido.getTblcandidatoList()) {
                     candidato.setEstadodel("S");
                     SelectedCandidatos.add(candidato);
-                    vb.ejecutarJavascript("draw('" + candidato.getIdcandidato() + "');");
+                    vb.ejecutarJavascript("draw('C" + candidato.getIdcandidato() + "');");
                 }
             } else {
                 isNulo = true;
@@ -152,7 +152,7 @@ public class VotarController {
                 if (SelectedCandidatos.size() < maxcand) {
                     candidato.setEstadodel("S");
                     SelectedCandidatos.add(candidato);
-                    vb.ejecutarJavascript("draw('" + candidato.getIdcandidato() + "');");
+                    vb.ejecutarJavascript("draw('C" + candidato.getIdcandidato() + "');");
                     System.out.println("agregacand");
                     //vb.lanzarMensaje("info", "lblVotar","lblAgregarCandidato");
                 vb.updateComponent("growl");
@@ -164,7 +164,7 @@ public class VotarController {
             } else if (candidato.getEstadodel().equals("S")) {
                 SelectedCandidatos.remove(candidato);
                 candidato.setEstadodel("A");
-                vb.ejecutarJavascript("limpiar('../.." + candidato.getFotourl() + "','" + candidato.getIdcandidato() + "');");
+                vb.ejecutarJavascript("limpiar('../.." + candidato.getFotourl() + "','C" + candidato.getIdcandidato() + "');");
                 System.out.println("remuevecand");
                  //vb.lanzarMensaje("warn", "lblVotar","lblRemoverCandidato");
                 vb.updateComponent("growl");
@@ -186,7 +186,7 @@ public class VotarController {
     
       public void limpiar(){
       for (Tblcandidato SelectedCandidato : SelectedCandidatos) {
-                  vb.ejecutarJavascript("limpiar('../.." + SelectedCandidato.getFotourl() + "','" + SelectedCandidato.getIdcandidato() + "');"); 
+                  vb.ejecutarJavascript("limpiar('../.." + SelectedCandidato.getFotourl() + "','C" + SelectedCandidato.getIdcandidato() + "');"); 
                   SelectedCandidato.setEstadodel("A");
                 }
                 SelectedCandidatos = new ArrayList<>();
