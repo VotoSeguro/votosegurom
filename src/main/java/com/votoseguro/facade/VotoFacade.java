@@ -115,4 +115,22 @@ public class VotoFacade extends AbstractFacade<Tblvoto> {
         return flag;
 
     }
+    
+    
+    public List<Tblvoto> mostrar(String idperiodo){
+    List<Tblvoto> lista = new ArrayList<>();
+        try {
+            Query q = em.createNativeQuery("select * from tblvoto where idperiodo = ?",Tblvoto.class);
+            q.setParameter(1, idperiodo);
+            lista = q.getResultList();
+            
+                 
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.facade.VotoFacade.mostrar()");
+            e.printStackTrace();
+        }
+    
+    return lista;
+    }
+    
 }

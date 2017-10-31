@@ -9,6 +9,8 @@
     <h:body>
         <h:form>
             <p:commandButton value="clic" actionListener="#{reportes.prueba()}" />
+            
+            <p:chart type="bar" model="#{reportes.createBarModel()}"  style="height: 300px" />
         </h:form>
     </h:body>
 </html>
