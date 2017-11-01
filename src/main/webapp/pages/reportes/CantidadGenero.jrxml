@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="63b14cf5-3677-4b45-ad83-51eef39bf538">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="81"/>
+	<parameter name="grafico" class="java.lang.Object" isForPrompting="false"/>
+	<parameter name="idperiodo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select sum(males) as "Hombres", sum(females) as "Mujeres"
+from
+(select count(*) as Males, 0 as Females from (SELECT DISTINCT v.idvotante FROM tblvoto v inner join tblvotante vo on vo.IDVOTANTE = v.IDVOTANTE where vo.GENERO = 'M' and v.IDPERIODO =$P{idperiodo})
+union all
+select 0 as males, count(*) as Females
+from (SELECT DISTINCT v.idvotante FROM tblvoto v inner join tblvotante vo on vo.IDVOTANTE = v.IDVOTANTE where vo.GENERO = 'F' and v.IDPERIODO =$P{idperiodo} ))]]>
+	</queryString>
+	<field name="Hombres" class="java.math.BigDecimal"/>
+	<field name="Mujeres" class="java.math.BigDecimal"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="82">
+			<image>
+				<reportElement x="0" y="0" width="139" height="80" uuid="8535364d-2196-41a5-b578-efc1a931e7ea"/>
+				<imageExpression><![CDATA["C:\\Users\\luis\\Desktop\\tareas\\multi\\SIS13B_VOTACIONES_LUIS_EDUARDO_VALDEZ_CISNEROS\\sisVotoBSFaces\\votoseguroM\\votoseguroM\\src\\main\\webapp\\resources\\img\\logo-tse.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="73">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="e4d9dc9c-e9cc-441d-89a2-1e3c3f0b0845"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="21" width="114" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="0ef6b1ee-ee45-4239-8d6c-6e684fd813e2"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="47" width="114" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5ad9777e-9dcb-448d-b3b7-21b50a05150a"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mujeres]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="164" y="21" width="75" height="20" uuid="33e10619-720d-4ade-92a6-6e3037bf5804"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Hombres}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="164" y="47" width="71" height="20" uuid="812cf1e1-63a4-4f39-ad2a-7b19bc27f6cc"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Mujeres}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="cf7d20be-6142-428b-a00f-f8bef7ef9684"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="a2d18080-f9d6-4599-81d3-812435f8b79d"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="aed04f8a-5f54-4a42-b93c-f313ea6e0c10"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="306">
+			<image>
+				<reportElement x="11" y="12" width="521" height="294" uuid="15cef0ec-11fa-4888-8ae8-fcfdd2218b88"/>
+				<imageExpression><![CDATA[$P{grafico}]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>

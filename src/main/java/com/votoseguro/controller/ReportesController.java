@@ -19,6 +19,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -35,9 +36,10 @@ public class ReportesController {
     PeriodoFacade pf;
     @EJB
     VotoFacade vf;
+    Tblperiodo periodo = new Tblperiodo();
     @PostConstruct
     public void init() {
-       
+       periodo = pf.obtenerPeriodoHaboAct();
         createBarModel();
 
     }
@@ -68,5 +70,55 @@ public class ReportesController {
     public void prueba(){
     rf.pruebaReport();
     vb.redirecionar("/pdf/prueba1.pdf");
+    }
+    
+     public void cantidadGenero(){
+    rf.reporteCantidadGenero(Integer.parseInt(String.valueOf(periodo.getIdperiodo())));
+    vb.redirecionar("/pdf/CantidadGenero.pdf");
+    }
+     
+      public void cantidadVotaron(){
+    rf.reporteCantidadVotaron();
+    vb.redirecionar("/pdf/votaronynovotaron.pdf");
+    }
+    
+    public PieChartModel createPieModelGenero(){
+    PieChartModel pieModel = new PieChartModel();
+        try {
+            List<Integer> lista = rf.obtenerCantidadGenero(Integer.parseInt(String.valueOf(periodo.getIdperiodo())));
+            pieModel.set("Hombres", lista.get(0));
+            pieModel.set("Mujeres", lista.get(1));
+            
+            pieModel.setTitle("Cantidad de Hombres y Mujeres que votaron");
+            pieModel.setLegendPosition("e");
+            pieModel.setFill(false);
+            pieModel.setShowDataLabels(true);
+            pieModel.setDiameter(150);
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.controller.ReportesController.createPieModel()");
+            e.printStackTrace();
+        }
+    
+      return pieModel;
+    }
+    
+    public PieChartModel createPieModelVotaron(){
+    PieChartModel pieModel = new PieChartModel();
+        try {
+            List<String> lista = rf.obtenerCantidadVotaron();
+            pieModel.set("Ya Votaron", Double.valueOf(lista.get(0)));
+            pieModel.set("No Votaron", Double.valueOf(lista.get(1)));
+            
+            pieModel.setTitle("Porcentaje de personas que votaron y que no votaron");
+            pieModel.setLegendPosition("e");
+            pieModel.setFill(false);
+            pieModel.setShowDataLabels(true);
+            pieModel.setDiameter(150);
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.controller.ReportesController.createPieModel()");
+            e.printStackTrace();
+        }
+    
+      return pieModel;
     }
 }
