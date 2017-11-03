@@ -53,22 +53,22 @@ public class ReportesController {
         try {
             //Tblperiodo per = pf.obtenerPeriodoHaboAct();
             listaVoto = rf.obtenerCantidadPorDepto(periodo);
-            ChartSeries votos;
-            
+            ChartSeries votos = new ChartSeries();;
+            votos.setLabel("TOTAL");
             for (VotantesDepto votantesDepto : listaVoto) {
-                votos = new ChartSeries();
-                votos.setLabel(votantesDepto.getNomDepto());
+                
+                
                 votos.set(votantesDepto.getNomDepto(), votantesDepto.getTotal());
-                barModel.addSeries(votos);
+                
             }
-            
+            barModel.addSeries(votos);
             
             barModel.setTitle("Total de votantes por departamento");
             barModel.setLegendPosition("e");
             Axis xAxis = barModel.getAxis(AxisType.X);
-            //xAxis.setLabel("Departamentos");
-            //xAxis.setMin(0);
-            //xAxis.setMax(200);
+            xAxis.setLabel("Departamentos");
+            xAxis.setMin(0);
+            xAxis.setMax(200);
             
             Axis yAxis = barModel.getAxis(AxisType.Y);
             yAxis.setLabel("Votantes");

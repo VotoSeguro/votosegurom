@@ -168,6 +168,19 @@ public class VotanteController {
         pregunta = selectedVotante.getPregunta();
         respuesta = selectedVotante.getRespuesta();
         idMuni = String.valueOf(selectedVotante.getIdmuni().getIdmuni());
+        codzona  = selectedVotante.getCodzona();
+        estadocivil = selectedVotante.getEstadocivil();
+        fechaexp = selectedVotante.getFechaexp();
+        fechavenc = selectedVotante.getFechavenc();
+        lugarexp = selectedVotante.getLugarexp();
+        lugarnac = selectedVotante.getLugarnac();
+        nacionalidad = selectedVotante.getNacionalidad();
+        nomconyuge = selectedVotante.getNomconyuge();
+        nommadre = selectedVotante.getNommadre();
+        nompadre = selectedVotante.getNompadre();
+        tiposangre = selectedVotante.getTiposangre();
+        tramite = selectedVotante.getTramite();
+        
 
     }
 

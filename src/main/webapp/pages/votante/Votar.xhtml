@@ -74,6 +74,14 @@
                     </b:row>
                     <b:modal  id="amodal" title="#{bundle['lblPapeleta']}" styleClass="modalPseudoClass">
                         <p>#{bundle['lblRegVotar']}</p>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Contraseña"/>
+                            <b:inputSecret value="#{sufragioController.contra}"/>
+                            <p:outputLabel value="Pregunta"/>
+                            <p:outputLabel value="#{votController.loggedVotante.pregunta}"/>
+                            <p:outputLabel value="Respuesta Secreta"/>
+                            <b:inputText value="#{sufragioController.respuesta}"/>
+                        </h:panelGrid>
                         <f:facet name="footer">
                             <b:commandButton  ajax="true"  value="#{bundle['lblBtnCerrar']}" look="primary"  onclick="$('.modalPseudoClass').modal('hide');">
                                                                 <f:ajax execute="@form" render="@none" />

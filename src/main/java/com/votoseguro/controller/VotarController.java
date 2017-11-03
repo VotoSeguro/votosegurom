@@ -54,7 +54,12 @@ public class VotarController {
     private @Getter
     @Setter
     List<Tblpartido> SelectedPartidos = new ArrayList<>();
-
+    
+     private @Getter
+    @Setter String respuesta;
+      private @Getter
+    @Setter String contra;
+    
     private @Getter
     @Setter
     List<Tblcandidato> SelectedCandidatos = new ArrayList<>();
@@ -192,6 +197,15 @@ public class VotarController {
                 SelectedCandidatos = new ArrayList<>();
       }
       
+      public void reset(){
+       for (Tblpartido partido: SelectedPartidos) {
+                 vb.ejecutarJavascript("limpiar('../.." + partido.getBanderapartido() + "','" + partido.getIdpartido() + "');");
+                  partido.setEstadodel("A");
+                }
+       SelectedPartidos = new ArrayList<>();
+       limpiar();
+      }
+      
       public void limpiarPartido(){
       SelectedPartidos = new ArrayList<>();
       
@@ -222,17 +236,31 @@ public class VotarController {
       
       public void votar(){
           if (!SelectedCandidatos.isEmpty()) {
-              try {
+              if (vb.validarCampoVacio(contra, "error", "lblPapeleta", "lblVotarContra") 
+                      && vb.validarCampoVacio(respuesta, "error", "lblPapeleta", "lblVotarRespuesta")) {
+                  
+                  if (contra.equals(login.getLoggedVotante().getPassvotante())  &&  respuesta.toLowerCase().equals(login.getLoggedVotante().getRespuesta().toLowerCase())  ) {
+                       try {
                   vf.votar(SelectedCandidatos, perf.obtenerPeriodoHab(), login.getLoggedVotante());
                   vb.redirecionar("/pages/votante/confirmacion.xhtml");
               } catch (Exception e) {
                   System.out.println("com.votoseguro.controller.VotarController.votar()");
                   e.printStackTrace();
+              } 
+                  }else{
+                  vb.lanzarMensaje("error", "lblPapeleta", "lblVotarFail");
+                      reset();
+                  }
+                 
+              }else{
+               reset();
               }
+             
  
           }else {
       vb.lanzarMensaje("error", "lblVotar","lblSeleccReq");
                 vb.updateComponent("growl");
+                
                 
       }
           
@@ -241,5 +269,6 @@ public class VotarController {
       
       public void salir() throws IOException{
           vb.redirecionar("/index.xhtml");
+          limpiarTodo();
       }
 }

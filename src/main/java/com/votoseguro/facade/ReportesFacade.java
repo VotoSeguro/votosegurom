@@ -331,7 +331,8 @@ public class ReportesFacade extends AbstractFacade<Tblvoto> {
             BarRenderer renderer = (BarRenderer) plot.getRenderer();
             //renderer.setSeriesPaint(0, Color.green);
             //renderer.setSeriesPaint(1, Color.blue);
-            renderer.setMaximumBarWidth(.70);
+            //renderer.setMaximumBarWidth(2);
+            renderer.setItemMargin(0.0000000000000000000000000000000000000000000000000000000000000001);
             
         } catch (Exception e) {
             System.out.println("com.votoseguro.facade.ReportesFacade.graficoBarraCantDepto()");
