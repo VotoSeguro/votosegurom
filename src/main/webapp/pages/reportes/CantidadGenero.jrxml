@@ -2,11 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="63b14cf5-3677-4b45-ad83-51eef39bf538">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="81"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="grafico" class="java.lang.Object" isForPrompting="false"/>
 	<parameter name="idperiodo" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="anio" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select sum(males) as "Hombres", sum(females) as "Mujeres"
 from
@@ -26,6 +27,13 @@ from (SELECT DISTINCT v.idvotante FROM tblvoto v inner join tblvotante vo on vo.
 				<reportElement x="0" y="0" width="139" height="80" uuid="8535364d-2196-41a5-b578-efc1a931e7ea"/>
 				<imageExpression><![CDATA["C:\\Users\\luis\\Desktop\\tareas\\multi\\SIS13B_VOTACIONES_LUIS_EDUARDO_VALDEZ_CISNEROS\\sisVotoBSFaces\\votoseguroM\\votoseguroM\\src\\main\\webapp\\resources\\img\\logo-tse.png"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="178" y="16" width="377" height="54" forecolor="#006699" uuid="52e38892-7df2-4632-a198-bb72e313fad3"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad de Hombres y Mujeres que votaron en las elecciones ]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -64,6 +72,20 @@ from (SELECT DISTINCT v.idvotante FROM tblvoto v inner join tblvotante vo on vo.
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Mujeres}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="410" y="25" width="105" height="22" uuid="c7319e2a-660f-41f7-98f2-a4c26b9e3f5b"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{anio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="284" y="27" width="114" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="19377618-8f49-4545-aa60-6f7c4a1cffe2"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<columnFooter>
@@ -87,9 +109,9 @@ from (SELECT DISTINCT v.idvotante FROM tblvoto v inner join tblvotante vo on vo.
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="306">
+		<band height="442">
 			<image>
-				<reportElement x="11" y="12" width="521" height="294" uuid="15cef0ec-11fa-4888-8ae8-fcfdd2218b88"/>
+				<reportElement x="84" y="0" width="406" height="423" uuid="15cef0ec-11fa-4888-8ae8-fcfdd2218b88"/>
 				<imageExpression><![CDATA[$P{grafico}]]></imageExpression>
 			</image>
 		</band>

@@ -10,6 +10,7 @@ import com.votoseguro.entity.Tblvoto;
 import com.votoseguro.facade.PeriodoFacade;
 import com.votoseguro.facade.ReportesFacade;
 import com.votoseguro.facade.VotoFacade;
+import com.votoseguro.report.VotantesDepto;
 import com.votoseguro.util.ValidationBean;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
@@ -46,17 +49,29 @@ public class ReportesController {
     
     public BarChartModel createBarModel(){
     BarChartModel barModel = new BarChartModel();
-    List<Tblvoto> listaVoto = new ArrayList<>();
+    List<VotantesDepto> listaVoto = new ArrayList<>();
         try {
-            Tblperiodo per = pf.obtenerPeriodoHaboAct();
-            listaVoto = vf.mostrar(String.valueOf(per.getIdperiodo()));
-            ChartSeries votos = new ChartSeries();
-            votos.setLabel("Votos");
-            for (Tblvoto tblvoto : listaVoto) {
-              votos.set(tblvoto.getIdcandidato().getNomcand(), tblvoto.getValor());
+            //Tblperiodo per = pf.obtenerPeriodoHaboAct();
+            listaVoto = rf.obtenerCantidadPorDepto(periodo);
+            ChartSeries votos;
+            
+            for (VotantesDepto votantesDepto : listaVoto) {
+                votos = new ChartSeries();
+                votos.setLabel(votantesDepto.getNomDepto());
+                votos.set(votantesDepto.getNomDepto(), votantesDepto.getTotal());
+                barModel.addSeries(votos);
             }
             
-            barModel.addSeries(votos);
+            
+            barModel.setTitle("Total de votantes por departamento");
+            barModel.setLegendPosition("e");
+            Axis xAxis = barModel.getAxis(AxisType.X);
+            //xAxis.setLabel("Departamentos");
+            //xAxis.setMin(0);
+            //xAxis.setMax(200);
+            
+            Axis yAxis = barModel.getAxis(AxisType.Y);
+            yAxis.setLabel("Votantes");
         } catch (Exception e) {
             System.out.println("com.votoseguro.controller.ReportesController.createBarModel()");
             e.printStackTrace();
@@ -73,13 +88,17 @@ public class ReportesController {
     }
     
      public void cantidadGenero(){
-    rf.reporteCantidadGenero(Integer.parseInt(String.valueOf(periodo.getIdperiodo())));
+    rf.reporteCantidadGenero(periodo);
     vb.redirecionar("/pdf/CantidadGenero.pdf");
     }
      
       public void cantidadVotaron(){
     rf.reporteCantidadVotaron();
     vb.redirecionar("/pdf/votaronynovotaron.pdf");
+    }
+      public void cantidadDepto(){
+    rf.reporteCantidadDepto(periodo);
+    vb.redirecionar("/pdf/cantidadDepto.pdf");
     }
     
     public PieChartModel createPieModelGenero(){
@@ -94,6 +113,7 @@ public class ReportesController {
             pieModel.setFill(false);
             pieModel.setShowDataLabels(true);
             pieModel.setDiameter(150);
+            
         } catch (Exception e) {
             System.out.println("com.votoseguro.controller.ReportesController.createPieModel()");
             e.printStackTrace();

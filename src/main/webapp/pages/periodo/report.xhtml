@@ -11,9 +11,10 @@
             <p:commandButton value="clic" actionListener="#{reportes.prueba()}" />
             <p:commandButton value="clic" actionListener="#{reportes.cantidadGenero()}" />
             <p:commandButton value="clic" actionListener="#{reportes.cantidadVotaron()}" />
+            <p:commandButton value="clic" actionListener="#{reportes.cantidadDepto()}" />
             <p:chart type="pie" model="#{reportes.createPieModelGenero()}" style="width:400px;height:300px;"/>
             <p:chart type="pie" model="#{reportes.createPieModelVotaron()}" style="width:400px;height:300px;"/>
-            <p:chart type="bar" model="#{reportes.createBarModel()}"  style="height: 300px" />
+            <p:chart type="bar" model="#{reportes.createBarModel()}"  style="width:800px;height:600px;" />
         </h:form>
     </h:body>
 </html>

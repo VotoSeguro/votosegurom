@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a6bc9030-4258-4d15-ac45-ebef5cb4ac56">
-	<queryString language="SQL">
-		<![CDATA[select  TO_CHAR(fn_obtener_porcentaje(1),'99.99') as "Porcentaje que Votaron",TO_CHAR(fn_obtener_porcentaje(2),'99.99') as "Porcentaje que No Votaron"  from dual]]>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="grafico" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select  TO_CHAR(fn_obtener_porcentaje(1),'99.99') || '%' as "Porcentaje que Votaron",TO_CHAR(fn_obtener_porcentaje(2),'99.99') || '%' as "Porcentaje que No Votaron"  from dual]]>
 	</queryString>
 	<field name="Porcentaje que Votaron" class="java.lang.String"/>
 	<field name="Porcentaje que No Votaron" class="java.lang.String"/>
@@ -10,23 +16,17 @@
 	</background>
 	<title>
 		<band height="72">
-			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="62162e2e-a06d-4777-8770-4a309db0c6c4"/>
-				<staticText>
-					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="24d8633b-c2a5-4c2c-8a4d-0ef6acbe4f59"/>
-					<textElement>
-						<font size="34" isBold="true"/>
-					</textElement>
-					<text><![CDATA[TITLE]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="3db7b863-245d-4c6a-bd28-03c58242a593"/>
-					<textElement textAlignment="Right">
-						<font size="14" isBold="false"/>
-					</textElement>
-					<text><![CDATA[Add a description here]]></text>
-				</staticText>
-			</frame>
+			<image>
+				<reportElement x="0" y="0" width="139" height="72" uuid="80e76085-a05d-44cb-b5ce-ce960ce5cc97"/>
+				<imageExpression><![CDATA["C:\\Users\\luis\\Desktop\\tareas\\multi\\SIS13B_VOTACIONES_LUIS_EDUARDO_VALDEZ_CISNEROS\\sisVotoBSFaces\\votoseguroM\\votoseguroM\\src\\main\\webapp\\resources\\img\\logo-tse.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="190" y="18" width="364" height="54" uuid="1d9d9d67-767a-416e-867a-2322a8de30fc"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Reporte de ciudadanos que votaron y que no votaron segun el padrón electoral]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -60,15 +60,15 @@
 			</line>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="0" width="277" height="20" uuid="07aca15b-b063-45c0-96ed-6104e82b5081"/>
-				<textElement>
-					<font size="14"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Porcentaje que Votaron}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="277" y="0" width="277" height="20" uuid="3e08f0be-6a2b-4677-a926-17e312107c98"/>
-				<textElement>
-					<font size="14"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Porcentaje que No Votaron}]]></textFieldExpression>
 			</textField>
@@ -78,7 +78,7 @@
 		<band/>
 	</columnFooter>
 	<pageFooter>
-		<band height="17">
+		<band height="20">
 			<textField>
 				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="408889e8-eb37-482b-9c98-a8e5fda669bc"/>
 				<textElement textAlignment="Right"/>
@@ -95,6 +95,11 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band/>
+		<band height="554">
+			<image>
+				<reportElement x="82" y="31" width="472" height="437" uuid="de27f908-c4a2-4684-9022-c2e3e84702c3"/>
+				<imageExpression><![CDATA[$P{grafico}]]></imageExpression>
+			</image>
+		</band>
 	</summary>
 </jasperReport>
