@@ -104,6 +104,20 @@ public class LoginMantController implements Serializable {
            " "+ logedUser.getNombreuser().substring(0,1) + logedUser.getNombreuser().substring(1).toLowerCase()+ " "+logedUser.getApellidouser().substring(0,1) +logedUser.getApellidouser().substring(1).toLowerCase();
    return saludo;
    }
+   
+   
+   public boolean mostrarReportes(){
+       boolean flag = false;
+       if (loggedIn) {
+            for (Tblrolxpermiso obj :  logedUser.getIdrol().getTblrolxpermisoList()) {
+           if (obj.getIdpermiso().getUrlpermiso().toLowerCase().equals("pages/periodo/mantperiodo.xhtml")) {
+               flag = true;
+           }
+       }
+       }
+       
+       return flag;
+   }
     
    
 }

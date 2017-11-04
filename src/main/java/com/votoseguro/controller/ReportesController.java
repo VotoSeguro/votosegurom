@@ -18,6 +18,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import lombok.Getter;
+import lombok.Setter;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -40,9 +42,16 @@ public class ReportesController {
     @EJB
     VotoFacade vf;
     Tblperiodo periodo = new Tblperiodo();
-    @PostConstruct
+    
+    private @Getter @Setter String pdfActual;
+    private @Getter @Setter boolean pdfShow = false; 
+    private @Getter @Setter List<Tblperiodo> periodoList = new ArrayList<>();
+    
+    
+    @PostConstruct  
     public void init() {
        periodo = pf.obtenerPeriodoHaboAct();
+       periodoList = pf.obtenerPeriodos();
         createBarModel();
 
     }
@@ -80,25 +89,30 @@ public class ReportesController {
     
     }
     
-    
+    public void onchange(String id){
+    vb.updateComponent(id);
+    }
     
     public void prueba(){
     rf.pruebaReport();
-    vb.redirecionar("/pdf/prueba1.pdf");
+    //vb.redirecionar("/pdf/prueba1.pdf");
     }
     
      public void cantidadGenero(){
     rf.reporteCantidadGenero(periodo);
-    vb.redirecionar("/pdf/CantidadGenero.pdf");
+    //vb.redirecionar("/pdf/CantidadGenero.pdf");
+         mostrarModal("/pdf/CantidadGenero.pdf");
     }
      
       public void cantidadVotaron(){
     rf.reporteCantidadVotaron();
-    vb.redirecionar("/pdf/votaronynovotaron.pdf");
+    //vb.redirecionar("/pdf/votaronynovotaron.pdf");
+          mostrarModal("/pdf/votaronynovotaron.pdf");
     }
       public void cantidadDepto(){
     rf.reporteCantidadDepto(periodo);
-    vb.redirecionar("/pdf/cantidadDepto.pdf");
+    //vb.redirecionar("/pdf/cantidadDepto.pdf");
+    mostrarModal("/pdf/cantidadDepto.pdf");
     }
     
     public PieChartModel createPieModelGenero(){
@@ -112,7 +126,7 @@ public class ReportesController {
             pieModel.setLegendPosition("e");
             pieModel.setFill(false);
             pieModel.setShowDataLabels(true);
-            pieModel.setDiameter(150);
+            pieModel.setDiameter(300);
             
         } catch (Exception e) {
             System.out.println("com.votoseguro.controller.ReportesController.createPieModel()");
@@ -131,9 +145,10 @@ public class ReportesController {
             
             pieModel.setTitle("Porcentaje de personas que votaron y que no votaron");
             pieModel.setLegendPosition("e");
+            
             pieModel.setFill(false);
             pieModel.setShowDataLabels(true);
-            pieModel.setDiameter(150);
+            pieModel.setDiameter(300);
         } catch (Exception e) {
             System.out.println("com.votoseguro.controller.ReportesController.createPieModel()");
             e.printStackTrace();
@@ -141,4 +156,15 @@ public class ReportesController {
     
       return pieModel;
     }
+    
+    public void mostrarModal(String url){
+    
+         pdfShow = true;
+         pdfActual = url;
+         vb.updateComponent("frmReport:amodal");
+         vb.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
+    
+    }
+    
+    
 }
