@@ -37,12 +37,12 @@
                 
             </b:tabView>
                 
-                <b:tabView  tabPosition="north" >
+                <b:tabView  tabPosition="left" >
                      <b:tab title="Cantidad Hombres y Mujeres que Votaron"  >
                       
-                        <b:panel id="tab1">
+                        <b:panel id="tab1"  >
                             <b:commandButton value="Generar PDF" actionListener="#{reportes.cantidadGenero()}" look="success" ajax="true" update="amodal" />
-                        <p:chart type="pie" model="#{reportes.createPieModelGenero()}" style="width:600px;height:400px;"/>
+                        <p:chart type="pie" model="#{reportes.createPieModelGenero()}" style="width:100%;height:400px;"/>
                         </b:panel>
                        
                     </b:tab>
@@ -50,7 +50,7 @@
                          
                         <b:panel id="tab2">
                             <b:commandButton value="Generar PDF" actionListener="#{reportes.cantidadVotaron()}" look="success" ajax="true" update="amodal" />
-                        <p:chart type="pie" model="#{reportes.createPieModelVotaron()}" style="width:600px;height:400px;"/>
+                        <p:chart type="pie" model="#{reportes.createPieModelVotaron()}" style="width:100%;height:400px;"/>
                         </b:panel>
                       
                         
@@ -58,12 +58,37 @@
                    <b:tab title="Cantidad de Votantes por Departamento"  onclick="ajax:reportes.onchange('frmReport:tab3');" >
                         <b:panel id="tab3">
                             <b:commandButton value="Generar PDF" actionListener="#{reportes.cantidadDepto()}" look="success" ajax="true" update="amodal" />
-                       <p:chart type="bar" model="#{reportes.createBarModel()}"  style="width:600px;height:400px;" />
+                       <p:chart type="bar" model="#{reportes.createBarModel()}"  style="width:100%;height:400px;" />
                         </b:panel>
                         
                         
                     </b:tab>
                     
+                     <b:tab title="Cantidad de votos de candidatos por partido politico"  onclick="ajax:reportes.onchange('frmReport:tab4');" >
+                        <b:panel id="tab4">
+                           <!-- <p:media value="#{reportes.canidadCandidatoPorPartido()}" width="100%" height="500px"   />  -->
+                    
+                        </b:panel>
+                        
+                        
+                    </b:tab>
+                      <b:tab title="Departamentos ganados por partido politico"  onclick="ajax:reportes.onchange('frmReport:tab5');" >
+                        <b:panel id="tab5">
+                            <b:commandButton value="Generar PDF" actionListener="#{reportes.pruebaXML()}"  look="success" ajax="true" update="amodal" />
+                            <p:chart type="bar" model="#{reportes.createBarModelDeptoGanado()}"  style="width:100%;height:400px;" />
+                        </b:panel>
+                        
+                        
+                    </b:tab>
+                    
+                     <b:tab title="Votantes entre rango de edad"  onclick="ajax:reportes.onchange('frmReport:tab6');" >
+                        <b:panel id="tab6">
+                            <b:commandButton value="Generar PDF" actionListener="#{reportes.edadXML()}"  look="success" ajax="true" update="amodal" />
+                            <p:chart type="pie" model="#{reportes.createPieRangoEdad()}" style="width:100%;height:400px;"/>
+                        </b:panel>
+                        
+                        
+                    </b:tab>
                 </b:tabView>
                 
                  <b:modal  id="amodal" title="Reporte PDF" styleClass="modalPseudoClass"  close-on-escape="false" backdrop="false"  >

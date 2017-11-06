@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d58df967-c90f-4f3a-874e-bba2d6b6987d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="anio" class="java.lang.String"/>
+	<queryString language="xPath">
+		<![CDATA[/ganados/fila]]>
+	</queryString>
+	<field name="total" class="java.lang.String">
+		<fieldDescription><![CDATA[total]]></fieldDescription>
+	</field>
+	<field name="nomdepto" class="java.lang.String">
+		<fieldDescription><![CDATA[nomdepto]]></fieldDescription>
+	</field>
+	<field name="nompartido" class="java.lang.String">
+		<fieldDescription><![CDATA[nompartido]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<image>
+				<reportElement x="0" y="0" width="145" height="72" uuid="8f2124a5-f6e0-4a6b-9579-478ce91497d0"/>
+				<imageExpression><![CDATA["C:\\Users\\luis\\Desktop\\tareas\\multi\\SIS13B_VOTACIONES_LUIS_EDUARDO_VALDEZ_CISNEROS\\sisVotoBSFaces\\votoseguroM\\votoseguroM\\src\\main\\webapp\\resources\\img\\logo-tse.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="191" y="18" width="344" height="36" forecolor="#006699" backcolor="#E6E6E6" uuid="4ec89efe-6a48-4361-930c-dee16ac37a84"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamentos ganados por partido]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20">
+			<staticText>
+				<reportElement mode="Opaque" x="81" y="0" width="191" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="4fd1ed33-b600-4834-8c1b-4101dbb90f16"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="272" y="0" width="161" height="20" forecolor="#006699" uuid="ebb34d1b-ec55-4398-807a-9d8a5bad3052"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{anio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="8e359352-4238-4b4a-8597-3331900b9924"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="191" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="332021b3-3196-479f-bbfa-b72481cf29f9"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="191" y="0" width="191" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d15d73e2-a79c-4877-9f7d-a3c41e18fe63"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Partido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="382" y="0" width="183" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="adb8d6bb-ba13-46c7-973d-d35565c373ba"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL VOTOS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="91cd650e-be1f-4f4a-824d-3ca483927c99"/>
+			</line>
+			<textField>
+				<reportElement x="191" y="0" width="191" height="20" forecolor="#006699" uuid="ec93113f-9b97-4576-a192-1d8cd2025989"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nompartido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="191" height="20" forecolor="#006699" uuid="b78c7308-1017-4cd3-8588-3f26584aa1a3"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomdepto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="382" y="0" width="173" height="20" forecolor="#006699" uuid="ccd2d7bf-20d2-4dec-94cb-8eadb11b5698"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="753b8490-5c48-4eb8-93e1-4c10bc6fcd94"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="a7b17fd1-d52f-485c-add6-e895cce14c7d"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="79e6d140-889b-4788-8de4-605571a8be9c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

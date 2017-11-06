@@ -3,6 +3,7 @@
 <glassfish-web-app error-url="">
     <property name="alternatedocroot_1" value="from=/uploads/* dir=/config" />
     <property name="alternatedocroot_2" value="from=/pdf/* dir=/config" />
+    <property name="alternatedocroot_3" value="from=/xml/* dir=/config" />
   <class-loader delegate="true"/>
   <jsp-config>
     <property name="keepgenerated" value="true">

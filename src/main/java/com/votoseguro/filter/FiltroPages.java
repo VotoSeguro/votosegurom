@@ -88,7 +88,11 @@ public class FiltroPages implements Filter{
                         if (obj.getIdpermiso().getUrlpermiso().contains(urlpieces[1])) {
                             c++;
                         }
+                        if (obj.getIdpermiso().getUrlpermiso().contains("mantPeriodo.xhtml") && urlpieces[1].contains("reportesPeriodo.xhtml")) {
+                            c++;
+                        }
                     }
+                    
                     
                     if (c == 0) {
                         ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
