@@ -12,16 +12,22 @@
         <ui:define name="content">
 
             <h:form id="advertenciaForm" > 
-            <b:container>
+            
                 <b:row>
-                    <b:column col-lg="12">
+                   
                         <b:panel title="#{bundle.lblAdvertencia}" look="danger" collapsible="false">
-                            <b:jumbotron  style="text-align: center" >
-                            <h1 style="font-weight: bold;" >#{bundle.lblAdvertenciaLegal}</h1>
-                            </b:jumbotron>
+                            <b:column span="4">
+                                <p:graphicImage library="img" name="Danger_Warning_Sign_PNG_Clipart-812.png" width="100%"/>
+                            </b:column>
+                             <b:column col-lg="8">
                             
+                            <b:jumbotron  style="text-align: center" >
+                            <p:graphicImage library="img" name="accesonoautorizado.png" width="100%"/>
+                            <p:graphicImage library="img" name="serapenadoporlaley.png" width="100%"/>
+                            </b:jumbotron>
+                            </b:column>
                 </b:panel>
-                        </b:column>
+                        
                 </b:row>
                 <b:row >
                     <b:panel>
@@ -33,7 +39,7 @@
                     </b:panel>
                     
                 </b:row>
-            </b:container>
+        
                 </h:form>
         </ui:define>
     </ui:composition>

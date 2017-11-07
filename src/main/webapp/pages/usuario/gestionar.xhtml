@@ -10,22 +10,55 @@
 
     <ui:composition template="/WEB-INF/templates/template.xhtml">
         <ui:define name="content">
-         
-         <b:container>
-             
+            <h:form>
+                    
              <b:row>
-                 <b:column col-md="12">
-                       <b:jumbotron>
+                 <b:panel>
+                 <b:column span="4">
+                     <p:graphicImage library="img" name="Partner-icon.png" width="100%"/>
+                 </b:column>
+                 <b:column col-md="8">
+                     
                            <h1>
-                               <h:outputText value="#{loginMant.saludo}"/>
+                               <h:outputText  escape="false" value="#{loginMant.saludo}"/>
                                
                            </h1>
-         </b:jumbotron> 
+        
                      
                  </b:column>
+                     </b:panel>
              </b:row>
-         </b:container>
-      
+            <b:row>
+                <b:column span="12">
+                    <h2><p:outputLabel value="Usted tiene acceso a los siguientes módulos"/></h2>
+                </b:column>
+                
+            </b:row>
+      <b:row>
+          <b:panel look="primary"  title="Módulos" >
+              
+              <ui:repeat value="#{loginMant.logedUser.idrol.tblrolxpermisoList}" var="permiso"  >
+              <b:column span="4" >
+                  <b:panel  style="margin: 20px;" title="#{permiso.idpermiso.nombrepermiso}"  look="primary" collapsible="false" >
+                      <h:panelGrid columns="1"  >
+                          <h:outputText value="Permiso: #{loginMant.obtenerNombrePermiso(permiso.nivelpermiso)}" />
+                          <b:commandButton  look="info" value="#{permiso.idpermiso.nombrepermiso}"  style="width: 100%" actionListener='#{loginMant.redireccionars(permiso.idpermiso.urlpermiso)}' />
+                     
+                      </h:panelGrid>
+                      
+                      
+                  </b:panel>
+                  
+              </b:column>
+          </ui:repeat>
+              
+          </b:panel>
+                
+            </b:row>
+                
+            </h:form>
+         
+         
         </ui:define>
     </ui:composition>
 </html>

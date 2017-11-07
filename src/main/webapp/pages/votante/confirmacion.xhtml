@@ -10,20 +10,35 @@
 
     <ui:composition template="/WEB-INF/templates/template.xhtml">
         <ui:define name="content">
-            <b:row>
-                <b:column span="12">
+            <h:form >
+                  <b:row>
+                <b:column span="4">
+                    <p:graphicImage library="img" name="check.png" width="100%"/>
+                </b:column>
+                <b:column span="8">
                    
                     <b:jumbotron style="width: 100%" >
-                        <h1 style="size: 20px" > #{bundle.lblConfirmarVoto}</h1>
-                        <h1 style="size: 20px" > #{bundle.lblConfirmarVoto1}</h1>
-                        <h1 style="size: 20px" > #{bundle.lblConfirmarVoto2}</h1>
+                        <p:graphicImage library="img" name="confirmacionvoto.png" width="100%"/><br></br><br></br><br></br>
+                        <p:graphicImage library="img" name="confirmacionvoto2.png" width="100%"/><br></br><br></br><br></br>
+                        <p:graphicImage library="img" name="confirmacionvoto3.png" width="100%"/><br></br><br></br>
+                        <b:commandButton value="Volver al inicio" actionListener="#{votController.volverIndice()}"  look="success" />
                     </b:jumbotron>
                 </b:column>
                 
                 
             </b:row>
+            <b:row>
+                <b:column span="6">
+                    <p:graphicImage library="img" name="b1.jpg" width="100%" />
+                </b:column>
+                <b:column span="6">
+                    <p:graphicImage library="img" name="b2.jpg" width="100%" />
+                </b:column>
+            </b:row>
             
-            
+                
+                
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

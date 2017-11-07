@@ -83,6 +83,15 @@ public class LoginMantController implements Serializable {
             //Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+     public void redireccionars(String pag) {
+        try {
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + "/"+pag);
+        } catch (IOException ex) {
+            //JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("titleUserNotFound"));
+            //Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public String logout(){
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -101,7 +110,7 @@ public class LoginMantController implements Serializable {
    
    public String getSaludo(){
    String saludo = vb.getMsgBundle("lblBienvenidoMant")+ " "  + logedUser.getIdrol().getNomrol().toLowerCase().substring(0, 1).toUpperCase() + logedUser.getIdrol().getNomrol().substring(1).toLowerCase() +
-           " "+ logedUser.getNombreuser().substring(0,1) + logedUser.getNombreuser().substring(1).toLowerCase()+ " "+logedUser.getApellidouser().substring(0,1) +logedUser.getApellidouser().substring(1).toLowerCase();
+           " <br>"+ logedUser.getNombreuser().substring(0,1) + logedUser.getNombreuser().substring(1).toLowerCase()+ " "+logedUser.getApellidouser().substring(0,1) +logedUser.getApellidouser().substring(1).toLowerCase();
    return saludo;
    }
    
@@ -119,5 +128,30 @@ public class LoginMantController implements Serializable {
        return flag;
    }
     
+   
+   public String obtenerNombrePermiso(int nivel){
+   String res= "";
+    switch(nivel)
+    {
+        case 1:
+            res = "Agregar";
+            break;
+         case 2:
+            res = "Agregar y Ver";
+            break;
+            case 3:
+            res = "Agregar, Modificar y Ver";
+            break;
+            case 4:
+            res = "Agregar, Modificar, Eliminar y Ver";
+            break;
+    
+    }
+       
+   
+   return res;
+   }
+   
+  
    
 }

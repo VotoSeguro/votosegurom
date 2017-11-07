@@ -10,6 +10,7 @@
 
     <ui:composition template="/WEB-INF/templates/template.xhtml">
         <ui:define name="content">
+            
             <h:outputStylesheet>
                 .mensajeModal{
                 position: absolute;
@@ -84,9 +85,15 @@
                 };
             </h:outputScript>
             <h:form  id="indexForm">
-                  
+                <b:row >
+                    <b:column span="12">
+                         <p:graphicImage library="img" name="welcome.png" width="100%"/>
+                        
+                    </b:column>
+                    
+                </b:row>
             <b:jumbotron>
-                <b:container>
+              
                     <b:row>
                         <b:column col-md="12">
                             <p:graphicImage library="img" name="banner1.jpg" style="max-width: 100%;" />
@@ -94,14 +101,14 @@
                         
                     </b:row>
                     
-                </b:container>
+               
 
             </b:jumbotron>
                 <p:separator/>
-                <b:container>
+               
                     <b:row>
                         <b:column col-md="12">
-                            <h2>#{bundle.lblComoVotar}</h2>
+                            <h2 style="text-align: center" >#{bundle.lblComoVotar}</h2>
                         </b:column>
                     </b:row>
                 <b:row>
@@ -202,9 +209,9 @@
                             </center>
                 </b:column>
                 </b:row>
-                </b:container>
+               
                 <p:separator/>
-                 <b:container>
+                 
                 <b:row>
                     <b:column col-md="4">
                         <h2><h:outputText value="#{votController.daysBetweenUsingJoda()}" />   Días para la elección 2018</h2>
@@ -225,14 +232,14 @@
                     </b:column>
                 </b:row>
                
-            </b:container>  
+           
                 
                 <h:outputScript target="body" >
                     jssor_slider1_init();
                     
                 </h:outputScript>
                 
-                <b:container>
+                
                     <b:row>
                         <b:column col-md="12">
                        
@@ -240,7 +247,7 @@
                     </b:column>
                 </b:row>
                
-            </b:container> 
+           
             </h:form>
         </ui:define>
     </ui:composition>

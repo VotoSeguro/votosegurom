@@ -43,6 +43,7 @@ public class VotLoginController implements Serializable {
     private @Getter @Setter String closetag="</div>";
     private @Getter @Setter String fechaSig = "03/03/2018";
     private @Getter @Setter boolean accesoMant = false;
+    private @Getter @Setter String msg = "";
     @EJB
     VotanteFacade vf;
     @EJB
@@ -124,6 +125,9 @@ public class VotLoginController implements Serializable {
          boolean yaVoto = votofacade.yaVoto(String.valueOf(loggedVotante.getIdvotante()), String.valueOf(pf.obtenerPeriodoHab().getIdperiodo()))   ;
             if (!yaVoto) {
                 flag = true;
+                msg = "Bienvenido " + getFullName() + ", usted aun no ejerce su voto";
+            }else{
+            msg = "Bienvenido " + getFullName() + ", usted ya ejerció su voto";
             }
       
                  
@@ -135,6 +139,8 @@ public class VotLoginController implements Serializable {
     return flag;
     }
      
-     
+     public void volverIndice(){
+     vb.redirecionar("/index.xhtml");
+     }
     
 }

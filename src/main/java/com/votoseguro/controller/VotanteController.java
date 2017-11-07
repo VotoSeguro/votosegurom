@@ -226,6 +226,9 @@ public class VotanteController {
         nompadre = "";
         tiposangre = "";
         tramite = "";
+        direccion = "";
+        nit = "";
+        profesion = "";
 
     }
 
