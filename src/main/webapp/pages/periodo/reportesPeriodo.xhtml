@@ -66,8 +66,8 @@
                     
                      <b:tab title="Cantidad de votos de candidatos por partido politico"  onclick="ajax:reportes.onchange('frmReport:tab4');" >
                         <b:panel id="tab4">
-                           <!-- <p:media value="#{reportes.canidadCandidatoPorPartido()}" width="100%" height="500px"   />  -->
-                    
+                            <b:commandButton value="Generar PDF" actionListener="#{reportes.canidadCandidatoPorPartido()}"  look="success" ajax="true" update="amodal" />
+                            <p:chart type="pie" model="#{reportes.createCandPorPart()}" style="width:100%;height:400px;"/>
                         </b:panel>
                         
                         

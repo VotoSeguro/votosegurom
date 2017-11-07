@@ -10,6 +10,7 @@ import com.votoseguro.entity.Tblvoto;
 import com.votoseguro.facade.PeriodoFacade;
 import com.votoseguro.facade.ReportesFacade;
 import com.votoseguro.facade.VotoFacade;
+import com.votoseguro.report.CandidatoPartido;
 import com.votoseguro.report.DeptosGanados;
 import com.votoseguro.report.RangoEdad;
 import com.votoseguro.report.VotantesDepto;
@@ -158,9 +159,9 @@ public class ReportesController {
     mostrarModal("/pdf/cantidadDepto.pdf");
     }
       
-      public String canidadCandidatoPorPartido(){
+      public void canidadCandidatoPorPartido(){
       rf.reporteCantidadCandidatoPorPartido(periodo);
-      return "/pdf/diputadosPorPartido.pdf";
+     mostrarModal("/pdf/diputadosPorPartido.pdf");
       
       }
     
@@ -231,6 +232,31 @@ public class ReportesController {
       return pieModel;
     }
     
+     public PieChartModel createCandPorPart(){
+    PieChartModel pieModel = new PieChartModel();
+        try {
+            List<CandidatoPartido> lista = rf.obtenerCandsPorPart(Integer.parseInt(String.valueOf(periodo.getIdperiodo())));
+            for (CandidatoPartido vd : lista) {
+                pieModel.set(vd.getNompartido(), vd.getTotal());
+            }
+            
+            //pieModel.set("Ya Votaron", Double.valueOf(lista.get(0)));
+           //pieModel.set("No Votaron", Double.valueOf(lista.get(1)));
+            
+            pieModel.setTitle("Total votos por partido");
+            pieModel.setLegendPosition("e");
+            
+           // pieModel.setFill(false);
+            pieModel.setShowDataLabels(true);
+            pieModel.setDiameter(300);
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.controller.ReportesController.createPieModel()");
+            e.printStackTrace();
+        }
+    
+      return pieModel;
+    }
+    
     
     
     public void mostrarModal(String url){
@@ -253,8 +279,8 @@ public class ReportesController {
     public void edadXML(){
         WriteXMLFile f = new WriteXMLFile();
         f.crearXMLEdad(obtenerListaEdad());
-        //rf.reporteDeptosGanados(periodo);
-        //mostrarModal("/pdf/deptoPartido.pdf");
+        rf.reporteRangoEdad(periodo,rf.GraficoRangoEdad(obtenerListaEdad()));
+        mostrarModal("/pdf/RangoEdad.pdf");
     }
     public List<DeptosGanados> logicaDeptosGanadosPorPartido(){
     

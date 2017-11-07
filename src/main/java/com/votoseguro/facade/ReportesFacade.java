@@ -7,6 +7,7 @@ package com.votoseguro.facade;
 
 import com.votoseguro.entity.Tblperiodo;
 import com.votoseguro.entity.Tblvoto;
+import com.votoseguro.report.CandidatoPartido;
 import com.votoseguro.report.DeptosGanados;
 import com.votoseguro.report.RangoEdad;
 import com.votoseguro.report.VotantesDepto;
@@ -159,6 +160,7 @@ public class ReportesFacade extends AbstractFacade<Tblvoto> {
         return jc.createBufferedImage(500, 500);
         
     }
+   
     
     public BufferedImage GraficoCantidadVotaron() {
         DefaultPieDataset pd = new DefaultPieDataset();
@@ -480,6 +482,88 @@ public class ReportesFacade extends AbstractFacade<Tblvoto> {
               e.printStackTrace();
         }
         return lista.get(0);
+    }
+     
+     
+      public void reporteRangoEdad(Tblperiodo periodo, BufferedImage grafico) {
+        try {
+           // JRBeanCollectionDataSource source = new JRBeanCollectionDataSource(obtenerDeptosGanadosPorPartido(Integer.parseInt(String.valueOf(periodo.getIdperiodo()))));
+            //Connection cn = em.unwrap(java.sql.Connection.class);
+            String dir = "pages\\reportes\\RangoEdad.jrxml";
+            String destino = System.getProperty("user.dir") + File.separator + "pdf\\RangoEdad.pdf";
+            //File file = new File(dir);
+            
+            Map parametersMap = new HashMap();
+            //parametersMap.put("idperiodo", Integer.parseInt(String.valueOf(periodo.getIdperiodo())));
+            parametersMap.put("grafico", grafico);
+            parametersMap.put("anio", String.valueOf(periodo.getAnio()));
+            try {
+                
+                ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+                String realPath = ec.getRealPath("/");
+                System.out.println(realPath + dir);
+                JasperReport report = JasperCompileManager.compileReport(realPath + dir);
+                
+                //String canonicalPath = file.getCanonicalPath();
+                String uri = System.getProperty("user.dir")+ File.separator + "xml"+File.separator+"RangoEdad.xml";
+                InputStream inputStream = new FileInputStream(new File(uri));
+                JRXmlDataSource data = new JRXmlDataSource(uri,"/rango/fila");
+                JasperPrint print = JasperFillManager.fillReport(report, parametersMap,data);
+                JRExporter exporter = new JRPdfExporter();
+                
+                exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destino);
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+                exporter.exportReport();
+                System.out.println("File Created: " + destino);
+            } catch (Exception e) {
+                System.out.println("com.votoseguro.facade.ReportesFacade.rangoedad()");
+                e.printStackTrace();
+            }
+            System.out.println("exito");
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.facade.ReportesFacade.rangoedad()");
+            e.printStackTrace();
+        }
+        
+    }
+      
+       public BufferedImage GraficoRangoEdad(List<RangoEdad> lista) {
+        DefaultPieDataset pd = new DefaultPieDataset();
+        //List<Integer> lista = new ArrayList<>();
+        JFreeChart jc = null;
+        try {
+            //lista = obtenerCantidadGenero(idperiodo);
+            for (RangoEdad re : lista) {
+                pd.setValue(re.getTitulo(), re.getCantidad());
+            }
+            jc = ChartFactory.createPieChart("Cantidad de votantes en un rango de edad", pd, true, true, Locale.US);
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.facade.ReportesFacade.GraficoCantidadGenero()");
+            e.printStackTrace();
+        }
+        return jc.createBufferedImage(500, 500);
+        
+    }
+       
+       
+        public List<CandidatoPartido> obtenerCandsPorPart(int idperiodo){
+    String sql= "select sum(valor) as Votos, nomcand || ' ' || apecand as Candidato, nompartido as Partido from tblvoto v \n" +
+"inner join tblcandidato c on c.idcandidato = v.idcandidato inner join tblpartido \n" +
+"p on p.idpartido = c.idpartido where idperiodo = ? group by nomcand,apecand, nompartido order by nompartido, Votos desc";
+    List<CandidatoPartido> lista = new ArrayList<>();
+        try {
+            Connection cn = em.unwrap(java.sql.Connection.class);
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setInt(1, idperiodo);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                lista.add(new CandidatoPartido(rs.getDouble("Votos"),rs.getString("Partido"),rs.getString("Candidato")));
+            }
+        } catch (Exception e) {
+              System.out.println("com.votoseguro.facade.ReportesFacade.obtenerDeptosGanadosPorPartido()");
+              e.printStackTrace();
+        }
+        return lista;
     }
     
 }

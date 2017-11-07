@@ -3,6 +3,10 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="anio" class="java.lang.String"/>
+	<parameter name="grafico" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString language="xPath">
 		<![CDATA[/rango/fila]]>
 	</queryString>
@@ -17,27 +21,36 @@
 	</background>
 	<title>
 		<band height="72">
-			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="2a1b6c49-ba75-46f4-98e0-72af3d14e9cd"/>
-				<staticText>
-					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="2fc1952b-01f7-4976-8f4c-45f1b3606ddd"/>
-					<textElement>
-						<font size="34" isBold="true"/>
-					</textElement>
-					<text><![CDATA[TITLE]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="5b084301-e6db-438a-845e-d766515c23e0"/>
-					<textElement textAlignment="Right">
-						<font size="14" isBold="false"/>
-					</textElement>
-					<text><![CDATA[Add a description here]]></text>
-				</staticText>
-			</frame>
+			<image>
+				<reportElement x="0" y="0" width="164" height="72" uuid="575d624b-7543-4a5c-82ca-62c3787afc48"/>
+				<imageExpression><![CDATA["C:\\Users\\luis\\Desktop\\tareas\\multi\\SIS13B_VOTACIONES_LUIS_EDUARDO_VALDEZ_CISNEROS\\sisVotoBSFaces\\votoseguroM\\votoseguroM\\src\\main\\webapp\\resources\\img\\logo-tse.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="206" y="10" width="309" height="62" forecolor="#006699" backcolor="#FFFFFF" uuid="325c04f1-987a-4677-a609-dec3efc53529"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad de votantes entre rangos de edad]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="13"/>
+		<band height="23">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="4" width="191" height="19" forecolor="#006699" backcolor="#FFFFFF" uuid="a16adffd-7c36-430a-92eb-8f1430da424f"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="252" y="0" width="191" height="20" forecolor="#006699" uuid="8b92884a-89e4-4172-990f-47af05ff91e2"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{anio}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="21">
@@ -45,26 +58,38 @@
 				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="c3ab1626-8e4e-420d-8914-5d50f4c70be7"/>
 			</line>
 			<staticText>
-				<reportElement x="106" y="1" width="100" height="20" uuid="22504a49-7b31-4072-b51b-e04022b691af"/>
-				<text><![CDATA[titulo]]></text>
+				<reportElement mode="Opaque" x="0" y="0" width="191" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="7ae74306-7e49-4457-bbe0-f7fe16a673c2"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Titulo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="315" y="1" width="100" height="20" uuid="f56df429-a3ae-42cb-bf21-6a3b25e010db"/>
-				<text><![CDATA[cantidad]]></text>
+				<reportElement mode="Opaque" x="252" y="1" width="191" height="19" forecolor="#006699" backcolor="#FFFFFF" uuid="aa36d768-5977-44eb-9ca3-545fbfbf3c76"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
+		<band height="21">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="9ec53f7f-3ab6-4ac6-acc8-78a81176de15"/>
 			</line>
 			<textField>
-				<reportElement x="45" y="0" width="161" height="20" uuid="73d4c3dc-5daa-46aa-aaea-038a0252086b"/>
+				<reportElement x="3" y="0" width="188" height="20" uuid="73d4c3dc-5daa-46aa-aaea-038a0252086b"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="315" y="0" width="100" height="20" uuid="24d6daea-6bf0-444e-9b16-668db7ccbca1"/>
+				<reportElement x="252" y="0" width="191" height="20" uuid="24d6daea-6bf0-444e-9b16-668db7ccbca1"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -90,6 +115,11 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band/>
+		<band height="287">
+			<image>
+				<reportElement x="128" y="0" width="427" height="287" uuid="caf1b5ad-72e7-4c4d-9395-2113be4a70e4"/>
+				<imageExpression><![CDATA[$P{grafico}]]></imageExpression>
+			</image>
+		</band>
 	</summary>
 </jasperReport>
