@@ -180,7 +180,10 @@ public class VotanteController {
         nompadre = selectedVotante.getNompadre();
         tiposangre = selectedVotante.getTiposangre();
         tramite = selectedVotante.getTramite();
-        
+        direccion = selectedVotante.getDireccion();
+        nit = selectedVotante.getNit();
+        profesion = selectedVotante.getProfesion();
+        System.out.println("com.votoseguro.controller.VotanteController.onSelect("+v.getApellidov()+")");
 
     }
 
@@ -191,6 +194,8 @@ public class VotanteController {
     }
  public void onChangeDepto() {
         listaMunicipios = mf.obtenerMunicipios(idDepto);
+        listaVotantes = vf.obtenerVotantes(String.valueOf(listaMunicipios.get(0).getIdmuni()));
+        vb.updateComponent("votanteForm:tblVot");
         limpiar();
 
     }
@@ -209,6 +214,18 @@ public class VotanteController {
         fnac = "";
         pregunta = "";
         respuesta = "";
+        codzona  = "";
+        estadocivil = "";
+        fechaexp = "";
+        fechavenc = "";
+        lugarexp = "";
+        lugarnac = "";
+        nacionalidad = "";
+        nomconyuge = "";
+        nommadre = "";
+        nompadre = "";
+        tiposangre = "";
+        tramite = "";
 
     }
 
@@ -324,6 +341,26 @@ public class VotanteController {
                     && vb.validarLongitudCampo(passvotante, 4, 8, "warn", "lblMantVot", "lblLongVotPass")
                     && vb.validarCampoVacio(passvotantere, "warn", "lblMantVot", "lblPassreReqVot")
                     && vb.validarLongitudCampo(passvotantere, 4, 8, "warn", "lblMantVot", "lblLongVotPassre")
+                    && vb.validarSoloLetras(nacionalidad, "warn", "lblMantVot", "lblNacionalidadSolo")
+                    && vb.validarLongitudCampo(nacionalidad, 0, 30, "warn", "lblMantVot", "lblNacionalidadLong")
+                    && vb.validarSoloLetras(lugarnac, "warn", "lblMantVot", "lblLugarNacSolo")
+                    && vb.validarLongitudCampo(lugarnac, 0, 30, "warn", "lblMantVot", "lblLugarNacLong")
+                 //   && vb.validarFecha(fechaexp,"warn", "lblMantVot", "lblFechaExpInvalid")
+                    && vb.validarSoloLetras(lugarexp, "warn", "lblMantVot", "lblLuagrExpSolo")
+                    && vb.validarLongitudCampo(lugarexp, 0, 30, "warn", "lblMantVot", "lblLugarExpLong")
+                   // && vb.validarFecha(fechavenc,"warn", "lblMantVot", "lblFechaVencInvalid")
+                    && vb.validarLongitudCampo(direccion, 4, 199, "warn", "lblMantVot", "lblDireccionLong")
+                    && vb.validarLongitudCampo(tramite, 0, 14, "warn", "lblMantVot", "lblTipoTramiteLong")
+                    && vb.validarLongitudCampo(codzona, 0, 20, "warn", "lblMantVot", "lblCodZonaLong")
+                    && vb.validarLongitudCampo(nommadre, 0, 70, "warn", "lblMantVot", "lblNomMadreSolo")
+                    && vb.validarSoloLetras(nommadre, "warn", "lblMantVot", "lblNomMadreLong")
+                    && vb.validarLongitudCampo(nompadre, 0, 70, "warn", "lblMantVot", "lblNomPadreSolo")
+                    && vb.validarSoloLetras(nompadre, "warn", "lblMantVot", "lblNomPadreLong")
+                    && vb.validarLongitudCampo(nomconyuge, 0, 70, "warn", "lblMantVot", "lblNomConyugeSolo")
+                    && vb.validarSoloLetras(nomconyuge, "warn", "lblMantVot", "lblNomConyugeLong")
+                    && vb.validarLongitudCampo(tiposangre, 0, 10, "warn", "lblMantVot", "lblTipoSangreLong")
+                    && vb.validarLongitudCampo(profesion, 0, 30, "warn", "lblMantVot", "lblProfSolo")
+                    && vb.validarSoloLetras(profesion, "warn", "lblMantVot", "lblProfLong")
                     ) {
                                  if (passvotante.equals(passvotantere)) {
                      flag = true;

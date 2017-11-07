@@ -45,49 +45,11 @@
                             </f:facet>
                         </b:modal>
                     </b:tab>
-                    
+
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
-                    <b:tab title="" style="background-color: white"  >
-                         <b:dataTable
-                            id="tblVot"
-                            value="#{votanteController.listaVotantes}"
-                            selectionMode="single"
-                            select="true"
-                            responsive="true"
-                            var="votante"
-                            onselect="ajax:votanteController.onSelect(votante);"
-                            update="@form"
-                            ajax="true"
-                            >
-                            <b:dataTableColumn value="#{votante.nombrev}" label="#{bundle.lblNombreUsuario}"/>
-                            <b:dataTableColumn value="#{votante.nombrev}" label="#{bundle.lblApellidoUsuario}"/>
-                            <b:dataTableColumn label="#{bundle.lblVotDui}" value="#{votante.genero}"/>
-                            <b:dataTableColumn label="#{bundle.lblVotFnac}" value="#{votante.fnac}"/>
-                            <b:dataTableColumn label="#{bundle.lblNacionalidad}" value="#{votante.nacionalidad}"/>
-                            <b:dataTableColumn label="#{bundle.lblLugarNac}" value="#{votante.lugarnac}"/>
-                            <b:dataTableColumn label="#{bundle.lblFechaExp}" value="#{votante.fechaexp}"/>
-                            <b:dataTableColumn label="#{bundle.lblLugarExp}" value="#{votante.lugarexp}"/>
-                            <b:dataTableColumn label="#{bundle.lblFechaVenc}" value="#{votante.fechavenc}"/>
-                            <b:dataTableColumn label="#{bundle.lblDireccion}" value="#{votante.direccion}"/>
-                            <b:dataTableColumn label="#{bundle.lblTramite}" value="#{votante.tramite}"/>
-                            <b:dataTableColumn label="#{bundle.lblNit}" value="#{votante.nit}"/>
-                            <b:dataTableColumn label="#{bundle.lblCodZona}" value="#{votante.codzona}"/>
-                            <b:dataTableColumn label="#{bundle.lblNomMadre}" value="#{votante.nommadre}"/>
-                            <b:dataTableColumn label="#{bundle.lblNomPadre}" value="#{votante.nompadre}"/>
-                            <b:dataTableColumn label="#{bundle.lblEstadoCivil}" value="#{votante.estadocivil}"/>
-                            <b:dataTableColumn label="#{bundle.lblNomConyuge}" value="#{votante.nomconyuge}"/>
-                            <b:dataTableColumn label="#{bundle.lblTipoSangre}" value="#{votante.tiposangre}"/>
-                            <b:dataTableColumn label="#{bundle.lblProfesion}" value="#{votante.profesion}"/>
-                        </b:dataTable>
-                         <p:separator></p:separator>
-                    </b:tab>
-                    
-                </b:tabView>
-                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
-                    <b:tab title="#{bundle.lblMantVot}" id="fields" >
-                        
-                        
+                    <b:tab title="#{bundle.lblMantVot}" >
+                        <div id="fields">
                         <b:messages/>
                         <b:selectOneMenu id="Depto"  label="#{bundle.lblDepartamento}" value="#{votanteController.idDepto}" onchange="ajax:votanteController.onChangeDepto();" ajax="true" update="Muni" >
                             <f:selectItems  value="#{votanteController.listaDeptos}" var="depto" itemValue="#{depto.iddepto}" itemLabel="#{depto.nomdepto}" />
@@ -150,10 +112,25 @@
                         </b:selectOneMenu>
                         
                         <b:inputText size="10" id="respuesta"  label="#{bundle.lblVotRespuesta}" value="#{votanteController.respuesta}" placeholder="#{bundle.lblVotRespuestaReq}"  maxlength="250"/>
-                       
-                    
-                       
-                       
+                        <p:separator></p:separator>
+                        </div>
+                        <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" 
+                                     id="tblVot"
+                                     value="#{votanteController.listaVotantes}"
+                                    rendered="#{votanteController.nivelPermiso > 1}"
+                                     var="vot"
+                                     responsive="true"
+                                     select="true"
+                                     selectionMode="single"
+                                     onselect="ajax:votanteController.onSelect(vot);"
+                                     
+                                     ajax="true"
+                                     update="votanteForm:fields"
+                                     >
+                            <b:dataTableColumn label="#{bundle.lblVotDui}" value="#{vot.dui}"/>
+                     
+                        </b:dataTable>
+
                     </b:tab>
                 </b:tabView>
 
