@@ -48,6 +48,21 @@ public class PeriodoFacade extends AbstractFacade<Tblperiodo>{
         return listaEntity;
     }
     
+     public List<Tblperiodo> obtenerPeriodosTeryHab(){
+        String sql = "select * from Tblperiodo where estadodel = 'A' and estadoper = 'TERMINADO' or estadoper='HABILITADO'";
+     Query q = getEntityManager().createNativeQuery(sql, Tblperiodo.class);
+     List<Tblperiodo> listaEntity;
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntity = new ArrayList<Tblperiodo>();
+            }
+        } catch (Exception e) {
+            listaEntity = new ArrayList<Tblperiodo>();
+        }
+        return listaEntity;
+    }
+    
     public int revisarActivo(){
       
      Query q = getEntityManager().createNativeQuery("select * from tblperiodo where"

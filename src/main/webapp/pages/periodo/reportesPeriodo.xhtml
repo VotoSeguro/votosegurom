@@ -22,12 +22,14 @@
                                 var="per"
                                 select="true"
                                 selectionMode="single"
-                                
-                                
+                                onselect="ajax:reportes.onSelect(per);"
+                                ajax="true"
+                                update="@form"
                                 >
                                 
                                 <b:dataTableColumn label="Año" value="#{per.anio}" />
                                  <b:dataTableColumn label="Nombre" value="#{per.nomper}" />
+                                 <b:dataTableColumn label="Estado" value="#{per.estadoper}" />
                             </b:dataTable>
                         </b:column>
                         
@@ -37,7 +39,7 @@
                 
             </b:tabView>
                 
-                <b:tabView  tabPosition="left" >
+                <b:tabView  tabPosition="left"  rendered="#{reportes.mostrarAnalitica()}"  id="analitica" >
                      <b:tab title="Cantidad Hombres y Mujeres que Votaron"  >
                       
                         <b:panel id="tab1"  >

@@ -57,11 +57,31 @@ public class ReportesController {
     
     @PostConstruct  
     public void init() {
-       periodo = pf.obtenerPeriodoHaboAct();
-       periodoList = pf.obtenerPeriodos();
+       //periodo = pf.obtenerPeriodoHaboAct();
+       periodoList = pf.obtenerPeriodosTeryHab();
         //createBarModel();
-        logicaDeptosGanadosPorPartido();
+        //logicaDeptosGanadosPorPartido();
 
+    }
+    
+    public boolean mostrarAnalitica(){
+    boolean flag = false;
+        try {
+            List<Tblvoto> list = vf.mostrar(String.valueOf(periodo.getIdperiodo()));
+            if (!list.isEmpty()) {
+                flag = true;
+            }
+        } catch (Exception e) {
+            System.out.println("com.votoseguro.controller.ReportesController.mostrarAnalitica()");
+            e.printStackTrace();
+        }
+    
+    return flag;
+    
+    }
+    
+    public void onSelect(Tblperiodo per){
+    periodo = per;
     }
     
     public BarChartModel createBarModel(){
